@@ -1,0 +1,2 @@
+
+1. Display a list of armor combinations.

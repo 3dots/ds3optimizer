@@ -1,7 +1,7 @@
 import { Component, OnInit } from 'angular2/core';
 import { Router } from 'angular2/router';
 
-import { Armory, ArmorPiece } from './armory';
+import { Armory, ArmorCombination } from './armory';
 import { ArmorService } from './armory.service';
 
 @Component({
@@ -12,6 +12,14 @@ import { ArmorService } from './armory.service';
 
 export class OptimizerComponent implements OnInit {
     Armory: Armory;
+    
+    Test: string;
+    
+    OptimalArmorCombinations;
+    
+    // OptimalArmorCombinations(): ArmorCombination[]{
+    //     return [ new ArmorCombination(this.Armory.Head[1], this.Armory.Chest[1], this.Armory.Arms[1], this.Armory.Legs[1]) ];
+    // };
 
     constructor(
         private _router: Router,
@@ -21,7 +29,13 @@ export class OptimizerComponent implements OnInit {
     ngOnInit() {
         this._armorService.getArmorData()
             .then(data => this.Armory = data);
+            
+        this.Test = "Success"
+        
+        this.OptimalArmorCombinations = new ArmorCombination(this.Armory.Head[1], this.Armory.Chest[1], this.Armory.Arms[1], this.Armory.Legs[1]);
     }
+    
+
 
 
 }
