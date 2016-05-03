@@ -1,26 +1,24 @@
 import { Component, OnInit } from 'angular2/core';
 import { Router } from 'angular2/router';
 
-import { Armory, ArmorCombination } from './armory';
+import { Armory, ArmorCombination, ArmorPiece } from './armory';
 import { ArmorService } from './armory.service';
+import { OptimizationEngine } from './optimizer';
 
 @Component({
     selector: 'my-optimizer',
     templateUrl: 'app/optimizer.component.html',
     styleUrls: ['app/optimizer.component.css']
 })
-
 export class OptimizerComponent implements OnInit {
     Armory: Armory;
     
-    Test: string;
+    AvailableWeight: number;
+      
+    OptimalArmorCombinations: ArmorCombination[];
     
-    OptimalArmorCombinations;
+    Progress: number;
     
-    // OptimalArmorCombinations(): ArmorCombination[]{
-    //     return [ new ArmorCombination(this.Armory.Head[1], this.Armory.Chest[1], this.Armory.Arms[1], this.Armory.Legs[1]) ];
-    // };
-
     constructor(
         private _router: Router,
         private _armorService: ArmorService) {
@@ -28,12 +26,27 @@ export class OptimizerComponent implements OnInit {
 
     ngOnInit() {
         this._armorService.getArmorData()
-            .then(data => this.Armory = data);
-            
-        this.Test = "Success"
-        
-        this.OptimalArmorCombinations = new ArmorCombination(this.Armory.Head[1], this.Armory.Chest[1], this.Armory.Arms[1], this.Armory.Legs[1]);
+            .then( (data: Armory)=> 
+            {
+                
+                this.Armory = data;   
+                
+                this.Progress = 70;  
+                //this.Test = this.Armory.Head[1].Weight.toString();
+                //this.OptimalArmorCombinations = [ new ArmorCombination(this.Armory.Head[2], this.Armory.Chest[1], this.Armory.Arms[1], this.Armory.Legs[1]) ];
+            });       
     }
+    
+    RunOptimization() {
+        
+        new OptimizationEngine(this);
+    }
+    
+    MethodOf(){
+
+    }
+    
+
     
 
 

@@ -6,7 +6,9 @@ System.register([], function(exports_1, context_1) {
         setters:[],
         execute: function() {
             OptimizationEngine = (function () {
-                function OptimizationEngine() {
+                function OptimizationEngine(_ViewModel) {
+                    this._ViewModel = _ViewModel;
+                    _ViewModel.MethodOf();
                 }
                 return OptimizationEngine;
             }());
