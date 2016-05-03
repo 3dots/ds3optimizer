@@ -1,7 +1,7 @@
 System.register([], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var Armory, ArmorPiece, ArmorCombination;
+    var Armory, ArmorPiece, ArmorCombination, ArmorCombinationFactory, OptimizationParameters;
     return {
         setters:[],
         execute: function() {
@@ -41,6 +41,50 @@ System.register([], function(exports_1, context_1) {
                 return ArmorCombination;
             }());
             exports_1("ArmorCombination", ArmorCombination);
+            ArmorCombinationFactory = (function () {
+                function ArmorCombinationFactory(MetricWeights) {
+                    this.MetricWeights = MetricWeights;
+                }
+                ArmorCombinationFactory.prototype.Combine = function (Head, Chest, Arms, Legs) {
+                    var result = new ArmorCombination(Head, Chest, Arms, Legs);
+                    result.Metric =
+                        this.MetricWeights.Physical * result.Physical +
+                            this.MetricWeights.Strike * result.Strike +
+                            this.MetricWeights.Slash * result.Slash +
+                            this.MetricWeights.Thrust * result.Thrust +
+                            this.MetricWeights.Magic * result.Magic +
+                            this.MetricWeights.Fire * result.Fire +
+                            this.MetricWeights.Lightning * result.Lightning +
+                            this.MetricWeights.Dark * result.Dark +
+                            this.MetricWeights.Bleed * result.Bleed +
+                            this.MetricWeights.Poison * result.Poison +
+                            this.MetricWeights.Frost * result.Frost +
+                            this.MetricWeights.Curse * result.Curse +
+                            this.MetricWeights.Poise * result.Poise;
+                    return result;
+                };
+                return ArmorCombinationFactory;
+            }());
+            exports_1("ArmorCombinationFactory", ArmorCombinationFactory);
+            OptimizationParameters = (function () {
+                function OptimizationParameters() {
+                    this.Physical = 0;
+                    this.Strike = 0;
+                    this.Slash = 0;
+                    this.Thrust = 0;
+                    this.Magic = 0;
+                    this.Fire = 0;
+                    this.Lightning = 0;
+                    this.Dark = 0;
+                    this.Bleed = 0;
+                    this.Poison = 0;
+                    this.Frost = 0;
+                    this.Curse = 0;
+                    this.Poise = 0;
+                }
+                return OptimizationParameters;
+            }());
+            exports_1("OptimizationParameters", OptimizationParameters);
         }
     }
 });

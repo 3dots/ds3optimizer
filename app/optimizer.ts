@@ -1,17 +1,76 @@
-import {LinkedList} from 'typescript-collections'
-
-import {ArmorCombination} from './armory';
-import {OptimizerComponent} from './optimizer.component';
+import {ArmorCombination, Armory, ArmorPiece, OptimizationParameters, ArmorCombinationFactory} from './armory';
+import {IOptimizerNecessaryData} from './optimizer.component';
+import {DoublyLinkedList} from './doublylinkedlist'
 
 export class OptimizationEngine {
+    Armory: Armory;
     
-    
+    MaxWeight: number;
     MaxListLength: number;
     
-    List: LinkedList<ArmorCombination>;
+    Minimums: OptimizationParameters;
+    ACF: ArmorCombinationFactory;
     
-    constructor(private _ViewModel: OptimizerComponent){
-        _ViewModel.MethodOf();
+    //List: LinkedList<ArmorCombination>;
+    
+    constructor(private _ViewModel: IOptimizerNecessaryData){
+        this.MaxWeight = _ViewModel.AvailableWeight;
+        this.MaxListLength = _ViewModel.ResultListLength;
+        
+        this.Armory = _ViewModel.Armory;
+        
+        this.Minimums = _ViewModel.Minimums;
+        this.ACF = new ArmorCombinationFactory(_ViewModel.Weights);
+
+    }
+    
+    ComputeOptimals(): ArmorCombination[] {
+        //traverse whole list, if satisfies conditions try to add to optimal Linked List
+        let List = new DoublyLinkedList<ArmorCombination>(this.MaxListLength);
+
+        for(var ih = 0; ih < this.Armory.Head.length; ih++) {
+            
+            for(var ic = 0; ic < this.Armory.Chest.length; ic++) {
+                
+                for(var ia = 0; ia < this.Armory.Arms.length; ia++) {
+                    
+                    for(var il = 0; il < this.Armory.Legs.length; il++) {
+                        if(this.Armory.Head[ih].Weight + this.Armory.Chest[ic].Weight +  this.Armory.Arms[ia].Weight + this.Armory.Legs[il].Weight > this.MaxWeight)
+                            continue;
+                        
+                        let combo: ArmorCombination = this.ACF.Combine(this.Armory.Head[ih], this.Armory.Chest[ic], this.Armory.Arms[ia], this.Armory.Legs[il]);
+                        
+                        if(
+                            combo.Physical >= this.Minimums.Physical &&
+                            combo.Strike >= this.Minimums.Strike &&
+                            combo.Slash >= this.Minimums.Slash &&
+                            combo.Thrust >= this.Minimums.Thrust &&
+                            
+                            combo.Magic >= this.Minimums.Magic &&
+                            combo.Fire >= this.Minimums.Fire &&
+                            combo.Lightning >= this.Minimums.Lightning &&
+                            combo.Dark >= this.Minimums.Dark &&
+                            
+                            combo.Bleed >= this.Minimums.Bleed &&
+                            combo.Poison >= this.Minimums.Poison &&
+                            combo.Frost >= this.Minimums.Frost &&
+                            combo.Curse >= this.Minimums.Curse &&
+                            
+                            combo.Poise >= this.Minimums.Poise){
+                                
+                                List.TryToAdd(combo);
+                            
+                        }
+                        
+                    }
+                    
+                }
+                
+            }
+            
+        }
+        
+        return List.ToArray();
     }
     
 }

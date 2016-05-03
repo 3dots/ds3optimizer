@@ -1,8 +1,78 @@
 <label>Max Armor Weight</label>
-<input type="number" step="any" [(ngModel)]="AvailableWeight" placeholder=0/>
+<input type="number" step="any" [(ngModel)]="AvailableWeight" placeholder=100/>
+<label>Result List Length</label>
+<input type="number" [(ngModel)]="ResultListLenght" placeholder=10 min=1/>
 
 <button type="button" class="btn btn-primary" (click)="RunOptimization()">Run</button>
 
+<table class="table table-striped">
+   <thead>
+      <tr>
+         <th></th>         
+         <th>Physical</th>
+         <th>Strike</th>
+         <th>Slash</th>
+         <th>Thrust</th>
+         
+         <th>Magic</th>
+         <th>Fire</th>
+         <th>Lightning</th>
+         <th>Dark</th>
+         
+         <th>Bleed</th>
+         <th>Poison</th>
+         <th>Frost</th>
+         <th>Curse</th>
+         
+         <th>Pointless</th>
+      </tr>
+   </thead>
+   
+   <tbody>
+         <tr>
+               <td>Minimums</td>
+                            
+               <td><input type="number" step="any" [(ngModel)]="Minimums.Physical" placeholder=0/></td>
+               <td><input type="number" step="any" [(ngModel)]="Minimums.Strike" placeholder=0/></td>
+               <td><input type="number" step="any" [(ngModel)]="Minimums.Slash" placeholder=0/></td>
+               <td><input type="number" step="any" [(ngModel)]="Minimums.Thrust" placeholder=0/></td>
+               
+               <td><input type="number" step="any" [(ngModel)]="Minimums.Magic" placeholder=0/></td>
+               <td><input type="number" step="any" [(ngModel)]="Minimums.Fire" placeholder=0/></td>
+               <td><input type="number" step="any" [(ngModel)]="Minimums.Lightning" placeholder=0/></td>
+               <td><input type="number" step="any" [(ngModel)]="Minimums.Dark" placeholder=0/></td>
+               
+               <td><input type="number" step="any" [(ngModel)]="Minimums.Bleed" placeholder=0/></td>
+               <td><input type="number" step="any" [(ngModel)]="Minimums.Poison" placeholder=0/></td>
+               <td><input type="number" step="any" [(ngModel)]="Minimums.Frost" placeholder=0/></td>
+               <td><input type="number" step="any" [(ngModel)]="Minimums.Curse" placeholder=0/></td>
+               
+               <td><input type="number" step="any" [(ngModel)]="Minimums.Poise" placeholder=0/></td>
+         </tr>
+         <tr>       
+               <td>Weights</td>
+                            
+               <td><input type="number" step="any" [(ngModel)]="Weights.Physical" placeholder=1/></td>
+               <td><input type="number" step="any" [(ngModel)]="Weights.Strike" placeholder=0/></td>
+               <td><input type="number" step="any" [(ngModel)]="Weights.Slash" placeholder=0/></td>
+               <td><input type="number" step="any" [(ngModel)]="Weights.Thrust" placeholder=0/></td>
+               
+               <td><input type="number" step="any" [(ngModel)]="Weights.Magic" placeholder=0/></td>
+               <td><input type="number" step="any" [(ngModel)]="Weights.Fire" placeholder=0/></td>
+               <td><input type="number" step="any" [(ngModel)]="Weights.Lightning" placeholder=0/></td>
+               <td><input type="number" step="any" [(ngModel)]="Weights.Dark" placeholder=0/></td>
+               
+               <td><input type="number" step="any" [(ngModel)]="Weights.Bleed" placeholder=0/></td>
+               <td><input type="number" step="any" [(ngModel)]="Weights.Poison" placeholder=0/></td>
+               <td><input type="number" step="any" [(ngModel)]="Weights.Frost" placeholder=0/></td>
+               <td><input type="number" step="any" [(ngModel)]="Weights.Curse" placeholder=0/></td>
+               
+               <td><input type="number" step="any" [(ngModel)]="Weights.Poise" placeholder=0/></td>
+         </tr>
+   </tbody>
+</table>
+
+<h1>Results</h1>
 <table class="table table-hover">
    <thead>
       <tr>

@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', './armory.service', './optimizer'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', './armory', './armory.service', './optimizer'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', './armory.service', './opti
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, armory_service_1, optimizer_1;
+    var core_1, router_1, armory_1, armory_service_1, optimizer_1;
     var OptimizerComponent;
     return {
         setters:[
@@ -19,6 +19,9 @@ System.register(['angular2/core', 'angular2/router', './armory.service', './opti
             },
             function (router_1_1) {
                 router_1 = router_1_1;
+            },
+            function (armory_1_1) {
+                armory_1 = armory_1_1;
             },
             function (armory_service_1_1) {
                 armory_service_1 = armory_service_1_1;
@@ -31,21 +34,27 @@ System.register(['angular2/core', 'angular2/router', './armory.service', './opti
                 function OptimizerComponent(_router, _armorService) {
                     this._router = _router;
                     this._armorService = _armorService;
+                    this.Minimums = new armory_1.OptimizationParameters();
+                    this.Weights = new armory_1.OptimizationParameters();
                 }
                 OptimizerComponent.prototype.ngOnInit = function () {
                     var _this = this;
                     this._armorService.getArmorData()
                         .then(function (data) {
                         _this.Armory = data;
-                        _this.Progress = 70;
+                        _this.Progress = 0;
+                        _this.AvailableWeight = 100;
+                        _this.ResultListLength = 10;
+                        _this.Weights.Physical = 1;
                         //this.Test = this.Armory.Head[1].Weight.toString();
                         //this.OptimalArmorCombinations = [ new ArmorCombination(this.Armory.Head[2], this.Armory.Chest[1], this.Armory.Arms[1], this.Armory.Legs[1]) ];
                     });
                 };
                 OptimizerComponent.prototype.RunOptimization = function () {
-                    new optimizer_1.OptimizationEngine(this);
+                    this.OptimalArmorCombinations = new optimizer_1.OptimizationEngine(this).ComputeOptimals();
                 };
-                OptimizerComponent.prototype.MethodOf = function () {
+                //Used later for progress updates.
+                OptimizerComponent.prototype.UpdateProgress = function (Progress) {
                 };
                 OptimizerComponent = __decorate([
                     core_1.Component({

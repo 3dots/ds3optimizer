@@ -1,3 +1,5 @@
+import { ISortable } from './doublylinkedlist';
+
 export class Armory {
     Head: ArmorPiece[];
     Chest: ArmorPiece[];
@@ -32,7 +34,7 @@ export class ArmorPiece {
     Poise: number;    
 }
 
-export class ArmorCombination {
+export class ArmorCombination implements ISortable {
     
     Metric: number;
     
@@ -74,5 +76,56 @@ export class ArmorCombination {
     Curse: number;
 
     Poise: number; 
+}
+
+export class ArmorCombinationFactory{
+    
+    constructor(public MetricWeights: OptimizationParameters){        
+    }
+    
+    Combine(Head: ArmorPiece, Chest: ArmorPiece, Arms: ArmorPiece, Legs: ArmorPiece) : ArmorCombination {
+        let result: ArmorCombination = new ArmorCombination(Head, Chest, Arms, Legs);
+        
+        result.Metric = 
+        this.MetricWeights.Physical * result.Physical +
+        this.MetricWeights.Strike * result.Strike +
+        this.MetricWeights.Slash * result.Slash +
+        this.MetricWeights.Thrust * result.Thrust +
+        
+        this.MetricWeights.Magic * result.Magic +
+        this.MetricWeights.Fire * result.Fire +
+        this.MetricWeights.Lightning * result.Lightning +
+        this.MetricWeights.Dark * result.Dark +
+        
+        this.MetricWeights.Bleed * result.Bleed +
+        this.MetricWeights.Poison * result.Poison +
+        this.MetricWeights.Frost * result.Frost +
+        this.MetricWeights.Curse * result.Curse +
+        
+        this.MetricWeights.Poise * result.Poise;
+        
+        return result;       
+    }
+    
+}
+
+export class OptimizationParameters {
+    
+    Physical: number = 0;
+    Strike: number = 0;
+    Slash: number = 0;
+    Thrust: number = 0;
+
+    Magic: number = 0;
+    Fire: number = 0;
+    Lightning: number = 0;
+    Dark: number = 0;
+
+    Bleed: number = 0;
+    Poison: number = 0;
+    Frost: number = 0;
+    Curse: number = 0;
+
+    Poise: number = 0; 
 }
 
