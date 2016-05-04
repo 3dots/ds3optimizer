@@ -23,8 +23,6 @@ export class OptimizerComponent implements OnInit, IOptimizerNecessaryData {
 
     Progress: number;
     
-    Test: number;
-    
     constructor(
         private _router: Router,
         private _armorService: ArmorService) {
@@ -60,6 +58,12 @@ export class OptimizerComponent implements OnInit, IOptimizerNecessaryData {
     //Used later for progress updates.
     UpdateProgress(Progress: number){
 
+    }
+    
+    DisableArmorPiece(piece: ArmorPiece) {
+        piece.Enabled = false;
+        
+        this.RunOptimization();
     }
 }
 

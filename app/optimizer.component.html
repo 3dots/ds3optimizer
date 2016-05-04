@@ -1,7 +1,7 @@
 <label>Max Armor Weight</label>
-<input type="number" step="any" [(ngModel)]="AvailableWeight" placeholder=100/>
+<input type="number" step="any" class="ds3input" [(ngModel)]="AvailableWeight" placeholder=100/>
 <label>Result List Length</label>
-<input type="number" [(ngModel)]="ResultListLenght" placeholder=10 min=1/>
+<input type="number" class="ds3input" [(ngModel)]="ResultListLength" placeholder=10 min=1/>
 
 <button type="button" class="btn btn-primary" (click)="RunOptimization()">Run</button>
 
@@ -32,42 +32,42 @@
          <tr>
                <td>Minimums</td>
                             
-               <td><input type="number" step="any" [(ngModel)]="Minimums.Physical" placeholder=0/></td>
-               <td><input type="number" step="any" [(ngModel)]="Minimums.Strike" placeholder=0/></td>
-               <td><input type="number" step="any" [(ngModel)]="Minimums.Slash" placeholder=0/></td>
-               <td><input type="number" step="any" [(ngModel)]="Minimums.Thrust" placeholder=0/></td>
+               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Physical" placeholder=0/></td>
+               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Strike" placeholder=0/></td>
+               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Slash" placeholder=0/></td>
+               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Thrust" placeholder=0/></td>
                
-               <td><input type="number" step="any" [(ngModel)]="Minimums.Magic" placeholder=0/></td>
-               <td><input type="number" step="any" [(ngModel)]="Minimums.Fire" placeholder=0/></td>
-               <td><input type="number" step="any" [(ngModel)]="Minimums.Lightning" placeholder=0/></td>
-               <td><input type="number" step="any" [(ngModel)]="Minimums.Dark" placeholder=0/></td>
+               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Magic" placeholder=0/></td>
+               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Fire" placeholder=0/></td>
+               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Lightning" placeholder=0/></td>
+               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Dark" placeholder=0/></td>
                
-               <td><input type="number" step="any" [(ngModel)]="Minimums.Bleed" placeholder=0/></td>
-               <td><input type="number" step="any" [(ngModel)]="Minimums.Poison" placeholder=0/></td>
-               <td><input type="number" step="any" [(ngModel)]="Minimums.Frost" placeholder=0/></td>
-               <td><input type="number" step="any" [(ngModel)]="Minimums.Curse" placeholder=0/></td>
+               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Bleed" placeholder=0/></td>
+               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Poison" placeholder=0/></td>
+               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Frost" placeholder=0/></td>
+               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Curse" placeholder=0/></td>
                
-               <td><input type="number" step="any" [(ngModel)]="Minimums.Poise" placeholder=0/></td>
+               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Poise" placeholder=0/></td>
          </tr>
          <tr>       
                <td>Weights</td>
                             
-               <td><input type="number" step="any" [(ngModel)]="Weights.Physical" placeholder=1/></td>
-               <td><input type="number" step="any" [(ngModel)]="Weights.Strike" placeholder=0/></td>
-               <td><input type="number" step="any" [(ngModel)]="Weights.Slash" placeholder=0/></td>
-               <td><input type="number" step="any" [(ngModel)]="Weights.Thrust" placeholder=0/></td>
+               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Physical" placeholder=1/></td>
+               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Strike" placeholder=0/></td>
+               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Slash" placeholder=0/></td>
+               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Thrust" placeholder=0/></td>
                
-               <td><input type="number" step="any" [(ngModel)]="Weights.Magic" placeholder=0/></td>
-               <td><input type="number" step="any" [(ngModel)]="Weights.Fire" placeholder=0/></td>
-               <td><input type="number" step="any" [(ngModel)]="Weights.Lightning" placeholder=0/></td>
-               <td><input type="number" step="any" [(ngModel)]="Weights.Dark" placeholder=0/></td>
+               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Magic" placeholder=0/></td>
+               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Fire" placeholder=0/></td>
+               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Lightning" placeholder=0/></td>
+               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Dark" placeholder=0/></td>
                
-               <td><input type="number" step="any" [(ngModel)]="Weights.Bleed" placeholder=0/></td>
-               <td><input type="number" step="any" [(ngModel)]="Weights.Poison" placeholder=0/></td>
-               <td><input type="number" step="any" [(ngModel)]="Weights.Frost" placeholder=0/></td>
-               <td><input type="number" step="any" [(ngModel)]="Weights.Curse" placeholder=0/></td>
+               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Bleed" placeholder=0/></td>
+               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Poison" placeholder=0/></td>
+               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Frost" placeholder=0/></td>
+               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Curse" placeholder=0/></td>
                
-               <td><input type="number" step="any" [(ngModel)]="Weights.Poise" placeholder=0/></td>
+               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Poise" placeholder=0/></td>
          </tr>
    </tbody>
 </table>
@@ -104,12 +104,12 @@
    
    <tbody>
          <tr *ngFor="let ArmorCombo of OptimalArmorCombinations">
-               <td>{{ArmorCombo.Head.Name}}</td>
-               <td>{{ArmorCombo.Chest.Name}}</td>
-               <td>{{ArmorCombo.Arms.Name}}</td>
-               <td>{{ArmorCombo.Legs.Name}}</td>
+               <td>{{ArmorCombo.Head.Name}} <button type="button"  (click)="DisableArmorPiece(ArmorCombo.Head)">x</button></td>
+               <td>{{ArmorCombo.Chest.Name}} <button type="button"  (click)="DisableArmorPiece(ArmorCombo.Chest)">x</button></td>
+               <td>{{ArmorCombo.Arms.Name}} <button type="button"  (click)="DisableArmorPiece(ArmorCombo.Arms)">x</button></td>
+               <td>{{ArmorCombo.Legs.Name}} <button type="button"  (click)="DisableArmorPiece(ArmorCombo.Legs)">x</button></td>
                
-               <td>{{ArmorCombo.Weight}}</td>
+               <td>{{ArmorCombo.Weight | number:'.2'}}</td>
                
                <td>{{ArmorCombo.Physical | number:'.3'}}</td>
                <td>{{ArmorCombo.Strike | number:'.3'}}</td>
@@ -126,7 +126,7 @@
                <td>{{ArmorCombo.Frost}}</td>
                <td>{{ArmorCombo.Curse}}</td>
                
-               <td>{{ArmorCombo.Poise}}</td>
+               <td>{{ArmorCombo.Poise | number:'.1'}}</td>
          </tr>
    </tbody>
 </table>

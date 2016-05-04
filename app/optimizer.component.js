@@ -56,6 +56,10 @@ System.register(['angular2/core', 'angular2/router', './armory', './armory.servi
                 //Used later for progress updates.
                 OptimizerComponent.prototype.UpdateProgress = function (Progress) {
                 };
+                OptimizerComponent.prototype.DisableArmorPiece = function (piece) {
+                    piece.Enabled = false;
+                    this.RunOptimization();
+                };
                 OptimizerComponent = __decorate([
                     core_1.Component({
                         selector: 'my-optimizer',

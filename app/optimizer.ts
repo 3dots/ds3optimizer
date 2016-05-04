@@ -30,11 +30,24 @@ export class OptimizationEngine {
 
         for(var ih = 0; ih < this.Armory.Head.length; ih++) {
             
+            if(this.Armory.Head[ih].Enabled == false)
+                continue;
+            
             for(var ic = 0; ic < this.Armory.Chest.length; ic++) {
+                
+                if(this.Armory.Chest[ic].Enabled == false)
+                    continue;
                 
                 for(var ia = 0; ia < this.Armory.Arms.length; ia++) {
                     
+                    if(this.Armory.Arms[ia].Enabled == false)
+                        continue;
+                    
                     for(var il = 0; il < this.Armory.Legs.length; il++) {
+                        
+                        if(this.Armory.Legs[il].Enabled == false)
+                            continue;
+                        
                         if(this.Armory.Head[ih].Weight + this.Armory.Chest[ic].Weight +  this.Armory.Arms[ia].Weight + this.Armory.Legs[il].Weight > this.MaxWeight)
                             continue;
                         
