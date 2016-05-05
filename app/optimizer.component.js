@@ -1,4 +1,5 @@
-System.register(['angular2/core', 'angular2/router', './armory', './armory.service', './optimizer', './ProgressBar'], function(exports_1, context_1) {
+/// <reference path="../node_modules/typescript/lib/lib.d.ts"/>
+System.register(['angular2/core', 'angular2/router', './armory', './armory.service', './ProgressBar'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +11,7 @@ System.register(['angular2/core', 'angular2/router', './armory', './armory.servi
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, armory_1, armory_service_1, optimizer_1, ProgressBar_1;
+    var core_1, router_1, armory_1, armory_service_1, ProgressBar_1;
     var OptimizerComponent;
     return {
         setters:[
@@ -25,9 +26,6 @@ System.register(['angular2/core', 'angular2/router', './armory', './armory.servi
             },
             function (armory_service_1_1) {
                 armory_service_1 = armory_service_1_1;
-            },
-            function (optimizer_1_1) {
-                optimizer_1 = optimizer_1_1;
             },
             function (ProgressBar_1_1) {
                 ProgressBar_1 = ProgressBar_1_1;
@@ -45,18 +43,38 @@ System.register(['angular2/core', 'angular2/router', './armory', './armory.servi
                 }
                 OptimizerComponent.prototype.ngOnInit = function () {
                     var _this = this;
+                    if (!window.Worker) {
+                        window.alert("Multithreaded JS not enabled. Use a different browser.");
+                    }
                     this._armorService.getArmorData()
                         .then(function (data) {
                         _this.Armory = data;
                         _this.Weights.Physical = 1;
+                        _this.OptimizerThread = new Worker("optimizer.js");
+                        var TSthis = _this;
+                        _this.OptimizerThread.onmessage = _this.ResultHandler;
                     });
                 };
-                OptimizerComponent.prototype.RunOptimization = function () {
-                    this.OptimalArmorCombinations = new optimizer_1.OptimizationEngine(this).ComputeOptimals();
+                OptimizerComponent.prototype.ResultHandler = function (e) {
+                    var result = e.data;
+                    if (result.MessageType == "Working") {
+                        this.Progress = result.Progress;
+                    }
+                    else if (result.MessageType == "Done") {
+                        this.Progress = 100;
+                        this.OptimalArmorCombinations = result.Results;
+                    }
+                    else {
+                        window.alert("Something went wrong.");
+                    }
                 };
-                //Used later for progress updates.
-                OptimizerComponent.prototype.UpdateProgress = function (Progress) {
-                    this.Progress = Progress;
+                OptimizerComponent.prototype.ngOnDestroy = function () {
+                    this.OptimizerThread.terminate();
+                };
+                OptimizerComponent.prototype.RunOptimization = function () {
+                    var msg = { Armory: this.Armory, AvailableWeight: this.AvailableWeight, ResultListLength: this.ResultListLength,
+                        Minimums: this.Minimums, Weights: this.Weights };
+                    this.OptimizerThread.postMessage(msg);
                 };
                 OptimizerComponent.prototype.DisableArmorPiece = function (piece) {
                     piece.Enabled = false;

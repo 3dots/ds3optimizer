@@ -9,9 +9,11 @@
     "removeComments": false,
     "noImplicitAny": false
   },
+
   "exclude": [
     "node_modules",
     "typings/main",
     "typings/main.d.ts"
   ]
+
 }

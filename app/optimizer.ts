@@ -1,8 +1,8 @@
+/// <reference path="../node_modules/typescript/lib/lib.webworker.d.ts"/>
 import {ArmorCombination, Armory, ArmorPiece, OptimizationParameters, ArmorCombinationFactory, ArmorMethods} from './armory';
-import {IOptimizerNecessaryData} from './optimizer.component';
 import {DoublyLinkedList} from './doublylinkedlist'
 
-export class OptimizationEngine {
+export class OptimizationWorker {
     Armory: Armory;
     
     MaxWeight: number;
@@ -11,27 +11,24 @@ export class OptimizationEngine {
     Minimums: OptimizationParameters;
     ACF: ArmorCombinationFactory;
     
-    
-    //List: LinkedList<ArmorCombination>;
-    
-    constructor(private _ViewModel: IOptimizerNecessaryData){
-        this.MaxWeight = _ViewModel.AvailableWeight;
-        this.MaxListLength = _ViewModel.ResultListLength;
+    onmessage(data: WorkerStartMessage){
+        this.MaxWeight = data.AvailableWeight;
+        this.MaxListLength = data.ResultListLength;
         
-        this.Armory = _ViewModel.Armory;
+        this.Armory = data.Armory;
         
-        this.Minimums = _ViewModel.Minimums;
-        this.ACF = new ArmorCombinationFactory(_ViewModel.Weights);
-
+        this.Minimums = data.Minimums;
+        this.ACF = new ArmorCombinationFactory(data.Weights);
+        
+        this.ComputeOptimals();
     }
     
-
-    
-    ComputeOptimals(): ArmorCombination[] {
+    ComputeOptimals() {
         
         let AM: ArmorMethods = new ArmorMethods(this.Armory);
-
-        this._ViewModel.UpdateProgress(0);
+        
+        let status: WorkerResultMessage = { MessageType:"Working", Progress:0, Results:null };
+        postMessage(status);
                 
         let HeadIterationCount: number = AM.CountArmorInArray(this.Armory.Head);
        
@@ -96,14 +93,35 @@ export class OptimizationEngine {
             }
             
             Progress += ProgressIncrement;
-            this._ViewModel.UpdateProgress(Progress); 
+            status = { MessageType:"Working", Progress:Progress, Results:null };
+            postMessage(status);
         }
         
-        this._ViewModel.UpdateProgress(100);
-        
-        return List.ToArray();
+        status = { MessageType:"Done", Progress:100, Results:List.ToArray() };
+        postMessage(status);
+       
     }
     
 }
 
 
+
+export class WorkerStartMessage {
+    
+    AvailableWeight: number;
+    ResultListLength: number;
+    
+    Minimums: OptimizationParameters;
+    Weights: OptimizationParameters;
+    
+    Armory: Armory;
+}
+
+export class WorkerResultMessage {
+    
+    MessageType: string;
+    
+    Progress: number;
+    
+    Results: ArmorCombination[];
+}

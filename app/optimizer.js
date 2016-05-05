@@ -2,7 +2,7 @@ System.register(['./armory', './doublylinkedlist'], function(exports_1, context_
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var armory_1, doublylinkedlist_1;
-    var OptimizationEngine;
+    var OptimizationWorker, WorkerStartMessage, WorkerResultMessage;
     return {
         setters:[
             function (armory_1_1) {
@@ -12,19 +12,21 @@ System.register(['./armory', './doublylinkedlist'], function(exports_1, context_
                 doublylinkedlist_1 = doublylinkedlist_1_1;
             }],
         execute: function() {
-            OptimizationEngine = (function () {
-                //List: LinkedList<ArmorCombination>;
-                function OptimizationEngine(_ViewModel) {
-                    this._ViewModel = _ViewModel;
-                    this.MaxWeight = _ViewModel.AvailableWeight;
-                    this.MaxListLength = _ViewModel.ResultListLength;
-                    this.Armory = _ViewModel.Armory;
-                    this.Minimums = _ViewModel.Minimums;
-                    this.ACF = new armory_1.ArmorCombinationFactory(_ViewModel.Weights);
+            OptimizationWorker = (function () {
+                function OptimizationWorker() {
                 }
-                OptimizationEngine.prototype.ComputeOptimals = function () {
+                OptimizationWorker.prototype.onmessage = function (data) {
+                    this.MaxWeight = data.AvailableWeight;
+                    this.MaxListLength = data.ResultListLength;
+                    this.Armory = data.Armory;
+                    this.Minimums = data.Minimums;
+                    this.ACF = new armory_1.ArmorCombinationFactory(data.Weights);
+                    this.ComputeOptimals();
+                };
+                OptimizationWorker.prototype.ComputeOptimals = function () {
                     var AM = new armory_1.ArmorMethods(this.Armory);
-                    this._ViewModel.UpdateProgress(0);
+                    var status = { MessageType: "Working", Progress: 0, Results: null };
+                    postMessage(status);
                     var HeadIterationCount = AM.CountArmorInArray(this.Armory.Head);
                     var ProgressIncrement = 100 * 1 / HeadIterationCount;
                     var Progress = 0;
@@ -64,14 +66,27 @@ System.register(['./armory', './doublylinkedlist'], function(exports_1, context_
                             }
                         }
                         Progress += ProgressIncrement;
-                        this._ViewModel.UpdateProgress(Progress);
+                        status = { MessageType: "Working", Progress: Progress, Results: null };
+                        postMessage(status);
                     }
-                    this._ViewModel.UpdateProgress(100);
-                    return List.ToArray();
+                    status = { MessageType: "Done", Progress: 100, Results: List.ToArray() };
+                    postMessage(status);
                 };
-                return OptimizationEngine;
+                return OptimizationWorker;
             }());
-            exports_1("OptimizationEngine", OptimizationEngine);
+            exports_1("OptimizationWorker", OptimizationWorker);
+            WorkerStartMessage = (function () {
+                function WorkerStartMessage() {
+                }
+                return WorkerStartMessage;
+            }());
+            exports_1("WorkerStartMessage", WorkerStartMessage);
+            WorkerResultMessage = (function () {
+                function WorkerResultMessage() {
+                }
+                return WorkerResultMessage;
+            }());
+            exports_1("WorkerResultMessage", WorkerResultMessage);
         }
     }
 });

@@ -1,11 +1,14 @@
-import { Component, OnInit } from 'angular2/core';
+/// <reference path="../node_modules/typescript/lib/lib.d.ts"/>
+
+import { Component, OnInit, OnDestroy } from 'angular2/core';
 import { Router } from 'angular2/router';
 
 import { Armory, ArmorCombination, ArmorPiece, OptimizationParameters, GameProgressArmorGroup } from './armory';
 import { ArmorService } from './armory.service';
-import { OptimizationEngine } from './optimizer';
+import { OptimizationWorker, WorkerStartMessage, WorkerResultMessage } from './optimizer';
 
 import {ProgressBar} from './ProgressBar'
+
 
 @Component({
     selector: 'my-optimizer',
@@ -13,7 +16,7 @@ import {ProgressBar} from './ProgressBar'
     styleUrls: ['app/optimizer.component.css'],
     directives: [ProgressBar]
 })
-export class OptimizerComponent implements OnInit, IOptimizerNecessaryData {
+export class OptimizerComponent implements OnInit, OnDestroy {
     Armory: Armory;
     
     AvailableWeight: number = 100;
@@ -26,6 +29,8 @@ export class OptimizerComponent implements OnInit, IOptimizerNecessaryData {
 
     Progress: number = 0;
     
+    OptimizerThread: Worker;
+    
     constructor(
         private _router: Router,
         private _armorService: ArmorService) {
@@ -34,25 +39,62 @@ export class OptimizerComponent implements OnInit, IOptimizerNecessaryData {
     }
 
     ngOnInit() {
+        if(!(<any>window).Worker){
+            window.alert("Multithreaded JS not enabled. Use a different browser.");
+        }
+        
         this._armorService.getArmorData()
             .then( (data: Armory)=> 
             {             
                 this.Armory = data;   
              
-                this.Weights.Physical = 1;               
-            });       
+                this.Weights.Physical = 1;
+                
+                this.OptimizerThread = new Worker("optimizer.js");
+                
+                let TSthis = this;
+                
+                this.OptimizerThread.onmessage = this.ResultHandler;
+                    
+                
+  
+            });   
+    }
+    
+    ResultHandler(e: MessageEvent){
+        
+        let result: WorkerResultMessage = e.data;
+        
+        if(result.MessageType == "Working") {
+            this.Progress = result.Progress;
+        }
+        else if(result.MessageType == "Done") {
+            this.Progress = 100;
+            
+            this.OptimalArmorCombinations = result.Results;
+        }
+        else {
+            window.alert("Something went wrong.");
+        }
+    }
+    
+    ngOnDestroy() {
+
+        this.OptimizerThread.terminate();
+
     }
     
     
     
-    RunOptimization() {      
-        this.OptimalArmorCombinations = new OptimizationEngine(this as IOptimizerNecessaryData).ComputeOptimals();
+    RunOptimization() {
+        
+        let msg: WorkerStartMessage = { Armory:this.Armory, AvailableWeight:this.AvailableWeight, ResultListLength:this.ResultListLength, 
+                                        Minimums:this.Minimums, Weights:this.Weights  };
+              
+        this.OptimizerThread.postMessage(msg);
     }
     
-    //Used later for progress updates.
-    UpdateProgress(Progress: number){
-        this.Progress = Progress;
-    }
+    
     
     DisableArmorPiece(piece: ArmorPiece) {
         piece.Enabled = false;
@@ -61,15 +103,5 @@ export class OptimizerComponent implements OnInit, IOptimizerNecessaryData {
     }
 }
 
-export interface IOptimizerNecessaryData {
-    UpdateProgress(Progress: number): void;
-    
-    AvailableWeight: number;
-    ResultListLength: number;
-    
-    Minimums: OptimizationParameters;
-    Weights: OptimizationParameters;
-    
-    Armory: Armory;
-}
+
 
