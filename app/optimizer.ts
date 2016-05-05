@@ -1,4 +1,5 @@
 /// <reference path="../node_modules/typescript/lib/lib.webworker.d.ts"/>
+
 import {ArmorCombination, Armory, ArmorPiece, OptimizationParameters, ArmorCombinationFactory, ArmorMethods} from './armory';
 import {DoublyLinkedList} from './doublylinkedlist'
 

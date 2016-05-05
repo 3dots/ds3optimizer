@@ -1,4 +1,4 @@
-/// <reference path="../node_modules/typescript/lib/lib.d.ts"/>
+
 
 import { Component, OnInit, OnDestroy } from 'angular2/core';
 import { Router } from 'angular2/router';
@@ -8,7 +8,7 @@ import { ArmorService } from './armory.service';
 import { OptimizationWorker, WorkerStartMessage, WorkerResultMessage } from './optimizer';
 
 import {ProgressBar} from './ProgressBar'
-
+//import {window} from 'angular2/src/facade/browser';
 
 @Component({
     selector: 'my-optimizer',
@@ -39,9 +39,9 @@ export class OptimizerComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        if(!(<any>window).Worker){
-            window.alert("Multithreaded JS not enabled. Use a different browser.");
-        }
+        //if(!(<any>window).Worker){
+           // window.alert("Multithreaded JS not enabled. Use a different browser.");
+        //}
         
         this._armorService.getArmorData()
             .then( (data: Armory)=> 
@@ -74,7 +74,7 @@ export class OptimizerComponent implements OnInit, OnDestroy {
             this.OptimalArmorCombinations = result.Results;
         }
         else {
-            window.alert("Something went wrong.");
+           // window.alert("Something went wrong.");
         }
     }
     

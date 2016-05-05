@@ -11,8 +11,16 @@ Chain set
 
 Leonhard?
 
-  "exclude": [
-    "node_modules",
-    "typings/main",
-    "typings/main.d.ts"
+  
+  
+    "files" : [
+    "app/app.component.ts",
+    "app/armory.ts",
+    "app/armory.data.ts",
+    "app/armory.service.ts",
+    "app/doublylinkedlist.ts",
+    "app/main.ts",
+    "app/optimizer.ts",
+    "app/optimizer.component.ts",
+    "app/ProgressBar.ts"
   ]
