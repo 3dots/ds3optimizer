@@ -1,4 +1,4 @@
-import {ArmorCombination, Armory, ArmorPiece, OptimizationParameters, ArmorCombinationFactory} from './armory';
+import {ArmorCombination, Armory, ArmorPiece, OptimizationParameters, ArmorCombinationFactory, ArmorMethods} from './armory';
 import {IOptimizerNecessaryData} from './optimizer.component';
 import {DoublyLinkedList} from './doublylinkedlist'
 
@@ -10,6 +10,7 @@ export class OptimizationEngine {
     
     Minimums: OptimizationParameters;
     ACF: ArmorCombinationFactory;
+    
     
     //List: LinkedList<ArmorCombination>;
     
@@ -24,7 +25,20 @@ export class OptimizationEngine {
 
     }
     
+
+    
     ComputeOptimals(): ArmorCombination[] {
+        
+        let AM: ArmorMethods = new ArmorMethods(this.Armory);
+
+        this._ViewModel.UpdateProgress(0);
+                
+        let HeadIterationCount: number = AM.CountArmorInArray(this.Armory.Head);
+       
+        let ProgressIncrement: number = 100 * 1 / HeadIterationCount;
+        
+        let Progress: number = 0;
+        
         //traverse whole list, if satisfies conditions try to add to optimal Linked List
         let List = new DoublyLinkedList<ArmorCombination>(this.MaxListLength);
 
@@ -76,12 +90,16 @@ export class OptimizationEngine {
                         }
                         
                     }
-                    
+                                    
                 }
                 
             }
             
+            Progress += ProgressIncrement;
+            this._ViewModel.UpdateProgress(Progress); 
         }
+        
+        this._ViewModel.UpdateProgress(100);
         
         return List.ToArray();
     }

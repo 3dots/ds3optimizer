@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', './armory', './armory.service', './optimizer'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', './armory', './armory.service', './optimizer', './ProgressBar'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', './armory', './armory.servi
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, armory_1, armory_service_1, optimizer_1;
+    var core_1, router_1, armory_1, armory_service_1, optimizer_1, ProgressBar_1;
     var OptimizerComponent;
     return {
         setters:[
@@ -28,12 +28,18 @@ System.register(['angular2/core', 'angular2/router', './armory', './armory.servi
             },
             function (optimizer_1_1) {
                 optimizer_1 = optimizer_1_1;
+            },
+            function (ProgressBar_1_1) {
+                ProgressBar_1 = ProgressBar_1_1;
             }],
         execute: function() {
             OptimizerComponent = (function () {
                 function OptimizerComponent(_router, _armorService) {
                     this._router = _router;
                     this._armorService = _armorService;
+                    this.AvailableWeight = 100;
+                    this.ResultListLength = 10;
+                    this.Progress = 0;
                     this.Minimums = new armory_1.OptimizationParameters();
                     this.Weights = new armory_1.OptimizationParameters();
                 }
@@ -42,12 +48,7 @@ System.register(['angular2/core', 'angular2/router', './armory', './armory.servi
                     this._armorService.getArmorData()
                         .then(function (data) {
                         _this.Armory = data;
-                        _this.Progress = 0;
-                        _this.AvailableWeight = 100;
-                        _this.ResultListLength = 10;
                         _this.Weights.Physical = 1;
-                        //this.Test = this.Armory.Head[1].Weight.toString();
-                        //this.OptimalArmorCombinations = [ new ArmorCombination(this.Armory.Head[2], this.Armory.Chest[1], this.Armory.Arms[1], this.Armory.Legs[1]) ];
                     });
                 };
                 OptimizerComponent.prototype.RunOptimization = function () {
@@ -55,6 +56,7 @@ System.register(['angular2/core', 'angular2/router', './armory', './armory.servi
                 };
                 //Used later for progress updates.
                 OptimizerComponent.prototype.UpdateProgress = function (Progress) {
+                    this.Progress = Progress;
                 };
                 OptimizerComponent.prototype.DisableArmorPiece = function (piece) {
                     piece.Enabled = false;
@@ -64,7 +66,8 @@ System.register(['angular2/core', 'angular2/router', './armory', './armory.servi
                     core_1.Component({
                         selector: 'my-optimizer',
                         templateUrl: 'app/optimizer.component.html',
-                        styleUrls: ['app/optimizer.component.css']
+                        styleUrls: ['app/optimizer.component.css'],
+                        directives: [ProgressBar_1.ProgressBar]
                     }), 
                     __metadata('design:paramtypes', [router_1.Router, armory_service_1.ArmorService])
                 ], OptimizerComponent);

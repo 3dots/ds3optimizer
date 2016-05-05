@@ -1,7 +1,7 @@
 System.register([], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var Armory, ArmorPiece, ArmorCombination, ArmorCombinationFactory, OptimizationParameters;
+    var Armory, ArmorMethods, ArmorPiece, ArmorCombination, ArmorCombinationFactory, OptimizationParameters, GameProgressArmorGroup;
     return {
         setters:[],
         execute: function() {
@@ -11,6 +11,21 @@ System.register([], function(exports_1, context_1) {
                 return Armory;
             }());
             exports_1("Armory", Armory);
+            ArmorMethods = (function () {
+                function ArmorMethods(Armory) {
+                    this.Armory = Armory;
+                }
+                ArmorMethods.prototype.CountArmorInArray = function (arr) {
+                    var result = 0;
+                    for (var i = 0; i < arr.length; i++) {
+                        if (arr[i].Enabled)
+                            result++;
+                    }
+                    return result;
+                };
+                return ArmorMethods;
+            }());
+            exports_1("ArmorMethods", ArmorMethods);
             ArmorPiece = (function () {
                 function ArmorPiece() {
                 }
@@ -85,6 +100,12 @@ System.register([], function(exports_1, context_1) {
                 return OptimizationParameters;
             }());
             exports_1("OptimizationParameters", OptimizationParameters);
+            GameProgressArmorGroup = (function () {
+                function GameProgressArmorGroup() {
+                }
+                return GameProgressArmorGroup;
+            }());
+            exports_1("GameProgressArmorGroup", GameProgressArmorGroup);
         }
     }
 });

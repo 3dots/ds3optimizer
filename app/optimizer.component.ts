@@ -1,27 +1,30 @@
 import { Component, OnInit } from 'angular2/core';
 import { Router } from 'angular2/router';
 
-import { Armory, ArmorCombination, ArmorPiece, OptimizationParameters } from './armory';
+import { Armory, ArmorCombination, ArmorPiece, OptimizationParameters, GameProgressArmorGroup } from './armory';
 import { ArmorService } from './armory.service';
 import { OptimizationEngine } from './optimizer';
+
+import {ProgressBar} from './ProgressBar'
 
 @Component({
     selector: 'my-optimizer',
     templateUrl: 'app/optimizer.component.html',
-    styleUrls: ['app/optimizer.component.css']
+    styleUrls: ['app/optimizer.component.css'],
+    directives: [ProgressBar]
 })
 export class OptimizerComponent implements OnInit, IOptimizerNecessaryData {
     Armory: Armory;
     
-    AvailableWeight: number;
-    ResultListLength: number;
+    AvailableWeight: number = 100;
+    ResultListLength: number = 10;
     
     Minimums: OptimizationParameters;
     Weights: OptimizationParameters;
       
     OptimalArmorCombinations: ArmorCombination[];
 
-    Progress: number;
+    Progress: number = 0;
     
     constructor(
         private _router: Router,
@@ -33,23 +36,14 @@ export class OptimizerComponent implements OnInit, IOptimizerNecessaryData {
     ngOnInit() {
         this._armorService.getArmorData()
             .then( (data: Armory)=> 
-            {
-                
+            {             
                 this.Armory = data;   
-                
-                this.Progress = 0;  
-                
-                this.AvailableWeight = 100;
-                this.ResultListLength = 10;
-                
-                this.Weights.Physical = 1;
-                
-                
-                
-                //this.Test = this.Armory.Head[1].Weight.toString();
-                //this.OptimalArmorCombinations = [ new ArmorCombination(this.Armory.Head[2], this.Armory.Chest[1], this.Armory.Arms[1], this.Armory.Legs[1]) ];
+             
+                this.Weights.Physical = 1;               
             });       
     }
+    
+    
     
     RunOptimization() {      
         this.OptimalArmorCombinations = new OptimizationEngine(this as IOptimizerNecessaryData).ComputeOptimals();
@@ -57,7 +51,7 @@ export class OptimizerComponent implements OnInit, IOptimizerNecessaryData {
     
     //Used later for progress updates.
     UpdateProgress(Progress: number){
-
+        this.Progress = Progress;
     }
     
     DisableArmorPiece(piece: ArmorPiece) {
@@ -78,3 +72,4 @@ export interface IOptimizerNecessaryData {
     
     Armory: Armory;
 }
+

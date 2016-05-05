@@ -4,11 +4,13 @@ import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from 'angular2/route
 import { ArmorService }     from './armory.service';
 import { OptimizerComponent }     from './optimizer.component';
 
+import {ProgressBar} from './ProgressBar'
+
 @Component({
     selector: 'my-app',
     templateUrl: 'app/app.component.html',
     styleUrls: ['app/app.component.css'],
-    directives: [ROUTER_DIRECTIVES],
+    directives: [ROUTER_DIRECTIVES, ProgressBar],
     providers: [
         ROUTER_PROVIDERS,
         ArmorService

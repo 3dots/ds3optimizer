@@ -23,6 +23,11 @@ System.register(['./armory', './doublylinkedlist'], function(exports_1, context_
                     this.ACF = new armory_1.ArmorCombinationFactory(_ViewModel.Weights);
                 }
                 OptimizationEngine.prototype.ComputeOptimals = function () {
+                    var AM = new armory_1.ArmorMethods(this.Armory);
+                    this._ViewModel.UpdateProgress(0);
+                    var HeadIterationCount = AM.CountArmorInArray(this.Armory.Head);
+                    var ProgressIncrement = 100 * 1 / HeadIterationCount;
+                    var Progress = 0;
                     //traverse whole list, if satisfies conditions try to add to optimal Linked List
                     var List = new doublylinkedlist_1.DoublyLinkedList(this.MaxListLength);
                     for (var ih = 0; ih < this.Armory.Head.length; ih++) {
@@ -58,7 +63,10 @@ System.register(['./armory', './doublylinkedlist'], function(exports_1, context_
                                 }
                             }
                         }
+                        Progress += ProgressIncrement;
+                        this._ViewModel.UpdateProgress(Progress);
                     }
+                    this._ViewModel.UpdateProgress(100);
                     return List.ToArray();
                 };
                 return OptimizationEngine;

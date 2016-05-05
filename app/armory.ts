@@ -5,6 +5,23 @@ export class Armory {
     Chest: ArmorPiece[];
     Arms: ArmorPiece[];
     Legs: ArmorPiece[];
+    
+    StartingCharacter: GameProgressArmorGroup[];
+    GameProgressConditions: GameProgressArmorGroup[];
+    
+}
+
+export class ArmorMethods {
+    constructor(public Armory: Armory) {}
+    
+    CountArmorInArray(arr: ArmorPiece[]): number{
+        let result = 0;      
+        for(var i = 0; i < arr.length; i++){
+            if(arr[i].Enabled)
+                result++;
+        }       
+        return result;
+    }
 }
 
 export class ArmorPiece {
@@ -127,5 +144,15 @@ export class OptimizationParameters {
     Curse: number = 0;
 
     Poise: number = 0; 
+}
+
+
+export class GameProgressArmorGroup {
+    Enabled: boolean;
+    
+    ProgressCondition: string;
+    
+    ArmorSetIds: number[];
+    ArmorPiecesIds: number[];
 }
 

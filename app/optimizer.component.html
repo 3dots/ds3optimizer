@@ -5,6 +5,8 @@
 
 <button type="button" class="btn btn-primary" (click)="RunOptimization()">Run</button>
 
+<progress-bar [value]="Progress" [max]="100"></progress-bar>
+
 <table class="table table-striped">
    <thead>
       <tr>
