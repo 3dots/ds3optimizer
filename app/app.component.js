@@ -8,8 +8,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('angular2/core');
-var router_1 = require('angular2/router');
+var core_1 = require('@angular/core');
+var router_deprecated_1 = require('@angular/router-deprecated');
 var armory_service_1 = require('./armory.service');
 var optimizer_component_1 = require('./optimizer.component');
 var AppComponent = (function () {
@@ -20,13 +20,13 @@ var AppComponent = (function () {
             selector: 'my-app',
             templateUrl: 'app/app.component.html',
             styleUrls: ['app/app.component.css'],
-            directives: [router_1.ROUTER_DIRECTIVES],
+            directives: [router_deprecated_1.ROUTER_DIRECTIVES],
             providers: [
-                router_1.ROUTER_PROVIDERS,
+                router_deprecated_1.ROUTER_PROVIDERS,
                 armory_service_1.ArmorService
             ]
         }),
-        router_1.RouteConfig([
+        router_deprecated_1.RouteConfig([
             {
                 path: '/optimizer',
                 name: 'Optimizer',

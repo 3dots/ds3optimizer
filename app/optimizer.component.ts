@@ -1,7 +1,7 @@
 
 
-import { Component, OnInit, OnDestroy } from 'angular2/core';
-import { Router } from 'angular2/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router-deprecated';
 
 import { Armory, ArmorCombination, ArmorPiece, OptimizationParameters, GameProgressArmorGroup } from './armory';
 import { ArmorService } from './armory.service';
@@ -29,7 +29,7 @@ export class OptimizerComponent implements OnInit, OnDestroy {
 
     Progress: number = 0;
     
-    OptimizerThread: Worker;
+    //OptimizerThread: Worker;
     
     constructor(
         private _router: Router,
@@ -50,11 +50,10 @@ export class OptimizerComponent implements OnInit, OnDestroy {
              
                 this.Weights.Physical = 1;
                 
-                this.OptimizerThread = new Worker("optimizer.js");
+                //this.OptimizerThread = new Worker("optimizer.js");
                 
-                let TSthis = this;
                 
-                this.OptimizerThread.onmessage = this.ResultHandler;
+                //this.OptimizerThread.onmessage = this.ResultHandler;
                     
                 
   
@@ -80,7 +79,7 @@ export class OptimizerComponent implements OnInit, OnDestroy {
     
     ngOnDestroy() {
 
-        this.OptimizerThread.terminate();
+        //this.OptimizerThread.terminate();
 
     }
     
@@ -91,7 +90,7 @@ export class OptimizerComponent implements OnInit, OnDestroy {
         let msg: WorkerStartMessage = { Armory:this.Armory, AvailableWeight:this.AvailableWeight, ResultListLength:this.ResultListLength, 
                                         Minimums:this.Minimums, Weights:this.Weights  };
               
-        this.OptimizerThread.postMessage(msg);
+        //this.OptimizerThread.postMessage(msg);
     }
     
     

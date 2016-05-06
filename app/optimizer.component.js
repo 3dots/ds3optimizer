@@ -8,13 +8,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('angular2/core');
-var router_1 = require('angular2/router');
+var core_1 = require('@angular/core');
+var router_deprecated_1 = require('@angular/router-deprecated');
 var armory_1 = require('./armory');
 var armory_service_1 = require('./armory.service');
 var ProgressBar_1 = require('./ProgressBar');
 //import {window} from 'angular2/src/facade/browser';
 var OptimizerComponent = (function () {
+    //OptimizerThread: Worker;
     function OptimizerComponent(_router, _armorService) {
         this._router = _router;
         this._armorService = _armorService;
@@ -33,9 +34,8 @@ var OptimizerComponent = (function () {
             .then(function (data) {
             _this.Armory = data;
             _this.Weights.Physical = 1;
-            _this.OptimizerThread = new Worker("optimizer.js");
-            var TSthis = _this;
-            _this.OptimizerThread.onmessage = _this.ResultHandler;
+            //this.OptimizerThread = new Worker("optimizer.js");
+            //this.OptimizerThread.onmessage = this.ResultHandler;
         });
     };
     OptimizerComponent.prototype.ResultHandler = function (e) {
@@ -51,12 +51,12 @@ var OptimizerComponent = (function () {
         }
     };
     OptimizerComponent.prototype.ngOnDestroy = function () {
-        this.OptimizerThread.terminate();
+        //this.OptimizerThread.terminate();
     };
     OptimizerComponent.prototype.RunOptimization = function () {
         var msg = { Armory: this.Armory, AvailableWeight: this.AvailableWeight, ResultListLength: this.ResultListLength,
             Minimums: this.Minimums, Weights: this.Weights };
-        this.OptimizerThread.postMessage(msg);
+        //this.OptimizerThread.postMessage(msg);
     };
     OptimizerComponent.prototype.DisableArmorPiece = function (piece) {
         piece.Enabled = false;
@@ -69,7 +69,7 @@ var OptimizerComponent = (function () {
             styleUrls: ['app/optimizer.component.css'],
             directives: [ProgressBar_1.ProgressBar]
         }), 
-        __metadata('design:paramtypes', [router_1.Router, armory_service_1.ArmorService])
+        __metadata('design:paramtypes', [router_deprecated_1.Router, armory_service_1.ArmorService])
     ], OptimizerComponent);
     return OptimizerComponent;
 }());
