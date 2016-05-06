@@ -12,10 +12,10 @@ var core_1 = require('@angular/core');
 var router_deprecated_1 = require('@angular/router-deprecated');
 var armory_1 = require('./armory');
 var armory_service_1 = require('./armory.service');
+//import { OptimizationWorker, WorkerStartMessage, WorkerResultMessage } from './optimizer';
 var ProgressBar_1 = require('./ProgressBar');
 //import {window} from 'angular2/src/facade/browser';
 var OptimizerComponent = (function () {
-    //OptimizerThread: Worker;
     function OptimizerComponent(_router, _armorService) {
         this._router = _router;
         this._armorService = _armorService;
@@ -34,8 +34,8 @@ var OptimizerComponent = (function () {
             .then(function (data) {
             _this.Armory = data;
             _this.Weights.Physical = 1;
-            //this.OptimizerThread = new Worker("optimizer.js");
-            //this.OptimizerThread.onmessage = this.ResultHandler;
+            _this.OptimizerThread = new Worker("./app/optimizer.js");
+            _this.OptimizerThread.onmessage = _this.ResultHandler;
         });
     };
     OptimizerComponent.prototype.ResultHandler = function (e) {
@@ -51,12 +51,12 @@ var OptimizerComponent = (function () {
         }
     };
     OptimizerComponent.prototype.ngOnDestroy = function () {
-        //this.OptimizerThread.terminate();
+        this.OptimizerThread.terminate();
     };
     OptimizerComponent.prototype.RunOptimization = function () {
         var msg = { Armory: this.Armory, AvailableWeight: this.AvailableWeight, ResultListLength: this.ResultListLength,
             Minimums: this.Minimums, Weights: this.Weights };
-        //this.OptimizerThread.postMessage(msg);
+        this.OptimizerThread.postMessage(msg);
     };
     OptimizerComponent.prototype.DisableArmorPiece = function (piece) {
         piece.Enabled = false;
@@ -74,4 +74,14 @@ var OptimizerComponent = (function () {
     return OptimizerComponent;
 }());
 exports.OptimizerComponent = OptimizerComponent;
+var WorkerStartMessage = (function () {
+    function WorkerStartMessage() {
+    }
+    return WorkerStartMessage;
+}());
+var WorkerResultMessage = (function () {
+    function WorkerResultMessage() {
+    }
+    return WorkerResultMessage;
+}());
 //# sourceMappingURL=optimizer.component.js.map

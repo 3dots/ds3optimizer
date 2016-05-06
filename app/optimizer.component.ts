@@ -5,7 +5,7 @@ import { Router } from '@angular/router-deprecated';
 
 import { Armory, ArmorCombination, ArmorPiece, OptimizationParameters, GameProgressArmorGroup } from './armory';
 import { ArmorService } from './armory.service';
-import { OptimizationWorker, WorkerStartMessage, WorkerResultMessage } from './optimizer';
+//import { OptimizationWorker, WorkerStartMessage, WorkerResultMessage } from './optimizer';
 
 import {ProgressBar} from './ProgressBar'
 //import {window} from 'angular2/src/facade/browser';
@@ -29,7 +29,7 @@ export class OptimizerComponent implements OnInit, OnDestroy {
 
     Progress: number = 0;
     
-    //OptimizerThread: Worker;
+    OptimizerThread: Worker;
     
     constructor(
         private _router: Router,
@@ -50,10 +50,10 @@ export class OptimizerComponent implements OnInit, OnDestroy {
              
                 this.Weights.Physical = 1;
                 
-                //this.OptimizerThread = new Worker("optimizer.js");
+                this.OptimizerThread = new Worker("./app/optimizer.js");
                 
                 
-                //this.OptimizerThread.onmessage = this.ResultHandler;
+                this.OptimizerThread.onmessage = this.ResultHandler;
                     
                 
   
@@ -79,7 +79,7 @@ export class OptimizerComponent implements OnInit, OnDestroy {
     
     ngOnDestroy() {
 
-        //this.OptimizerThread.terminate();
+        this.OptimizerThread.terminate();
 
     }
     
@@ -90,7 +90,7 @@ export class OptimizerComponent implements OnInit, OnDestroy {
         let msg: WorkerStartMessage = { Armory:this.Armory, AvailableWeight:this.AvailableWeight, ResultListLength:this.ResultListLength, 
                                         Minimums:this.Minimums, Weights:this.Weights  };
               
-        //this.OptimizerThread.postMessage(msg);
+        this.OptimizerThread.postMessage(msg);
     }
     
     
@@ -104,3 +104,22 @@ export class OptimizerComponent implements OnInit, OnDestroy {
 
 
 
+class WorkerStartMessage {
+    
+    AvailableWeight: number;
+    ResultListLength: number;
+    
+    Minimums: OptimizationParameters;
+    Weights: OptimizationParameters;
+    
+    Armory: Armory;
+}
+
+class WorkerResultMessage {
+    
+    MessageType: string;
+    
+    Progress: number;
+    
+    Results: ArmorCombination[];
+}
