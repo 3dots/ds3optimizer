@@ -12,9 +12,8 @@ var core_1 = require('@angular/core');
 var router_deprecated_1 = require('@angular/router-deprecated');
 var armory_1 = require('./armory');
 var armory_service_1 = require('./armory.service');
-//import { OptimizationWorker, WorkerStartMessage, WorkerResultMessage } from './optimizer';
+var optimizer_1 = require('./optimizer');
 var ProgressBar_1 = require('./ProgressBar');
-//import {window} from 'angular2/src/facade/browser';
 var OptimizerComponent = (function () {
     function OptimizerComponent(_router, _armorService) {
         this._router = _router;
@@ -24,43 +23,21 @@ var OptimizerComponent = (function () {
         this.Progress = 0;
         this.Minimums = new armory_1.OptimizationParameters();
         this.Weights = new armory_1.OptimizationParameters();
+        this.Weights.Physical = 1;
     }
     OptimizerComponent.prototype.ngOnInit = function () {
-        //if(!(<any>window).Worker){
-        // window.alert("Multithreaded JS not enabled. Use a different browser.");
-        //}
         var _this = this;
         this._armorService.getArmorData()
-            .then(function (data) {
-            _this.Armory = data;
-            _this.Weights.Physical = 1;
-            _this.OptimizerThread = new Worker("./app/optimizer.js");
-            _this.OptimizerThread.onmessage = _this.ResultHandler;
-        });
-    };
-    OptimizerComponent.prototype.ResultHandler = function (e) {
-        var result = e.data;
-        if (result.MessageType == "Working") {
-            this.Progress = result.Progress;
-        }
-        else if (result.MessageType == "Done") {
-            this.Progress = 100;
-            this.OptimalArmorCombinations = result.Results;
-        }
-        else {
-        }
-    };
-    OptimizerComponent.prototype.ngOnDestroy = function () {
-        this.OptimizerThread.terminate();
+            .then(function (data) { _this.Armory = data; });
     };
     OptimizerComponent.prototype.RunOptimization = function () {
-        var msg = { Armory: this.Armory, AvailableWeight: this.AvailableWeight, ResultListLength: this.ResultListLength,
-            Minimums: this.Minimums, Weights: this.Weights };
-        this.OptimizerThread.postMessage(msg);
+        this.OptimalArmorCombinations = new optimizer_1.OptimizationEngine(this).ComputeOptimals();
     };
     OptimizerComponent.prototype.DisableArmorPiece = function (piece) {
         piece.Enabled = false;
-        this.RunOptimization();
+    };
+    OptimizerComponent.prototype.UpdateProgress = function (Progress) {
+        this.Progress = Progress;
     };
     OptimizerComponent = __decorate([
         core_1.Component({
@@ -74,14 +51,4 @@ var OptimizerComponent = (function () {
     return OptimizerComponent;
 }());
 exports.OptimizerComponent = OptimizerComponent;
-var WorkerStartMessage = (function () {
-    function WorkerStartMessage() {
-    }
-    return WorkerStartMessage;
-}());
-var WorkerResultMessage = (function () {
-    function WorkerResultMessage() {
-    }
-    return WorkerResultMessage;
-}());
 //# sourceMappingURL=optimizer.component.js.map
