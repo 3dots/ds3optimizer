@@ -31,10 +31,14 @@ var OptimizerComponent = (function () {
             .then(function (data) { _this.Armory = data; });
     };
     OptimizerComponent.prototype.RunOptimization = function () {
-        this.OptimalArmorCombinations = new optimizer_1.OptimizationEngine(this).ComputeOptimals();
+        new optimizer_1.OptimizationEngine(this).ComputeOptimals();
+    };
+    OptimizerComponent.prototype.RecieveResults = function (result) {
+        this.OptimalArmorCombinations = result;
     };
     OptimizerComponent.prototype.DisableArmorPiece = function (piece) {
         piece.Enabled = false;
+        this.RunOptimization();
     };
     OptimizerComponent.prototype.UpdateProgress = function (Progress) {
         this.Progress = Progress;

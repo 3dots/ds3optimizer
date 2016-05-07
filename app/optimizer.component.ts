@@ -47,11 +47,17 @@ export class OptimizerComponent implements OnInit {
       
     RunOptimization() {
         
-        this.OptimalArmorCombinations = new OptimizationEngine(this as IOptimizerNecessaryData).ComputeOptimals();
+        new OptimizationEngine(this as IOptimizerNecessaryData).ComputeOptimals();
+    }
+    
+    RecieveResults(result: ArmorCombination[]){
+        this.OptimalArmorCombinations = result;
     }
 
     DisableArmorPiece(piece: ArmorPiece) {
         piece.Enabled = false;
+        
+        this.RunOptimization();
     }
     
     UpdateProgress(Progress: number){
