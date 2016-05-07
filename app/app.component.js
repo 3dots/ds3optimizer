@@ -12,6 +12,7 @@ var core_1 = require('@angular/core');
 var router_deprecated_1 = require('@angular/router-deprecated');
 var armory_service_1 = require('./armory.service');
 var optimizer_component_1 = require('./optimizer.component');
+var armor_selections_component_1 = require('./armor.selections.component');
 var AppComponent = (function () {
     function AppComponent() {
     }
@@ -32,6 +33,11 @@ var AppComponent = (function () {
                 name: 'Optimizer',
                 component: optimizer_component_1.OptimizerComponent,
                 useAsDefault: true
+            },
+            {
+                path: '/armor.selections',
+                name: 'ArmorSelections',
+                component: armor_selections_component_1.ArmorSelectionsComponent,
             }
         ]), 
         __metadata('design:paramtypes', [])

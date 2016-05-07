@@ -3,7 +3,7 @@ import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/route
 
 import { ArmorService }     from './armory.service';
 import { OptimizerComponent }     from './optimizer.component';
-
+import { ArmorSelectionsComponent }     from './armor.selections.component';
 
 
 @Component({
@@ -22,6 +22,11 @@ import { OptimizerComponent }     from './optimizer.component';
         name: 'Optimizer',
         component: OptimizerComponent,
         useAsDefault: true
+    },
+    {
+        path: '/armor.selections',
+        name: 'ArmorSelections',
+        component: ArmorSelectionsComponent,
     }
 ])
 export class AppComponent { }

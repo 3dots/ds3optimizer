@@ -12,7 +12,11 @@ export class Armory {
 }
 
 export class ArmorMethods {
-    constructor(public Armory: Armory) {}
+    ArmorSets: ArmorCombination[]; 
+    
+    constructor(public Armory: Armory) {
+        
+    }
     
     CountArmorInArray(arr: ArmorPiece[]): number{
         let result = 0;      
@@ -20,9 +24,15 @@ export class ArmorMethods {
             if(arr[i].Enabled)
                 result++;
         }       
-        return result;
+        return result; 
     }
+    
+
 }
+
+
+
+
 
 export class ArmorPiece {
     PieceId: number;
@@ -103,24 +113,29 @@ export class ArmorCombinationFactory{
     Combine(Head: ArmorPiece, Chest: ArmorPiece, Arms: ArmorPiece, Legs: ArmorPiece) : ArmorCombination {
         let result: ArmorCombination = new ArmorCombination(Head, Chest, Arms, Legs);
         
-        result.Metric = 
-        this.MetricWeights.Physical * result.Physical +
-        this.MetricWeights.Strike * result.Strike +
-        this.MetricWeights.Slash * result.Slash +
-        this.MetricWeights.Thrust * result.Thrust +
-        
-        this.MetricWeights.Magic * result.Magic +
-        this.MetricWeights.Fire * result.Fire +
-        this.MetricWeights.Lightning * result.Lightning +
-        this.MetricWeights.Dark * result.Dark +
-        
-        this.MetricWeights.Bleed * result.Bleed +
-        this.MetricWeights.Poison * result.Poison +
-        this.MetricWeights.Frost * result.Frost +
-        this.MetricWeights.Curse * result.Curse +
-        
-        this.MetricWeights.Poise * result.Poise;
-        
+        if(this.MetricWeights != null) {
+            result.Metric = 
+            this.MetricWeights.Physical * result.Physical +
+            this.MetricWeights.Strike * result.Strike +
+            this.MetricWeights.Slash * result.Slash +
+            this.MetricWeights.Thrust * result.Thrust +
+            
+            this.MetricWeights.Magic * result.Magic +
+            this.MetricWeights.Fire * result.Fire +
+            this.MetricWeights.Lightning * result.Lightning +
+            this.MetricWeights.Dark * result.Dark +
+            
+            this.MetricWeights.Bleed * result.Bleed +
+            this.MetricWeights.Poison * result.Poison +
+            this.MetricWeights.Frost * result.Frost +
+            this.MetricWeights.Curse * result.Curse +
+            
+            this.MetricWeights.Poise * result.Poise;
+        }
+        else {
+            result.Metric = null;
+        }
+       
         return result;       
     }
     

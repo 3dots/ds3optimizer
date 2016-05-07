@@ -56,20 +56,25 @@ var ArmorCombinationFactory = (function () {
     }
     ArmorCombinationFactory.prototype.Combine = function (Head, Chest, Arms, Legs) {
         var result = new ArmorCombination(Head, Chest, Arms, Legs);
-        result.Metric =
-            this.MetricWeights.Physical * result.Physical +
-                this.MetricWeights.Strike * result.Strike +
-                this.MetricWeights.Slash * result.Slash +
-                this.MetricWeights.Thrust * result.Thrust +
-                this.MetricWeights.Magic * result.Magic +
-                this.MetricWeights.Fire * result.Fire +
-                this.MetricWeights.Lightning * result.Lightning +
-                this.MetricWeights.Dark * result.Dark +
-                this.MetricWeights.Bleed * result.Bleed +
-                this.MetricWeights.Poison * result.Poison +
-                this.MetricWeights.Frost * result.Frost +
-                this.MetricWeights.Curse * result.Curse +
-                this.MetricWeights.Poise * result.Poise;
+        if (this.MetricWeights != null) {
+            result.Metric =
+                this.MetricWeights.Physical * result.Physical +
+                    this.MetricWeights.Strike * result.Strike +
+                    this.MetricWeights.Slash * result.Slash +
+                    this.MetricWeights.Thrust * result.Thrust +
+                    this.MetricWeights.Magic * result.Magic +
+                    this.MetricWeights.Fire * result.Fire +
+                    this.MetricWeights.Lightning * result.Lightning +
+                    this.MetricWeights.Dark * result.Dark +
+                    this.MetricWeights.Bleed * result.Bleed +
+                    this.MetricWeights.Poison * result.Poison +
+                    this.MetricWeights.Frost * result.Frost +
+                    this.MetricWeights.Curse * result.Curse +
+                    this.MetricWeights.Poise * result.Poise;
+        }
+        else {
+            result.Metric = null;
+        }
         return result;
     };
     return ArmorCombinationFactory;

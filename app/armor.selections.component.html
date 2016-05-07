@@ -1,0 +1,62 @@
+<button type="button" class="btn btn-primary" (click)="gotoOptimizer()">Optimizer</button>
+<button type="button" class="btn btn-primary" (click)="null">Armor Selections</button>
+<button type="button" class="btn btn-primary" (click)="gotoGameProgressSelections()">Game Progress</button>
+
+<h1>Armor Selections</h1>
+<table class="table table-hover">
+   <thead>
+      <tr>
+         <th>Head</th>
+         <th>Chest</th>
+         <th>Arms</th>
+         <th>Legs</th>
+         
+         <th>Weight</th>
+         
+         <th>Physical</th>
+         <th>Strike</th>
+         <th>Slash</th>
+         <th>Thrust</th>
+         
+         <th>Magic</th>
+         <th>Fire</th>
+         <th>Lightning</th>
+         <th>Dark</th>
+         
+         <th>Bleed</th>
+         <th>Poison</th>
+         <th>Frost</th>
+         <th>Curse</th>
+         
+         <th>Pointless</th>
+      </tr>
+   </thead>
+   
+   <tbody>
+         <tr *ngFor="let ArmorCombo of OptimalArmorCombinations">
+               <td>{{ArmorCombo.Head.Name}} <button type="button"  (click)="DisableArmorPiece(ArmorCombo.Head)">x</button></td>
+               <td>{{ArmorCombo.Chest.Name}} <button type="button"  (click)="DisableArmorPiece(ArmorCombo.Chest)">x</button></td>
+               <td>{{ArmorCombo.Arms.Name}} <button type="button"  (click)="DisableArmorPiece(ArmorCombo.Arms)">x</button></td>
+               <td>{{ArmorCombo.Legs.Name}} <button type="button"  (click)="DisableArmorPiece(ArmorCombo.Legs)">x</button></td>
+               
+               <td>{{ArmorCombo.Weight | number:'.2'}}</td>
+               
+               <td>{{ArmorCombo.Physical | number:'.3'}}</td>
+               <td>{{ArmorCombo.Strike | number:'.3'}}</td>
+               <td>{{ArmorCombo.Slash | number:'.3'}}</td>
+               <td>{{ArmorCombo.Thrust | number:'.3'}}</td>
+               
+               <td>{{ArmorCombo.Magic | number:'.3'}}</td>
+               <td>{{ArmorCombo.Fire | number:'.3'}}</td>
+               <td>{{ArmorCombo.Lightning | number:'.3'}}</td>
+               <td>{{ArmorCombo.Dark | number:'.3'}}</td>
+               
+               <td>{{ArmorCombo.Bleed}}</td>
+               <td>{{ArmorCombo.Poison}}</td>
+               <td>{{ArmorCombo.Frost}}</td>
+               <td>{{ArmorCombo.Curse}}</td>
+               
+               <td>{{ArmorCombo.Poise | number:'.1'}}</td>
+         </tr>
+   </tbody>
+</table>

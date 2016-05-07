@@ -38,6 +38,7 @@ export class OptimizationEngine {
         let HeadIterationCount: number = this.AM.CountArmorInArray(this.Armory.Head);
         this.ProgressIncrement = 100 * 1 / HeadIterationCount; 
      
+        //Warning: Hacks ensue. Turn back.
         this.ComputeOptimalsIncremental(0, this);
     
     }

@@ -17,6 +17,7 @@ var OptimizationEngine = (function () {
         this._ViewModel.UpdateProgress(this.Progress);
         var HeadIterationCount = this.AM.CountArmorInArray(this.Armory.Head);
         this.ProgressIncrement = 100 * 1 / HeadIterationCount;
+        //Warning: Hacks ensue. Turn back.
         this.ComputeOptimalsIncremental(0, this);
     };
     OptimizationEngine.prototype.ReturnResults = function (Context) {

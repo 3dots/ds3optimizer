@@ -63,4 +63,13 @@ export class OptimizerComponent implements OnInit {
     UpdateProgress(Progress: number){
         this.Progress = Progress;
     }
+    
+    gotoArmorSelections() {
+        let link = ['ArmorSelections'];
+        this._router.navigate(link);        
+    }
+    
+    gotoGameProgressSelections() {
+        
+    }
 }

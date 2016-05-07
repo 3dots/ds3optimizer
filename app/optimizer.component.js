@@ -43,6 +43,12 @@ var OptimizerComponent = (function () {
     OptimizerComponent.prototype.UpdateProgress = function (Progress) {
         this.Progress = Progress;
     };
+    OptimizerComponent.prototype.gotoArmorSelections = function () {
+        var link = ['ArmorSelections'];
+        this._router.navigate(link);
+    };
+    OptimizerComponent.prototype.gotoGameProgressSelections = function () {
+    };
     OptimizerComponent = __decorate([
         core_1.Component({
             selector: 'my-optimizer',

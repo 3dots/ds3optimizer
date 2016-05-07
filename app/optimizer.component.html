@@ -1,10 +1,16 @@
+
+<button type="button" class="btn btn-primary" (click)="null">Optimizer</button>
+<button type="button" class="btn btn-primary" (click)="gotoArmorSelections()">Armor Selections</button>
+<button type="button" class="btn btn-primary" (click)="gotoGameProgressSelections()">Game Progress</button>
+
+<p></p>
 <label>Max Armor Weight</label>
 <input type="number" step="any" class="ds3input" [(ngModel)]="AvailableWeight" placeholder=100/>
 <label>Result List Length</label>
 <input type="number" class="ds3input" [(ngModel)]="ResultListLength" placeholder=10 min=1/>
 
 <button type="button" class="btn btn-primary" (click)="RunOptimization()">Run</button>
-
+<p></p>
 <progress-bar [value]="Progress" [max]="100"></progress-bar>
 
 <table class="table table-striped">
