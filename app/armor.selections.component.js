@@ -10,7 +10,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_deprecated_1 = require('@angular/router-deprecated');
-var armory_1 = require('./armory');
 var armory_service_1 = require('./armory.service');
 var ArmorSelectionsComponent = (function () {
     function ArmorSelectionsComponent(_router, _armorService) {
@@ -22,8 +21,7 @@ var ArmorSelectionsComponent = (function () {
         this._armorService.getArmorData()
             .then(function (data) {
             _this.Armory = data;
-            _this.AM = new armory_1.ArmorMethods(_this.Armory);
-            _this.ArmorSets = _this.AM.ArmorSets;
+            _this.ArmorSets = _this.Armory.ArmorSets;
         });
     };
     ArmorSelectionsComponent.prototype.gotoOptimizer = function () {

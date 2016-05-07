@@ -1,6 +1,6 @@
 import { ISortable } from './doublylinkedlist';
 
-export class Armory {
+export class ArmoryData {
     Head: ArmorPiece[];
     Chest: ArmorPiece[];
     Arms: ArmorPiece[];
@@ -11,24 +11,39 @@ export class Armory {
     
 }
 
-export class ArmorMethods {
+export class Armory {
+    Head: ArmorPiece[];
+    Chest: ArmorPiece[];
+    Arms: ArmorPiece[];
+    Legs: ArmorPiece[];
+    
+    StartingCharacter: GameProgressArmorGroup[];
+    GameProgressConditions: GameProgressArmorGroup[];
+    
     ArmorSets: ArmorCombination[]; 
     
-    constructor(public Armory: Armory) {
+    constructor(public ArmoryData: ArmoryData) {
+        this.Head = ArmoryData.Head;
+        this.Chest = ArmoryData.Chest;
+        this.Arms = ArmoryData.Arms;
+        this.Legs = ArmoryData.Legs;
+        
+        this.StartingCharacter = ArmoryData.StartingCharacter;
+        this.GameProgressConditions = ArmoryData.GameProgressConditions;
         
     }
     
-    CountArmorInArray(arr: ArmorPiece[]): number{
+    CountHeadArmor(): number{
         let result = 0;      
-        for(var i = 0; i < arr.length; i++){
-            if(arr[i].Enabled)
+        for(var i = 0; i < this.Head.length; i++){
+            if(this.Head[i].Enabled)
                 result++;
         }       
         return result; 
     }
     
-
 }
+
 
 
 

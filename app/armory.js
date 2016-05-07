@@ -1,25 +1,31 @@
 "use strict";
-var Armory = (function () {
-    function Armory() {
+var ArmoryData = (function () {
+    function ArmoryData() {
     }
-    return Armory;
+    return ArmoryData;
 }());
-exports.Armory = Armory;
-var ArmorMethods = (function () {
-    function ArmorMethods(Armory) {
-        this.Armory = Armory;
+exports.ArmoryData = ArmoryData;
+var Armory = (function () {
+    function Armory(ArmoryData) {
+        this.ArmoryData = ArmoryData;
+        this.Head = ArmoryData.Head;
+        this.Chest = ArmoryData.Chest;
+        this.Arms = ArmoryData.Arms;
+        this.Legs = ArmoryData.Legs;
+        this.StartingCharacter = ArmoryData.StartingCharacter;
+        this.GameProgressConditions = ArmoryData.GameProgressConditions;
     }
-    ArmorMethods.prototype.CountArmorInArray = function (arr) {
+    Armory.prototype.CountHeadArmor = function () {
         var result = 0;
-        for (var i = 0; i < arr.length; i++) {
-            if (arr[i].Enabled)
+        for (var i = 0; i < this.Head.length; i++) {
+            if (this.Head[i].Enabled)
                 result++;
         }
         return result;
     };
-    return ArmorMethods;
+    return Armory;
 }());
-exports.ArmorMethods = ArmorMethods;
+exports.Armory = Armory;
 var ArmorPiece = (function () {
     function ArmorPiece() {
     }

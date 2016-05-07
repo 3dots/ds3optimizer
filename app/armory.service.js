@@ -10,11 +10,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var armory_data_1 = require('./armory.data');
+var armory_1 = require('./armory');
 var ArmorService = (function () {
     function ArmorService() {
     }
     ArmorService.prototype.getArmorData = function () {
-        return Promise.resolve(armory_data_1.ARMORY);
+        return Promise.resolve(new armory_1.Armory(armory_data_1.ARMORY));
         /*
         return new Promise<Hero[]>(resolve =>
             setTimeout(() => resolve(HEROES), 2000) // 2 seconds

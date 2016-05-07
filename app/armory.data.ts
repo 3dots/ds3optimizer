@@ -1,6 +1,6 @@
-import {Armory, ArmorPiece, GameProgressArmorGroup} from './armory';
+import {ArmoryData, ArmorPiece, GameProgressArmorGroup} from './armory';
 
-export var ARMORY: Armory = {
+export var ARMORY: ArmoryData = {
   Head:[
     { PieceId:1, SetId:0, Enabled:true, Name:"None", Weight:0, Physical:0, Strike:0, Slash:0, Thrust:0, Magic:0, Fire:0, Lightning:0, Dark:0, Bleed:0, Poison:0, Frost:0, Curse:0, Poise:0 },
     { PieceId:2, SetId:25, Enabled:true, Name:"Chain Helm", Weight:3.9, Physical:3.8, Strike:2.2, Slash:4.3, Thrust:3.4, Magic:2.6, Fire:2, Lightning:1.1, Dark:2.9, Bleed:28, Poison:15, Frost:15, Curse:11, Poise:2.1 },

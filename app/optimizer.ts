@@ -1,4 +1,4 @@
-import {ArmorCombination, Armory, ArmorPiece, OptimizationParameters, ArmorCombinationFactory, ArmorMethods} from './armory';
+import {ArmorCombination, Armory, ArmorPiece, OptimizationParameters, ArmorCombinationFactory} from './armory';
 import {DoublyLinkedList} from './doublylinkedlist';
 
 
@@ -10,8 +10,7 @@ export class OptimizationEngine {
         
     Minimums: OptimizationParameters;
     ACF: ArmorCombinationFactory;
-    
-    AM: ArmorMethods;
+
     List: DoublyLinkedList<ArmorCombination>;
     
     Progress: number;
@@ -26,7 +25,6 @@ export class OptimizationEngine {
         this.Minimums = _ViewModel.Minimums;
         this.ACF = new ArmorCombinationFactory(_ViewModel.Weights);
         
-        this.AM = new ArmorMethods(this.Armory);
         this.List = new DoublyLinkedList<ArmorCombination>(this.MaxListLength);
 
     }
@@ -35,7 +33,7 @@ export class OptimizationEngine {
         this.Progress = 0;
         this._ViewModel.UpdateProgress(this.Progress);
         
-        let HeadIterationCount: number = this.AM.CountArmorInArray(this.Armory.Head);
+        let HeadIterationCount: number = this.Armory.CountHeadArmor();
         this.ProgressIncrement = 100 * 1 / HeadIterationCount; 
      
         //Warning: Hacks ensue. Turn back.

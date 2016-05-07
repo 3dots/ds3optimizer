@@ -9,13 +9,12 @@ var OptimizationEngine = (function () {
         this.Armory = _ViewModel.Armory;
         this.Minimums = _ViewModel.Minimums;
         this.ACF = new armory_1.ArmorCombinationFactory(_ViewModel.Weights);
-        this.AM = new armory_1.ArmorMethods(this.Armory);
         this.List = new doublylinkedlist_1.DoublyLinkedList(this.MaxListLength);
     }
     OptimizationEngine.prototype.ComputeOptimals = function () {
         this.Progress = 0;
         this._ViewModel.UpdateProgress(this.Progress);
-        var HeadIterationCount = this.AM.CountArmorInArray(this.Armory.Head);
+        var HeadIterationCount = this.Armory.CountHeadArmor();
         this.ProgressIncrement = 100 * 1 / HeadIterationCount;
         //Warning: Hacks ensue. Turn back.
         this.ComputeOptimalsIncremental(0, this);

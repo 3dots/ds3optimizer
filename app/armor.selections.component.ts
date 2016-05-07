@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router-deprecated';
 
-import { Armory, ArmorPiece, ArmorCombination, GameProgressArmorGroup, ArmorMethods } from './armory';
+import { Armory, ArmorPiece, ArmorCombination, GameProgressArmorGroup} from './armory';
 import { ArmorService } from './armory.service';
 
 @Component({
@@ -13,7 +13,6 @@ import { ArmorService } from './armory.service';
 export class ArmorSelectionsComponent implements OnInit{
     
     Armory: Armory;
-    AM: ArmorMethods;
     
     ArmorSets: ArmorCombination[];
     
@@ -29,9 +28,8 @@ export class ArmorSelectionsComponent implements OnInit{
             { 
                 this.Armory = data;                
                 
-                this.AM = new ArmorMethods(this.Armory);
                 
-                this.ArmorSets = this.AM.ArmorSets;
+                this.ArmorSets = this.Armory.ArmorSets;
             });   
     }
     
