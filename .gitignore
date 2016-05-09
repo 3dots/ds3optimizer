@@ -31,6 +31,7 @@ node_modules/*
 !node_modules/reflect-metadata
 !node_modules/systemjs
 !node_modules/jquery
+!node_modules/@angular
 
 node_modules/bootstrap/*
 !node_modules/bootstrap/dist
@@ -63,7 +64,24 @@ node_modules/jquery/*
 node_modules/jquery/dist/*
 !node_modules/jquery/dist/jquery.min.js
 
+node_modules/@angular/*
+!node_modules/@angular/platform-browser-dynamic 
+!node_modules/@angular/router-deprecated
+!node_modules/@angular/core
+!node_modules/@angular/common
 
+
+node_modules/@angular/platform-browser-dynamic/*
+!node_modules/@angular/platform-browser-dynamic/index.js
+
+node_modules/@angular/router-deprecated/*
+!node_modules/@angular/router-deprecated/index.js
+
+node_modules/@angular/core/*
+!node_modules/@angular/core/index.js
+
+node_modules/@angular/common/*
+!node_modules/@angular/common/index.js
 
 
 # Optional npm cache directory
