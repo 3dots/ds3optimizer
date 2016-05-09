@@ -24,7 +24,13 @@ coverage
 build/Release
 
 # Dependency directory
-node_modules
+node_modules/*
+!node_modules/bootstrap
+
+node_modules/bootstrap/*
+!node_modules/bootstrap/dist
+
+
 
 # Optional npm cache directory
 .npm
