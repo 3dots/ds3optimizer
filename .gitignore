@@ -30,7 +30,8 @@ node_modules/*
 node_modules/bootstrap/*
 !node_modules/bootstrap/dist
 
-
+node_modules/bootstrap/dist/*
+!node_modules/bootstrap/dist/bootstrap.min.css
 
 # Optional npm cache directory
 .npm
