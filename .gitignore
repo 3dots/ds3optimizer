@@ -32,6 +32,7 @@ node_modules/*
 !node_modules/systemjs
 !node_modules/jquery
 !node_modules/@angular
+!node_modules/rxjs
 
 node_modules/bootstrap/*
 !node_modules/bootstrap/dist
