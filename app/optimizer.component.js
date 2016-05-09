@@ -48,6 +48,12 @@ var OptimizerComponent = (function () {
         this._router.navigate(link);
     };
     OptimizerComponent.prototype.gotoGameProgressSelections = function () {
+        var link = ['GameProgress'];
+        this._router.navigate(link);
+    };
+    OptimizerComponent.prototype.DisableArmorSet = function (SetId) {
+        this.Armory.EnableDisableArmorSet(SetId, false);
+        this.RunOptimization();
     };
     OptimizerComponent = __decorate([
         core_1.Component({

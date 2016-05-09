@@ -3,7 +3,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router-deprecated';
 
-import { Armory, ArmorCombination, ArmorPiece, OptimizationParameters, GameProgressArmorGroup } from './armory';
+import { Armory, ArmorCombination, ArmorPiece, OptimizationParameters } from './armory';
 import { ArmorService } from './armory.service';
 import { OptimizationEngine, IOptimizerNecessaryData } from './optimizer';
 
@@ -70,6 +70,13 @@ export class OptimizerComponent implements OnInit {
     }
     
     gotoGameProgressSelections() {
+        let link = ['GameProgress'];
+        this._router.navigate(link);          
+    }
+    
+    DisableArmorSet(SetId: number) {
+        this.Armory.EnableDisableArmorSet(SetId, false);
         
+        this.RunOptimization();
     }
 }

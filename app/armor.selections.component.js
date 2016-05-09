@@ -21,7 +21,13 @@ var ArmorSelectionsComponent = (function () {
         this._armorService.getArmorData()
             .then(function (data) {
             _this.Armory = data;
+            _this.TotalArmorPieces = _this.Armory.LargestPieceId;
+            _this.TotalSetCount = _this.Armory.LargestSetId;
             _this.ArmorSets = _this.Armory.ArmorSets;
+            _this.HeadSeparatePieces = _this.Armory.HeadSeparatePieces;
+            _this.ChestSeparatePieces = _this.Armory.ChestSeparatePieces;
+            _this.ArmsSeparatePieces = _this.Armory.ArmsSeparatePieces;
+            _this.LegsSeparatePieces = _this.Armory.LegsSeparatePieces;
         });
     };
     ArmorSelectionsComponent.prototype.gotoOptimizer = function () {
@@ -29,6 +35,23 @@ var ArmorSelectionsComponent = (function () {
         this._router.navigate(link);
     };
     ArmorSelectionsComponent.prototype.gotoGameProgressSelections = function () {
+        var link = ['GameProgress'];
+        this._router.navigate(link);
+    };
+    ArmorSelectionsComponent.prototype.ToggleArmorPiece = function (Piece) {
+        Piece.Enabled = !Piece.Enabled;
+    };
+    ArmorSelectionsComponent.prototype.SetArmorSet = function (Combo, EnableDisable) {
+        var SetId;
+        if (Combo.Head.SetId != 0)
+            SetId = Combo.Head.SetId;
+        else if (Combo.Chest.SetId != 0)
+            SetId = Combo.Chest.SetId;
+        else if (Combo.Arms.SetId != 0)
+            SetId = Combo.Arms.SetId;
+        else if (Combo.Legs.SetId != 0)
+            SetId = Combo.Legs.SetId;
+        this.Armory.EnableDisableArmorSet(SetId, EnableDisable);
     };
     ArmorSelectionsComponent = __decorate([
         core_1.Component({

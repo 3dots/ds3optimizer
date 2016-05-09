@@ -2,10 +2,15 @@
 <button type="button" class="btn btn-primary" (click)="null">Armor Selections</button>
 <button type="button" class="btn btn-primary" (click)="gotoGameProgressSelections()">Game Progress</button>
 
-<h1>Armor Selections</h1>
+<p></p>
+<label>Total Armor Pieces: {{TotalArmorPieces}}</label>
+<label>Total Set Count: {{TotalSetCount}}</label>
+
+<h1>Armor Sets</h1>
 <table class="table table-hover">
    <thead>
       <tr>
+         <th></th>            
          <th>Head</th>
          <th>Chest</th>
          <th>Arms</th>
@@ -18,26 +23,30 @@
          <th>Slash</th>
          <th>Thrust</th>
          
-         <th>Magic</th>
-         <th>Fire</th>
-         <th>Lightning</th>
-         <th>Dark</th>
+         <th class="Magic">Magic</th>
+         <th class="Fire">Fire</th>
+         <th class="Lightning">Lightning</th>
+         <th class="Dark">Dark</th>
          
-         <th>Bleed</th>
-         <th>Poison</th>
-         <th>Frost</th>
-         <th>Curse</th>
+         <th class="Bleed">Bleed</th>
+         <th class="Poison">Poison</th>
+         <th class="Frost">Frost</th>
+         <th class="Curse">Curse</th>
          
          <th>Pointless</th>
       </tr>
    </thead>
    
    <tbody>
-         <tr *ngFor="let ArmorCombo of OptimalArmorCombinations">
-               <td>{{ArmorCombo.Head.Name}} <button type="button"  (click)="DisableArmorPiece(ArmorCombo.Head)">x</button></td>
-               <td>{{ArmorCombo.Chest.Name}} <button type="button"  (click)="DisableArmorPiece(ArmorCombo.Chest)">x</button></td>
-               <td>{{ArmorCombo.Arms.Name}} <button type="button"  (click)="DisableArmorPiece(ArmorCombo.Arms)">x</button></td>
-               <td>{{ArmorCombo.Legs.Name}} <button type="button"  (click)="DisableArmorPiece(ArmorCombo.Legs)">x</button></td>
+         <tr *ngFor="let ArmorCombo of ArmorSets">
+               <td>
+                     <button type="button" class="btn-success" title="Enable the Armor Set"  (click)="SetArmorSet(ArmorCombo, true)">X</button>
+                     <button type="button" class="btn-danger" title="Disable the Armor Set" (click)="SetArmorSet(ArmorCombo, false)">X</button>         
+               </td>
+               <td [style.text-decoration]="ArmorCombo.Head.Enabled ? 'none' : 'line-through'">{{ArmorCombo.Head.Name}}<button type="button" title="Toggle the Armor Piece" (click)="ToggleArmorPiece(ArmorCombo.Head)">x</button></td>
+               <td [style.text-decoration]="ArmorCombo.Chest.Enabled ? 'none' : 'line-through'">{{ArmorCombo.Chest.Name}}<button type="button" title="Toggle the Armor Piece" (click)="ToggleArmorPiece(ArmorCombo.Chest)">x</button></td>
+               <td [style.text-decoration]="ArmorCombo.Arms.Enabled ? 'none' : 'line-through'">{{ArmorCombo.Arms.Name}}<button type="button" title="Toggle the Armor Piece" (click)="ToggleArmorPiece(ArmorCombo.Arms)">x</button></td>
+               <td [style.text-decoration]="ArmorCombo.Legs.Enabled ? 'none' : 'line-through'">{{ArmorCombo.Legs.Name}}<button type="button" title="Toggle the Armor Piece" (click)="ToggleArmorPiece(ArmorCombo.Legs)">x</button></td>
                
                <td>{{ArmorCombo.Weight | number:'.2'}}</td>
                
@@ -46,17 +55,46 @@
                <td>{{ArmorCombo.Slash | number:'.3'}}</td>
                <td>{{ArmorCombo.Thrust | number:'.3'}}</td>
                
-               <td>{{ArmorCombo.Magic | number:'.3'}}</td>
-               <td>{{ArmorCombo.Fire | number:'.3'}}</td>
-               <td>{{ArmorCombo.Lightning | number:'.3'}}</td>
-               <td>{{ArmorCombo.Dark | number:'.3'}}</td>
+               <td class="Magic">{{ArmorCombo.Magic | number:'.3'}}</td>
+               <td class="Fire">{{ArmorCombo.Fire | number:'.3'}}</td>
+               <td class="Lightning">{{ArmorCombo.Lightning | number:'.3'}}</td>
+               <td class="Dark">{{ArmorCombo.Dark | number:'.3'}}</td>
                
-               <td>{{ArmorCombo.Bleed}}</td>
-               <td>{{ArmorCombo.Poison}}</td>
-               <td>{{ArmorCombo.Frost}}</td>
-               <td>{{ArmorCombo.Curse}}</td>
+               <td class="Bleed">{{ArmorCombo.Bleed}}</td>
+               <td class="Poison">{{ArmorCombo.Poison}}</td>
+               <td class="Frost">{{ArmorCombo.Frost}}</td>
+               <td class="Curse">{{ArmorCombo.Curse}}</td>
                
                <td>{{ArmorCombo.Poise | number:'.1'}}</td>
          </tr>
    </tbody>
 </table>
+
+<h1>Unassociated Armor Pieces</h1>
+
+<div class="row">
+        <div class="col-md-3">
+              <h2>Head</h2>
+              <tr *ngFor="let ArmorPiece of HeadSeparatePieces">
+                    <td [style.text-decoration]="ArmorPiece.Enabled ? 'none' : 'line-through'">{{ArmorPiece.Name}}<button type="button" title="Toggle the Armor Piece" (click)="ToggleArmorPiece(ArmorPiece)">x</button></td>
+              </tr>
+        </div>
+        <div class="col-md-3">
+              <h2>Chest</h2>
+              <tr *ngFor="let ArmorPiece of ChestSeparatePieces">
+                    <td [style.text-decoration]="ArmorPiece.Enabled ? 'none' : 'line-through'">{{ArmorPiece.Name}}<button type="button" title="Toggle the Armor Piece" (click)="ToggleArmorPiece(ArmorPiece)">x</button></td>
+              </tr>              
+        </div>
+        <div class="col-md-3">
+              <h2>Arms</h2>
+              <tr *ngFor="let ArmorPiece of ArmsSeparatePieces">
+                    <td [style.text-decoration]="ArmorPiece.Enabled ? 'none' : 'line-through'">{{ArmorPiece.Name}}<button type="button" title="Toggle the Armor Piece" (click)="ToggleArmorPiece(ArmorPiece)">x</button></td>
+              </tr>              
+        </div>
+        <div class="col-md-3">
+              <h2>Legs</h2>
+              <tr *ngFor="let ArmorPiece of LegsSeparatePieces">
+                    <td [style.text-decoration]="ArmorPiece.Enabled ? 'none' : 'line-through'">{{ArmorPiece.Name}}<button type="button" title="Toggle the Armor Piece" (click)="ToggleArmorPiece(ArmorPiece)">x</button></td>
+              </tr>              
+        </div>
+</div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router-deprecated';
 
+
 import { Armory, ArmorPiece, ArmorCombination, GameProgressArmorGroup} from './armory';
 import { ArmorService } from './armory.service';
 
@@ -16,6 +17,14 @@ export class ArmorSelectionsComponent implements OnInit{
     
     ArmorSets: ArmorCombination[];
     
+    TotalArmorPieces: number;
+    TotalSetCount: number;
+    
+    HeadSeparatePieces: ArmorPiece[];
+    ChestSeparatePieces: ArmorPiece[];
+    ArmsSeparatePieces: ArmorPiece[];
+    LegsSeparatePieces: ArmorPiece[];
+    
      constructor(
         private _router: Router,
         private _armorService: ArmorService) {
@@ -26,10 +35,16 @@ export class ArmorSelectionsComponent implements OnInit{
         this._armorService.getArmorData()
             .then( (data: Armory)=> 
             { 
-                this.Armory = data;                
-                
-                
+                this.Armory = data;
+                this.TotalArmorPieces = this.Armory.LargestPieceId;
+                this.TotalSetCount = this.Armory.LargestSetId;                
+               
                 this.ArmorSets = this.Armory.ArmorSets;
+                
+                this.HeadSeparatePieces = this.Armory.HeadSeparatePieces;
+                this.ChestSeparatePieces = this.Armory.ChestSeparatePieces;
+                this.ArmsSeparatePieces = this.Armory.ArmsSeparatePieces;
+                this.LegsSeparatePieces = this.Armory.LegsSeparatePieces;
             });   
     }
     
@@ -39,7 +54,28 @@ export class ArmorSelectionsComponent implements OnInit{
     }
     
     gotoGameProgressSelections() {
+        let link = ['GameProgress'];
+        this._router.navigate(link);          
+    }
+    
+    ToggleArmorPiece(Piece: ArmorPiece) {
+        Piece.Enabled = !Piece.Enabled;
+    }
+    
+    SetArmorSet(Combo: ArmorCombination, EnableDisable: boolean) {
+        let SetId;
         
-    }    
+        if(Combo.Head.SetId != 0) 
+            SetId = Combo.Head.SetId;
+        else if(Combo.Chest.SetId != 0)
+            SetId = Combo.Chest.SetId;
+        else if(Combo.Arms.SetId != 0)
+            SetId = Combo.Arms.SetId;
+        else if(Combo.Legs.SetId != 0)
+            SetId = Combo.Legs.SetId;                        
+        
+        this.Armory.EnableDisableArmorSet(SetId, EnableDisable);
+    }
+  
     
 }

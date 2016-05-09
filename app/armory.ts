@@ -21,6 +21,15 @@ export class Armory {
     GameProgressConditions: GameProgressArmorGroup[];
     
     ArmorSets: ArmorCombination[]; 
+    SeparateArmorPieces: ArmorCombination[]; 
+    
+    LargestPieceId: number;
+    LargestSetId: number;
+   
+    HeadSeparatePieces: ArmorPiece[];
+    ChestSeparatePieces: ArmorPiece[];
+    ArmsSeparatePieces: ArmorPiece[];
+    LegsSeparatePieces: ArmorPiece[];
     
     constructor(public ArmoryData: ArmoryData) {
         this.Head = ArmoryData.Head;
@@ -30,8 +39,253 @@ export class Armory {
         
         this.StartingCharacter = ArmoryData.StartingCharacter;
         this.GameProgressConditions = ArmoryData.GameProgressConditions;
+  
+        this.Init_FindAndSetLargestIds();
+         
+        this.Init_FormAllSets();
+        
+        this.Init_FormSeparatePieceArrays();
+        /*
+        for(var i = 1; i < this.Head.length; i++) {
+            this.Head[i].Enabled = false;
+        } 
+        for(var i = 1; i < this.Chest.length; i++) {
+            this.Chest[i].Enabled = false;
+        } 
+        for(var i = 1; i < this.Arms.length; i++) {
+            this.Arms[i].Enabled = false;
+        } 
+        for(var i = 1; i < this.Legs.length; i++) {
+            this.Legs[i].Enabled = false;
+        }                          
+      
+        //Temp Code
+        
+        for(var i = 0; i < 10; i++){
+            this.EnableArmorGroup(this.GameProgressConditions[i]);
+        }  
+        */
+        
         
     }
+    
+    private Init_FindAndSetLargestIds() {
+        
+        let LargestPieceId = 0;
+        let LargestSetId = 0;
+        
+        for(var i = 1; i < this.Head.length; i++) {
+            if(this.Head[i].PieceId > LargestPieceId)
+                LargestPieceId = this.Head[i].PieceId;
+                
+            if(this.Head[i].SetId > LargestSetId)
+                LargestSetId = this.Head[i].SetId;                                       
+        } 
+        for(var i = 1; i < this.Chest.length; i++) {
+            if(this.Chest[i].PieceId > LargestPieceId)
+                LargestPieceId = this.Chest[i].PieceId;
+                
+            if(this.Chest[i].SetId > LargestSetId)
+                LargestSetId = this.Chest[i].SetId;                         
+        } 
+        for(var i = 1; i < this.Arms.length; i++) {
+            if(this.Arms[i].PieceId > LargestPieceId)
+                LargestPieceId = this.Arms[i].PieceId;
+                
+            if(this.Arms[i].SetId > LargestSetId)
+                LargestSetId = this.Arms[i].SetId;  
+        } 
+        for(var i = 1; i < this.Legs.length; i++) {
+            if(this.Legs[i].PieceId > LargestPieceId)
+                LargestPieceId = this.Legs[i].PieceId;
+                
+            if(this.Legs[i].SetId > LargestSetId)
+                LargestSetId = this.Legs[i].SetId;  
+        }
+        
+        this.LargestPieceId = LargestPieceId;
+        this.LargestSetId = LargestSetId;          
+    }
+    
+    private Init_FormAllSets() {
+        
+        let ACF: ArmorCombinationFactory = new ArmorCombinationFactory(null);
+        
+        this.ArmorSets = []; 
+        
+        for(var SetId = 1; SetId <= this.LargestSetId; SetId++) {
+            
+            //The none piece
+            let Head: ArmorPiece = this.Head[0];
+            
+            for(var i = 1; i < this.Head.length; i++) {
+                if(this.Head[i].SetId == SetId) {
+                    Head = this.Head[i]; 
+                    break;
+                }                                          
+            }
+            
+            //The none piece
+            let Chest: ArmorPiece = this.Chest[0];
+            
+            for(var i = 1; i < this.Chest.length; i++) {
+                if(this.Chest[i].SetId == SetId) {
+                    Chest = this.Chest[i]; 
+                    break;
+                }                                          
+            }
+            
+            //The none piece
+            let Arms: ArmorPiece = this.Arms[0];
+            
+            for(var i = 1; i < this.Arms.length; i++) {
+                if(this.Arms[i].SetId == SetId) {
+                    Arms = this.Arms[i]; 
+                    break;
+                }                                          
+            }
+            
+            //The none piece
+            let Legs: ArmorPiece = this.Legs[0];
+            
+            for(var i = 1; i < this.Legs.length; i++) {
+                if(this.Legs[i].SetId == SetId) {
+                    Legs = this.Legs[i]; 
+                    break;
+                }                                          
+            }
+                          
+            this.ArmorSets.push(ACF.Combine(Head, Chest, Arms, Legs));
+
+        }
+        
+        this.ArmorSets.sort((a: ArmorCombination, b: ArmorCombination) => { return a.Head.Name.localeCompare(b.Head.Name); });        
+    }
+    
+    private Init_FormSeparatePieceArrays() {
+        
+        this.HeadSeparatePieces = [];
+        this.ChestSeparatePieces = [];
+        this.ArmsSeparatePieces = [];
+        this.LegsSeparatePieces = [];
+        
+        for(var i = 1; i < this.Head.length; i++) {
+            if(this.Head[i].SetId == 0)
+                this.HeadSeparatePieces.push(this.Head[i]);
+        }
+        this.HeadSeparatePieces.sort((a: ArmorPiece, b: ArmorPiece) => { return a.Name.localeCompare(b.Name); });
+        
+        for(var i = 1; i < this.Chest.length; i++) {
+            if(this.Chest[i].SetId == 0)
+                this.ChestSeparatePieces.push(this.Chest[i]);
+        }
+        this.ChestSeparatePieces.sort((a: ArmorPiece, b: ArmorPiece) => { return a.Name.localeCompare(b.Name); });
+        
+        for(var i = 1; i < this.Arms.length; i++) {
+            if(this.Arms[i].SetId == 0)
+                this.ArmsSeparatePieces.push(this.Arms[i]);
+        }
+        this.ArmsSeparatePieces.sort((a: ArmorPiece, b: ArmorPiece) => { return a.Name.localeCompare(b.Name); });
+        
+        for(var i = 1; i < this.Legs.length; i++) {
+            if(this.Legs[i].SetId == 0)
+                this.LegsSeparatePieces.push(this.Legs[i]);
+        }
+        this.LegsSeparatePieces.sort((a: ArmorPiece, b: ArmorPiece) => { return a.Name.localeCompare(b.Name); });                        
+               
+    }
+    
+    EnableDisableArmorSet(SetId: number, Setting: boolean) {
+        
+        let Combo: ArmorCombination;
+        
+        for(var i = 0; i <= this.ArmorSets.length; i++) {
+            if( this.ArmorSets[i].Head.SetId == SetId || 
+                this.ArmorSets[i].Chest.SetId == SetId ||
+                this.ArmorSets[i].Arms.SetId == SetId ||
+                this.ArmorSets[i].Legs.SetId == SetId) {
+                    Combo = this.ArmorSets[i];
+                    break;
+                }        
+        }
+        if(Combo.Head.SetId == SetId)
+            Combo.Head.Enabled = Setting;
+        if(Combo.Chest.SetId == SetId)
+            Combo.Chest.Enabled = Setting;
+        if(Combo.Arms.SetId == SetId)
+            Combo.Arms.Enabled = Setting;                        
+        if(Combo.Legs.SetId == SetId)
+            Combo.Legs.Enabled = Setting;        
+    }
+    
+    
+    EnableArmorGroup(Group: GameProgressArmorGroup) {
+        if(Group.ArmorPiecesIds != null) {
+            for(var i = 0; i < this.Head.length; i++) {
+                for(var j = 0; j < Group.ArmorPiecesIds.length; j++) {
+                    if(this.Head[i].PieceId == Group.ArmorPiecesIds[j]) {
+                        this.Head[i].Enabled = true;
+                    }
+                }
+            }
+            for(var i = 0; i < this.Chest.length; i++) {
+                for(var j = 0; j < Group.ArmorPiecesIds.length; j++) {
+                    if(this.Chest[i].PieceId == Group.ArmorPiecesIds[j]) {
+                        this.Chest[i].Enabled = true;
+                    }
+                }
+            }
+            for(var i = 0; i < this.Arms.length; i++) {
+                for(var j = 0; j < Group.ArmorPiecesIds.length; j++) {
+                    if(this.Arms[i].PieceId == Group.ArmorPiecesIds[j]) {
+                        this.Arms[i].Enabled = true;
+                    }
+                }
+            }
+            for(var i = 0; i < this.Legs.length; i++) {
+                for(var j = 0; j < Group.ArmorPiecesIds.length; j++) {
+                    if(this.Legs[i].PieceId == Group.ArmorPiecesIds[j]) {
+                        this.Legs[i].Enabled = true;
+                    }
+                }
+            }                                    
+              
+        }
+        
+        if(Group.ArmorSetIds != null) {
+            for(var i = 0; i < this.Head.length; i++) {
+                for(var j = 0; j < Group.ArmorSetIds.length; j++) {
+                    if(this.Head[i].SetId == Group.ArmorSetIds[j]) {
+                        this.Head[i].Enabled = true;
+                    }
+                }
+            }
+            for(var i = 0; i < this.Chest.length; i++) {
+                for(var j = 0; j < Group.ArmorSetIds.length; j++) {
+                    if(this.Chest[i].SetId == Group.ArmorSetIds[j]) {
+                        this.Chest[i].Enabled = true;
+                    }
+                }
+            }
+            for(var i = 0; i < this.Arms.length; i++) {
+                for(var j = 0; j < Group.ArmorSetIds.length; j++) {
+                    if(this.Arms[i].SetId == Group.ArmorSetIds[j]) {
+                        this.Arms[i].Enabled = true;
+                    }
+                }
+            }
+            for(var i = 0; i < this.Legs.length; i++) {
+                for(var j = 0; j < Group.ArmorSetIds.length; j++) {
+                    if(this.Legs[i].SetId == Group.ArmorSetIds[j]) {
+                        this.Legs[i].Enabled = true;
+                    }
+                }
+            }                                    
+              
+        }       
+   
+    }
+    
     
     CountHeadArmor(): number{
         let result = 0;      
@@ -40,6 +294,99 @@ export class Armory {
                 result++;
         }       
         return result; 
+    }
+    
+    FindPieceByPieceId(PieceId: number): ArmorPiece {
+            
+            for(var i = 1; i < this.Head.length; i++) {
+                if(this.Head[i].PieceId == PieceId) {
+                    return this.Head[i]; 
+                }                                          
+            }
+            for(var i = 1; i < this.Chest.length; i++) {
+                if(this.Chest[i].PieceId == PieceId) {
+                    return this.Chest[i]; 
+                }                                          
+            } 
+            for(var i = 1; i < this.Arms.length; i++) {
+                if(this.Arms[i].PieceId == PieceId) {
+                    return this.Arms[i]; 
+                }                                          
+            } 
+            for(var i = 1; i < this.Legs.length; i++) {
+                if(this.Legs[i].PieceId == PieceId) {
+                    return this.Legs[i]; 
+                }                                          
+            }             
+                   
+    }
+    
+    TryToCancelArmorGroup(Group: GameProgressArmorGroup, PossibleConflictGroups: GameProgressArmorGroup[]){
+        //if canceling a piece, we can't if a) there is an enabled Bonfire with that piece id. or b> there is an enabled Bonfire with a set with same setid.
+        //thus need setid of piece as well.  
+        //if cancelling a set, we canf't if a) there is an enabled Bonfire with that classid => after that have to check each piece.
+
+        //So in either case, first check if set is enabled as a set. If so, can't
+        
+        //Then need to check each piece sepratly for seprate pieceid enabled.
+        
+        if(Group.ArmorPiecesIds != null) {
+            for(var i = 0; i < Group.ArmorPiecesIds.length; i++){
+                this.TryToCancelArmorPiece(this.FindPieceByPieceId(Group.ArmorPiecesIds[i]), PossibleConflictGroups);
+            }
+        }
+        
+        if(Group.ArmorSetIds != null) {
+            for(var j = 0; j < Group.ArmorSetIds.length; j++){
+                
+                for(var i = 1; i < this.Head.length; i++) {
+                    if(this.Head[i].SetId == Group.ArmorSetIds[j]) {
+                        this.TryToCancelArmorPiece(this.Head[i], PossibleConflictGroups);
+                    }                                          
+                }        
+                for(var i = 1; i < this.Chest.length; i++) {
+                    if(this.Chest[i].SetId == Group.ArmorSetIds[j]) {
+                        this.TryToCancelArmorPiece(this.Chest[i], PossibleConflictGroups);
+                    }                                         
+                }          
+                for(var i = 1; i < this.Arms.length; i++) {
+                    if(this.Arms[i].SetId == Group.ArmorSetIds[j]) {
+                        this.TryToCancelArmorPiece(this.Arms[i], PossibleConflictGroups);
+                    }                                          
+                }
+                for(var i = 1; i < this.Legs.length; i++) {
+                    if(this.Legs[i].SetId == Group.ArmorSetIds[j]) {
+                        this.TryToCancelArmorPiece(this.Legs[i], PossibleConflictGroups);
+                    }                                          
+                }            
+            }        
+        }
+    }
+    
+    
+    TryToCancelArmorPiece(Piece: ArmorPiece, PossibleConflictGroups: GameProgressArmorGroup[]) {
+        
+        for(var i = 0; i < PossibleConflictGroups.length; i++){
+            if(PossibleConflictGroups[i].Enabled == false)
+                continue;
+            
+            if(PossibleConflictGroups[i].ArmorSetIds != null) {
+                for(var j = 0; j < PossibleConflictGroups[i].ArmorSetIds.length; j++){
+                    if(PossibleConflictGroups[i].ArmorSetIds[j] == Piece.SetId)
+                        return; //There is an explictly enabled set with this piece id.
+                }
+            }
+            if(PossibleConflictGroups[i].ArmorPiecesIds != null) {
+                for(var j = 0; j < PossibleConflictGroups[i].ArmorPiecesIds.length; j++){
+                    if(PossibleConflictGroups[i].ArmorPiecesIds[j] == Piece.PieceId)
+                        return; //This piece has been explictly enabled.
+                } 
+            }           
+        }
+        
+        //Can cancle it.
+        Piece.Enabled = false;       
+        
     }
     
 }

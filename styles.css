@@ -142,6 +142,34 @@ nav a.router-link-active {
 }
 
 
+.Magic {
+    color: blue;
+}
+
+.Fire {
+    color: red;
+}
+
+.Lightning{
+    color: #cccc00;
+}
+.Dark {
+    color: black;
+}
+
+.Bleed {
+    color: #660000;
+}
+.Poison {
+    color: #006600;
+}
+.Frost {
+    color: #4d79ff;
+}
+.Curse {
+    color: black;
+}
+
 /*
 Copyright 2016 Google Inc. All Rights Reserved.
 Use of this source code is governed by an MIT-style license that

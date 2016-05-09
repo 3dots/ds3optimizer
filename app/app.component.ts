@@ -4,6 +4,7 @@ import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/route
 import { ArmorService }     from './armory.service';
 import { OptimizerComponent }     from './optimizer.component';
 import { ArmorSelectionsComponent }     from './armor.selections.component';
+import { GameProgressComponent }     from './game.progress.component';
 
 
 @Component({
@@ -27,6 +28,11 @@ import { ArmorSelectionsComponent }     from './armor.selections.component';
         path: '/armor.selections',
         name: 'ArmorSelections',
         component: ArmorSelectionsComponent,
-    }
+    },
+    {
+        path: '/game.progress',
+        name: 'GameProgress',
+        component: GameProgressComponent,
+    }    
 ])
 export class AppComponent { }
