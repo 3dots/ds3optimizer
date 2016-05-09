@@ -26,12 +26,18 @@ build/Release
 # Dependency directory
 node_modules/*
 !node_modules/bootstrap
+!node_modules/es6-shim
 
 node_modules/bootstrap/*
 !node_modules/bootstrap/dist
 
 node_modules/bootstrap/dist/*
 !node_modules/bootstrap/dist/bootstrap.min.css
+
+node_modules/es6-shim/*
+!node_modules/es6-shim/es6-shim.min.js
+
+
 
 # Optional npm cache directory
 .npm
