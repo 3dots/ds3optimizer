@@ -53,6 +53,26 @@ var ArmorSelectionsComponent = (function () {
             SetId = Combo.Legs.SetId;
         this.Armory.EnableDisableArmorSet(SetId, EnableDisable);
     };
+    ArmorSelectionsComponent.prototype.DisableAllHead = function () {
+        for (var i = 1; i < this.Armory.Head.length; i++) {
+            this.Armory.Head[i].Enabled = false;
+        }
+    };
+    ArmorSelectionsComponent.prototype.DisableAllChest = function () {
+        for (var i = 1; i < this.Armory.Chest.length; i++) {
+            this.Armory.Chest[i].Enabled = false;
+        }
+    };
+    ArmorSelectionsComponent.prototype.DisableAllArms = function () {
+        for (var i = 1; i < this.Armory.Arms.length; i++) {
+            this.Armory.Arms[i].Enabled = false;
+        }
+    };
+    ArmorSelectionsComponent.prototype.DisableAllLegs = function () {
+        for (var i = 1; i < this.Armory.Legs.length; i++) {
+            this.Armory.Legs[i].Enabled = false;
+        }
+    };
     ArmorSelectionsComponent = __decorate([
         core_1.Component({
             selector: 'my-armor.selections',

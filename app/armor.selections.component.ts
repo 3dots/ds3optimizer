@@ -76,6 +76,30 @@ export class ArmorSelectionsComponent implements OnInit{
         
         this.Armory.EnableDisableArmorSet(SetId, EnableDisable);
     }
+    
+    DisableAllHead(){
+        for(var i = 1; i < this.Armory.Head.length; i++){
+            this.Armory.Head[i].Enabled = false;
+        }
+    }
+    
+    DisableAllChest(){
+        for(var i = 1; i < this.Armory.Chest.length; i++){
+            this.Armory.Chest[i].Enabled = false;
+        }
+    }
+    
+    DisableAllArms(){
+        for(var i = 1; i < this.Armory.Arms.length; i++){
+            this.Armory.Arms[i].Enabled = false;
+        }
+    }
+    
+    DisableAllLegs(){
+        for(var i = 1; i < this.Armory.Legs.length; i++){
+            this.Armory.Legs[i].Enabled = false;
+        }
+    }            
   
     
 }
