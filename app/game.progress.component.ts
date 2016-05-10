@@ -20,9 +20,6 @@ export class GameProgressComponent implements OnInit{
     SelectedCharacter: GameProgressArmorGroup;
     PreviousCharacter:  GameProgressArmorGroup;
     
-    TestBool: boolean;
-    Test: string;
-
      constructor(
         private _router: Router,
         private _armorService: ArmorService) {
@@ -38,12 +35,9 @@ export class GameProgressComponent implements OnInit{
                 this.StartingCharacterList = this.Armory.StartingCharacter;
                 this.GameProgressConditions = this.Armory.GameProgressConditions;
                 
-                this.SelectedCharacter = this.StartingCharacterList[0];
-                this.SelectedCharacter.Enabled = true;
-                //this.CTest = this.SelectedCharacter.ProgressCondition;
-                
-                this.PreviousCharacter = this.StartingCharacterList[0];
-                //this.CTest2 = this.PreviousCharacter.ProgressCondition;
+                this.SelectedCharacter = this.Armory.SelectedCharacter;
+                this.PreviousCharacter = this.Armory.PreviousCharacter;
+
             });   
     }
     
@@ -67,7 +61,8 @@ export class GameProgressComponent implements OnInit{
         this.Armory.TryToCancelArmorGroup(this.PreviousCharacter, this.GameProgressConditions);
         this.PreviousCharacter.Enabled = false;
 
-        this.PreviousCharacter = NewClass;   
+        this.Armory.PreviousCharacter = this.Armory.SelectedCharacter;
+        this.Armory.SelectedCharacter = NewClass;   
     }
     
     onChangeBonfire(BonfireChanged: GameProgressArmorGroup) {

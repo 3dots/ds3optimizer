@@ -10,7 +10,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_deprecated_1 = require('@angular/router-deprecated');
-var armory_1 = require('./armory');
 var armory_service_1 = require('./armory.service');
 var optimizer_1 = require('./optimizer');
 var ProgressBar_1 = require('./ProgressBar');
@@ -18,19 +17,18 @@ var OptimizerComponent = (function () {
     function OptimizerComponent(_router, _armorService) {
         this._router = _router;
         this._armorService = _armorService;
-        this.AvailableWeight = 100;
-        this.ResultListLength = 10;
         this.Progress = 0;
-        this.Minimums = new armory_1.OptimizationParameters();
-        this.Weights = new armory_1.OptimizationParameters();
-        this.Weights.Strike = 1 / 3;
-        this.Weights.Slash = 1 / 3;
-        this.Weights.Thrust = 1 / 3;
     }
     OptimizerComponent.prototype.ngOnInit = function () {
         var _this = this;
         this._armorService.getArmorData()
-            .then(function (data) { _this.Armory = data; });
+            .then(function (data) {
+            _this.Armory = data;
+            _this.Minimums = _this.Armory.Minimums;
+            _this.Weights = _this.Armory.Weights;
+            _this.AvailableWeight = _this.Armory.AvailableWeight;
+            _this.ResultListLength = _this.Armory.ResultListLength;
+        });
     };
     OptimizerComponent.prototype.RunOptimization = function () {
         new optimizer_1.OptimizationEngine(this).ComputeOptimals();

@@ -7,7 +7,9 @@
 <label>Total Set Count: {{TotalSetCount}}</label>
 
 <h1>Armor Sets</h1>
-
+<button type="button" class="btn btn-primary" (click)="SortAlphabetically()">Sort Sets Alphabetically</button> 
+<button type="button" class="btn btn-primary" (click)="SortByWeight()">Sort Sets by Weight</button> 
+<p></p>
 <button type="button" class="btn-danger" (click)="DisableAllHead()">Disable All Head Pieces</button> 
 <button type="button" class="btn-danger" (click)="DisableAllChest()">Disable All Chest Pieces</button> 
 <button type="button" class="btn-danger" (click)="DisableAllArms()">Disable All Arms Pieces</button> 

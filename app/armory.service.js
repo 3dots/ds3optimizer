@@ -13,9 +13,10 @@ var armory_data_1 = require('./armory.data');
 var armory_1 = require('./armory');
 var ArmorService = (function () {
     function ArmorService() {
+        this.Armory = new armory_1.Armory(armory_data_1.ARMORY);
     }
     ArmorService.prototype.getArmorData = function () {
-        return Promise.resolve(new armory_1.Armory(armory_data_1.ARMORY));
+        return Promise.resolve(this.Armory);
         /*
         return new Promise<Hero[]>(resolve =>
             setTimeout(() => resolve(HEROES), 2000) // 2 seconds

@@ -8,6 +8,8 @@ exports.ArmoryData = ArmoryData;
 var Armory = (function () {
     function Armory(ArmoryData) {
         this.ArmoryData = ArmoryData;
+        this.AvailableWeight = 100;
+        this.ResultListLength = 10;
         this.Head = ArmoryData.Head;
         this.Chest = ArmoryData.Chest;
         this.Arms = ArmoryData.Arms;
@@ -17,26 +19,14 @@ var Armory = (function () {
         this.Init_FindAndSetLargestIds();
         this.Init_FormAllSets();
         this.Init_FormSeparatePieceArrays();
-        /*
-        for(var i = 1; i < this.Head.length; i++) {
-            this.Head[i].Enabled = false;
-        }
-        for(var i = 1; i < this.Chest.length; i++) {
-            this.Chest[i].Enabled = false;
-        }
-        for(var i = 1; i < this.Arms.length; i++) {
-            this.Arms[i].Enabled = false;
-        }
-        for(var i = 1; i < this.Legs.length; i++) {
-            this.Legs[i].Enabled = false;
-        }
-      
-        //Temp Code
-        
-        for(var i = 0; i < 10; i++){
-            this.EnableArmorGroup(this.GameProgressConditions[i]);
-        }
-        */
+        this.Minimums = new OptimizationParameters();
+        this.Weights = new OptimizationParameters();
+        this.Weights.Strike = 1 / 3;
+        this.Weights.Slash = 1 / 3;
+        this.Weights.Thrust = 1 / 3;
+        this.SelectedCharacter = this.StartingCharacter[0];
+        this.SelectedCharacter.Enabled = true;
+        this.PreviousCharacter = this.StartingCharacter[0];
     }
     Armory.prototype.Init_FindAndSetLargestIds = function () {
         var LargestPieceId = 0;

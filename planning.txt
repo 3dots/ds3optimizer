@@ -2,7 +2,7 @@ Feature goals, May 10th.
 
 0->10 priority
 
-8* Armor selections page, add a sort alphabetically or total weight button.
+//Done//8* Armor selections page, add a sort alphabetically or total weight button.
 
 6* Target weight => ring slots and endurance inputs as well as weapon slot weights
 
@@ -12,6 +12,10 @@ Feature goals, May 10th.
 
 2* Progress bar formatting to digits.
 
-9* Change weights to not have physical or give weights to thrust/so on.
+//Done//9* Change weights to not have physical or give weights to thrust/so on.
 
 7* Convert to Web Worker (do this last)
+
+//Done//10* Make all UI properties globalish scope so that components dont creat new things and Forget.
+
+7* Sellsword progress?

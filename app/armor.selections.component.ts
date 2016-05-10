@@ -99,7 +99,15 @@ export class ArmorSelectionsComponent implements OnInit{
         for(var i = 1; i < this.Armory.Legs.length; i++){
             this.Armory.Legs[i].Enabled = false;
         }
-    }            
+    }
+    
+    SortAlphabetically() {
+        this.ArmorSets.sort((a: ArmorCombination, b: ArmorCombination) => { return a.Head.Name.localeCompare(b.Head.Name); });      
+    }
+    
+    SortByWeight() {
+        this.ArmorSets.sort((a: ArmorCombination, b: ArmorCombination) => { return a.Weight - b.Weight; });      
+    }                  
   
     
 }

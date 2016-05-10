@@ -18,8 +18,8 @@ import {ProgressBar} from './ProgressBar'
 export class OptimizerComponent implements OnInit {
     Armory: Armory;
     
-    AvailableWeight: number = 100;
-    ResultListLength: number = 10;
+    AvailableWeight: number;
+    ResultListLength: number;
     
     Minimums: OptimizationParameters;
     Weights: OptimizationParameters;
@@ -28,25 +28,26 @@ export class OptimizerComponent implements OnInit {
 
     Progress: number = 0;
     
-    OptimizerThread: Worker;
     
     constructor(
         private _router: Router,
         private _armorService: ArmorService) {
-            this.Minimums = new OptimizationParameters();
-            
-            this.Weights = new OptimizationParameters();
-            
-            this.Weights.Strike = 1 / 3;
-            this.Weights.Slash = 1 / 3;
-            this.Weights.Thrust = 1 / 3;
-            
+        
     }
 
     ngOnInit() {
         
         this._armorService.getArmorData()
-            .then( (data: Armory)=> { this.Armory = data; });   
+            .then( (data: Armory)=> 
+            { 
+                this.Armory = data; 
+                
+                this.Minimums = this.Armory.Minimums;
+                
+                this.Weights = this.Armory.Weights;
+                this.AvailableWeight = this.Armory.AvailableWeight;
+                this.ResultListLength = this.Armory.ResultListLength;
+            });   
     }
       
     RunOptimization() {

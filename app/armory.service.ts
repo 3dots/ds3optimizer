@@ -5,10 +5,16 @@ import {Armory, ArmoryData} from './armory';
 
 @Injectable()
 export class ArmorService {
+    
+    Armory: Armory;
+    
+    constructor() {
+        this.Armory = new Armory(ARMORY);
+    }
 
     getArmorData() {
   
-        return Promise.resolve(new Armory(ARMORY));
+        return Promise.resolve(this.Armory);
 
         
         /*

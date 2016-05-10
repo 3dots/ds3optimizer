@@ -73,6 +73,12 @@ var ArmorSelectionsComponent = (function () {
             this.Armory.Legs[i].Enabled = false;
         }
     };
+    ArmorSelectionsComponent.prototype.SortAlphabetically = function () {
+        this.ArmorSets.sort(function (a, b) { return a.Head.Name.localeCompare(b.Head.Name); });
+    };
+    ArmorSelectionsComponent.prototype.SortByWeight = function () {
+        this.ArmorSets.sort(function (a, b) { return a.Weight - b.Weight; });
+    };
     ArmorSelectionsComponent = __decorate([
         core_1.Component({
             selector: 'my-armor.selections',
