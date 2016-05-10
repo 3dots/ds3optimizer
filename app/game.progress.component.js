@@ -58,6 +58,12 @@ var GameProgressComponent = (function () {
             this.GameProgressConditions[i].Enabled = false;
         }
     };
+    GameProgressComponent.prototype.EnableAllBonfires = function () {
+        for (var i = 0; i < this.GameProgressConditions.length; i++) {
+            this.Armory.EnableArmorGroup(this.GameProgressConditions[i]);
+            this.GameProgressConditions[i].Enabled = true;
+        }
+    };
     GameProgressComponent = __decorate([
         core_1.Component({
             selector: 'my-game.progress',

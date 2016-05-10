@@ -80,4 +80,11 @@ export class GameProgressComponent implements OnInit{
             this.GameProgressConditions[i].Enabled = false;
         }
     }
+    
+    EnableAllBonfires() {
+        for(var i = 0; i < this.GameProgressConditions.length; i++){
+            this.Armory.EnableArmorGroup(this.GameProgressConditions[i]);
+            this.GameProgressConditions[i].Enabled = true;
+        }        
+    }
 }

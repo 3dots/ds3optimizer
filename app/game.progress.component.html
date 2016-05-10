@@ -9,6 +9,7 @@
 </select>
 
 <h1>Bonfire Progress</h1>
+<button type="button" class="btn-success" (click)="EnableAllBonfires()">Enable All Bonfires</button>
 <button type="button" class="btn-danger" (click)="DisableAllBonfires()">Disable All Bonfires</button> <p></p>
 <div *ngFor="let BonfireCondition of GameProgressConditions"><label> <input type="checkbox" [(ngModel)]="BonfireCondition.Enabled" (ngModelChange)="onChangeBonfire(BonfireCondition)" /> {{BonfireCondition.ProgressCondition}}</label> <p></p></div>
 

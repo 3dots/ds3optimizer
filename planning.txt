@@ -4,7 +4,7 @@ Feature goals, May 10th.
 
 //Done//8* Armor selections page, add a sort alphabetically or total weight button.
 
-6* Target weight => ring slots and endurance inputs as well as weapon slot weights
+
 
 3* Enable all button for bonfire to undo disable?
 
@@ -18,8 +18,10 @@ Feature goals, May 10th.
 
 //Done//10* Make all UI properties globalish scope so that components dont creat new things and Forget.
 
-7* Sellsword progress?
+//Done//7* Sellsword progress?
 
 Next major iteration:
 
 7* Convert to Web Worker (do this last)
+
+6* Target weight => ring slots and endurance inputs as well as weapon slot weights
