@@ -25,7 +25,7 @@ var ProgressBar = (function () {
     ProgressBar = __decorate([
         core_1.Component({
             selector: "progress-bar",
-            template: "\n<div class=\"progress\">\n    <div class=\"progress-bar\"\n        role=\"progressbar\"\n        [attr.aria-valuenow]=\"value / max * 100\"\n        aria-valuemin=\"0\"\n        [attr.aria-valuemax]=\"value / max * 100\" [ngStyle]=\"{ width: value / max * 100 + '%' }\">\n        {{ value / max * 100 }}% Complete\n    </div>\n</div>\n"
+            template: "\n<div class=\"progress\">\n    <div class=\"progress-bar\"\n        role=\"progressbar\"\n        [attr.aria-valuenow]=\"value / max * 100\"\n        aria-valuemin=\"0\"\n        [attr.aria-valuemax]=\"value / max * 100\" [ngStyle]=\"{ width: value / max * 100 + '%' }\">\n        {{ value / max * 100 | number:'.0' }}% Complete\n    </div>\n</div>\n"
         }), 
         __metadata('design:paramtypes', [])
     ], ProgressBar);

@@ -9,7 +9,7 @@ import {Component, Input} from "@angular/core";
         [attr.aria-valuenow]="value / max * 100"
         aria-valuemin="0"
         [attr.aria-valuemax]="value / max * 100" [ngStyle]="{ width: value / max * 100 + '%' }">
-        {{ value / max * 100 }}% Complete
+        {{ value / max * 100 | number:'.0' }}% Complete
     </div>
 </div>
 `
