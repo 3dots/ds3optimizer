@@ -1,26 +1,17 @@
+Feature goals, May 10th.
 
-1. Display a list of armor combinations.
+0->10 priority
 
-Cemetery of Ash
+8* Armor selections page, add a sort alphabetically or total weight button.
 
-Starting gear
+6* Target weight => ring slots and endurance inputs as well as weapon slot weights
 
-Firelink Shrine
+3* Enable all button for bonfire to undo disable?
 
-Chain set
+7* Reset to All button
 
-Leonhard?
+2* Progress bar formatting to digits.
 
-  
-  
-    "files" : [
-    "app/app.component.ts",
-    "app/armory.ts",
-    "app/armory.data.ts",
-    "app/armory.service.ts",
-    "app/doublylinkedlist.ts",
-    "app/main.ts",
-    "app/optimizer.ts",
-    "app/optimizer.component.ts",
-    "app/ProgressBar.ts"
-  ]
+9* Change weights to not have physical or give weights to thrust/so on.
+
+7* Convert to Web Worker (do this last)

@@ -40,7 +40,7 @@ var OptimizationEngine = (function () {
                         if (Context.Armory.Head[ih].Weight + Context.Armory.Chest[ic].Weight + Context.Armory.Arms[ia].Weight + Context.Armory.Legs[il].Weight > Context.MaxWeight)
                             continue;
                         var combo = Context.ACF.Combine(Context.Armory.Head[ih], Context.Armory.Chest[ic], Context.Armory.Arms[ia], Context.Armory.Legs[il]);
-                        if (combo.Physical >= Context.Minimums.Physical &&
+                        if (combo.PhysicalAverage >= Context.Minimums.PhysicalAverage &&
                             combo.Strike >= Context.Minimums.Strike &&
                             combo.Slash >= Context.Minimums.Slash &&
                             combo.Thrust >= Context.Minimums.Thrust &&

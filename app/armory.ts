@@ -430,10 +430,12 @@ export class ArmorCombination implements ISortable {
     constructor(public Head: ArmorPiece, public Chest: ArmorPiece, public Arms: ArmorPiece, public Legs: ArmorPiece) {
         this.Weight = Head.Weight + Chest.Weight + Arms.Weight + Legs.Weight;
         
-        this.Physical = 1 - (1 - Head.Physical / 100) * (1 - Chest.Physical / 100) * (1 - Arms.Physical / 100) * (1 - Legs.Physical / 100);
+        
         this.Strike = 1 - (1 - Head.Strike / 100) * (1 - Chest.Strike / 100) * (1 - Arms.Strike / 100) * (1 - Legs.Strike / 100);
         this.Slash = 1 - (1 - Head.Slash / 100) * (1 - Chest.Slash / 100) * (1 - Arms.Slash / 100) * (1 - Legs.Slash / 100);
         this.Thrust = 1 - (1 - Head.Thrust / 100) * (1 - Chest.Thrust / 100) * (1 - Arms.Thrust / 100) * (1 - Legs.Thrust / 100);
+        
+        this.PhysicalAverage = (this.Strike + this.Slash + this.Thrust) / 3;
         
         this.Magic = 1 - (1 - Head.Magic / 100) * (1 - Chest.Magic / 100) * (1 - Arms.Magic / 100) * (1 - Legs.Magic / 100);
         this.Fire = 1 - (1 - Head.Fire / 100) * (1 - Chest.Fire / 100) * (1 - Arms.Fire / 100) * (1 - Legs.Fire / 100);
@@ -449,7 +451,7 @@ export class ArmorCombination implements ISortable {
 
     Weight: number;
 
-    Physical: number;
+    PhysicalAverage: number;
     Strike: number;
     Slash: number;
     Thrust: number;
@@ -477,7 +479,7 @@ export class ArmorCombinationFactory{
         
         if(this.MetricWeights != null) {
             result.Metric = 
-            this.MetricWeights.Physical * result.Physical +
+            //this.MetricWeights.Physical * result.Physical +
             this.MetricWeights.Strike * result.Strike +
             this.MetricWeights.Slash * result.Slash +
             this.MetricWeights.Thrust * result.Thrust +
@@ -505,7 +507,9 @@ export class ArmorCombinationFactory{
 
 export class OptimizationParameters {
     
-    Physical: number = 0;
+    //Physical: number = 0;
+    PhysicalAverage: number = 0;
+    
     Strike: number = 0;
     Slash: number = 0;
     Thrust: number = 0;

@@ -23,7 +23,9 @@ var OptimizerComponent = (function () {
         this.Progress = 0;
         this.Minimums = new armory_1.OptimizationParameters();
         this.Weights = new armory_1.OptimizationParameters();
-        this.Weights.Physical = 1;
+        this.Weights.Strike = 1 / 3;
+        this.Weights.Slash = 1 / 3;
+        this.Weights.Thrust = 1 / 3;
     }
     OptimizerComponent.prototype.ngOnInit = function () {
         var _this = this;

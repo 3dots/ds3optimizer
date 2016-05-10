@@ -73,7 +73,7 @@ export class OptimizationEngine {
                         let combo: ArmorCombination = Context.ACF.Combine(Context.Armory.Head[ih], Context.Armory.Chest[ic], Context.Armory.Arms[ia], Context.Armory.Legs[il]);
                         
                         if(
-                            combo.Physical >= Context.Minimums.Physical &&
+                            combo.PhysicalAverage >= Context.Minimums.PhysicalAverage &&
                             combo.Strike >= Context.Minimums.Strike &&
                             combo.Slash >= Context.Minimums.Slash &&
                             combo.Thrust >= Context.Minimums.Thrust &&

@@ -17,7 +17,7 @@
    <thead>
       <tr>
          <th></th>         
-         <th>Physical</th>
+         <th>Avg(Str, Sla, Thr)</th>
          <th>Strike</th>
          <th>Slash</th>
          <th>Thrust</th>
@@ -40,7 +40,7 @@
          <tr>
                <td>Minimums</td>
                             
-               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Physical" placeholder=0/></td>
+               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.PhysicalAverage" placeholder=0/></td>
                <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Strike" placeholder=0/></td>
                <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Slash" placeholder=0/></td>
                <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Thrust" placeholder=0/></td>
@@ -60,10 +60,10 @@
          <tr>       
                <td>Weights</td>
                             
-               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Physical" placeholder=1/></td>
-               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Strike" placeholder=0/></td>
-               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Slash" placeholder=0/></td>
-               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Thrust" placeholder=0/></td>
+               <td></td>
+               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Strike" placeholder=0.333333/></td>
+               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Slash" placeholder=0.333333/></td>
+               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Thrust" placeholder=0.333333/></td>
                
                <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Magic" placeholder=0/></td>
                <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Fire" placeholder=0/></td>
@@ -91,7 +91,7 @@
          
          <th>Weight</th>
          
-         <th>Physical</th>
+         <th>Avg(Str, Sla, Thr)</th>
          <th>Strike</th>
          <th>Slash</th>
          <th>Thrust</th>
@@ -123,7 +123,7 @@
                
                <td>{{ArmorCombo.Weight | number:'.2'}}</td>
                
-               <td>{{ArmorCombo.Physical | number:'.3'}}</td>
+               <td>{{ArmorCombo.PhysicalAverage | number:'.3'}}</td>
                <td>{{ArmorCombo.Strike | number:'.3'}}</td>
                <td>{{ArmorCombo.Slash | number:'.3'}}</td>
                <td>{{ArmorCombo.Thrust | number:'.3'}}</td>

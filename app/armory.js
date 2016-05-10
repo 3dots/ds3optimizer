@@ -318,10 +318,10 @@ var ArmorCombination = (function () {
         this.Arms = Arms;
         this.Legs = Legs;
         this.Weight = Head.Weight + Chest.Weight + Arms.Weight + Legs.Weight;
-        this.Physical = 1 - (1 - Head.Physical / 100) * (1 - Chest.Physical / 100) * (1 - Arms.Physical / 100) * (1 - Legs.Physical / 100);
         this.Strike = 1 - (1 - Head.Strike / 100) * (1 - Chest.Strike / 100) * (1 - Arms.Strike / 100) * (1 - Legs.Strike / 100);
         this.Slash = 1 - (1 - Head.Slash / 100) * (1 - Chest.Slash / 100) * (1 - Arms.Slash / 100) * (1 - Legs.Slash / 100);
         this.Thrust = 1 - (1 - Head.Thrust / 100) * (1 - Chest.Thrust / 100) * (1 - Arms.Thrust / 100) * (1 - Legs.Thrust / 100);
+        this.PhysicalAverage = (this.Strike + this.Slash + this.Thrust) / 3;
         this.Magic = 1 - (1 - Head.Magic / 100) * (1 - Chest.Magic / 100) * (1 - Arms.Magic / 100) * (1 - Legs.Magic / 100);
         this.Fire = 1 - (1 - Head.Fire / 100) * (1 - Chest.Fire / 100) * (1 - Arms.Fire / 100) * (1 - Legs.Fire / 100);
         this.Lightning = 1 - (1 - Head.Lightning / 100) * (1 - Chest.Lightning / 100) * (1 - Arms.Lightning / 100) * (1 - Legs.Lightning / 100);
@@ -343,8 +343,8 @@ var ArmorCombinationFactory = (function () {
         var result = new ArmorCombination(Head, Chest, Arms, Legs);
         if (this.MetricWeights != null) {
             result.Metric =
-                this.MetricWeights.Physical * result.Physical +
-                    this.MetricWeights.Strike * result.Strike +
+                //this.MetricWeights.Physical * result.Physical +
+                this.MetricWeights.Strike * result.Strike +
                     this.MetricWeights.Slash * result.Slash +
                     this.MetricWeights.Thrust * result.Thrust +
                     this.MetricWeights.Magic * result.Magic +
@@ -367,7 +367,8 @@ var ArmorCombinationFactory = (function () {
 exports.ArmorCombinationFactory = ArmorCombinationFactory;
 var OptimizationParameters = (function () {
     function OptimizationParameters() {
-        this.Physical = 0;
+        //Physical: number = 0;
+        this.PhysicalAverage = 0;
         this.Strike = 0;
         this.Slash = 0;
         this.Thrust = 0;
