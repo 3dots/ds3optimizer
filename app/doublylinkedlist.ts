@@ -87,6 +87,18 @@ export class DoublyLinkedList<T extends ISortable>{
                             }   
                             
                         }
+                        else if(this.size < this.MaxSize) {
+                            let temp = new LinkedListNode<T>();
+                            temp.element = e;
+                            temp.prev = this.Tail
+                            temp.next = null;
+                            
+                            this.Tail.next = temp;
+                            
+                            this.Tail = temp;
+                            
+                            this.size++;
+                        }
                         //No need to do anything otherwise.
                         
                     }//We aren't at the tail and have found the first node with an element with a lower Metric then the new element
