@@ -21,9 +21,9 @@ var Armory = (function () {
         this.Init_FormSeparatePieceArrays();
         this.Minimums = new OptimizationParameters();
         this.Weights = new OptimizationParameters();
-        this.Weights.Strike = 1 / 3;
-        this.Weights.Slash = 1 / 3;
-        this.Weights.Thrust = 1 / 3;
+        this.Weights.Strike = 1;
+        this.Weights.Slash = 1;
+        this.Weights.Thrust = 1;
         this.SelectedCharacter = this.StartingCharacter[0];
         this.SelectedCharacter.Enabled = true;
         this.PreviousCharacter = this.StartingCharacter[0];

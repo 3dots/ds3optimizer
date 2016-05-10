@@ -55,6 +55,26 @@ var OptimizerComponent = (function () {
         this.Armory.EnableDisableArmorSet(SetId, false);
         this.RunOptimization();
     };
+    OptimizerComponent.prototype.ResetWeights = function () {
+        this.Weights.Strike = 1;
+        this.Weights.Slash = 1;
+        this.Weights.Thrust = 1;
+        this.Weights.Magic = 0;
+        this.Weights.Fire = 0;
+        this.Weights.Lightning = 0;
+        this.Weights.Dark = 0;
+        this.Weights.Bleed = 0;
+        this.Weights.Poison = 0;
+        this.Weights.Frost = 0;
+        this.Weights.Curse = 0;
+        this.Weights.Poise = 0;
+    };
+    OptimizerComponent.prototype.SetMagicWeights = function () {
+        this.Weights.Magic = 1;
+        this.Weights.Fire = 1;
+        this.Weights.Lightning = 1;
+        this.Weights.Dark = 1;
+    };
     OptimizerComponent = __decorate([
         core_1.Component({
             selector: 'my-optimizer',
