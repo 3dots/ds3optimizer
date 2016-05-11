@@ -18,9 +18,6 @@ import {ProgressBar} from './ProgressBar'
 export class OptimizerComponent implements OnInit {
     Armory: Armory;
     
-    AvailableWeight: number;
-    ResultListLength: number;
-    
     Minimums: OptimizationParameters;
     Weights: OptimizationParameters;
       
@@ -45,8 +42,8 @@ export class OptimizerComponent implements OnInit {
                 this.Minimums = this.Armory.Minimums;
                 
                 this.Weights = this.Armory.Weights;
-                this.AvailableWeight = this.Armory.AvailableWeight;
-                this.ResultListLength = this.Armory.ResultListLength;
+                //this.AvailableWeight = this.Armory.AvailableWeight;
+                //this.ResultListLength = this.Armory.ResultListLength;
             });   
     }
       
@@ -86,6 +83,7 @@ export class OptimizerComponent implements OnInit {
     }
     
     ResetWeights() {
+        this.Weights.Physical = 1;
         this.Weights.Strike = 1;
         this.Weights.Slash = 1;
         this.Weights.Thrust = 1;

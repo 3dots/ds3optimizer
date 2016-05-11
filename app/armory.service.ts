@@ -10,6 +10,7 @@ export class ArmorService {
     
     constructor() {
         this.Armory = new Armory(ARMORY);
+        //console.log("Service constructor ran.")
     }
 
     getArmorData() {

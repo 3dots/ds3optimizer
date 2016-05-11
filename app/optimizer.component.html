@@ -5,10 +5,10 @@
 
 <p></p>
 <label>Max Armor Weight</label>
-<input type="number" step="any" class="ds3input" [(ngModel)]="AvailableWeight" />
+<input type="number" step="any" class="ds3input" *ngIf="Armory" [(ngModel)]="Armory.AvailableWeight" />
 
 <label>Result List Length</label>
-<input type="number" class="ds3input" [(ngModel)]="ResultListLength" min=1/>
+<input type="number" class="ds3input" *ngIf="Armory" [(ngModel)]="Armory.ResultListLength" min=1/>
 
 <button type="button" class="btn btn-primary" (click)="RunOptimization()">Run</button>
 <p></p>
@@ -21,8 +21,9 @@
 
    <thead>
       <tr>
-         <th></th>         
-         <th>Avg(Str, Sla, Thr)</th>
+         <th></th>
+         <th>Average Physical</th>         
+         <th>Physical</th>
          <th>Strike</th>
          <th>Slash</th>
          <th>Thrust</th>
@@ -48,6 +49,7 @@
                             
                <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.PhysicalAverage"/></td>
  
+               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Physical"/></td>               
                <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Strike"/></td>
                <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Slash"/></td>
                <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Thrust"/></td>
@@ -68,6 +70,8 @@
                <td>Weights</td>
                             
                <td></td>
+               
+               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Physical"/></td>  
                <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Strike"/></td>
                <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Slash"/></td>
                <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Thrust"/></td>
@@ -99,7 +103,9 @@
          
          <th>Weight</th>
          
-         <th>Avg(Str, Sla, Thr)</th>
+         <th>Average Physical</th>
+         
+         <th>Physical</th>
          <th>Strike</th>
          <th>Slash</th>
          <th>Thrust</th>
@@ -125,13 +131,26 @@
                      {{ArmorCombo.Head.Name}}
                      <button type="button" title="Disable the Armor Piece" (click)="DisableArmorPiece(ArmorCombo.Head)">x</button>
                </td>
-               <td><button type="button" class="btn-danger" title="Disable the Armor Set" (click)="DisableArmorSet(ArmorCombo.Chest.SetId)">X</button>{{ArmorCombo.Chest.Name}}<button type="button" title="Disable the Armor Piece" (click)="DisableArmorPiece(ArmorCombo.Chest)">x</button></td>
-               <td><button type="button" class="btn-danger" title="Disable the Armor Set" (click)="DisableArmorSet(ArmorCombo.Arms.SetId)">X</button>{{ArmorCombo.Arms.Name}}<button type="button" title="Disable the Armor Piece" (click)="DisableArmorPiece(ArmorCombo.Arms)">x</button></td>
-               <td><button type="button" class="btn-danger" title="Disable the Armor Set" (click)="DisableArmorSet(ArmorCombo.Legs.SetId)">X</button>{{ArmorCombo.Legs.Name}}<button type="button" title="Disable the Armor Piece" (click)="DisableArmorPiece(ArmorCombo.Legs)">x</button></td>
+               <td>
+                     <button type="button" class="btn-danger" title="Disable the Armor Set" (click)="DisableArmorSet(ArmorCombo.Chest.SetId)">X</button>
+                     {{ArmorCombo.Chest.Name}}
+                     <button type="button" title="Disable the Armor Piece" (click)="DisableArmorPiece(ArmorCombo.Chest)">x</button>
+               </td>
+               <td>
+                     <button type="button" class="btn-danger" title="Disable the Armor Set" (click)="DisableArmorSet(ArmorCombo.Arms.SetId)">X</button>
+                     {{ArmorCombo.Arms.Name}}
+                     <button type="button" title="Disable the Armor Piece" (click)="DisableArmorPiece(ArmorCombo.Arms)">x</button>
+               </td>
+               <td>
+                     <button type="button" class="btn-danger" title="Disable the Armor Set" (click)="DisableArmorSet(ArmorCombo.Legs.SetId)">X</button>
+                     {{ArmorCombo.Legs.Name}}
+                     <button type="button" title="Disable the Armor Piece" (click)="DisableArmorPiece(ArmorCombo.Legs)">x</button>
+               </td>
                
                <td>{{ArmorCombo.Weight | number:'.2'}}</td>
                
                <td>{{ArmorCombo.PhysicalAverage | number:'.3'}}</td>
+               <td>{{ArmorCombo.Physical | number:'.3'}}</td>
                <td>{{ArmorCombo.Strike | number:'.3'}}</td>
                <td>{{ArmorCombo.Slash | number:'.3'}}</td>
                <td>{{ArmorCombo.Thrust | number:'.3'}}</td>

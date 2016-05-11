@@ -4,8 +4,8 @@ var doublylinkedlist_1 = require('./doublylinkedlist');
 var OptimizationEngine = (function () {
     function OptimizationEngine(_ViewModel) {
         this._ViewModel = _ViewModel;
-        this.MaxWeight = _ViewModel.AvailableWeight;
-        this.MaxListLength = _ViewModel.ResultListLength;
+        this.MaxWeight = _ViewModel.Armory.AvailableWeight;
+        this.MaxListLength = _ViewModel.Armory.ResultListLength;
         this.Armory = _ViewModel.Armory;
         this.Minimums = _ViewModel.Minimums;
         this.ACF = new armory_1.ArmorCombinationFactory(_ViewModel.Weights);
@@ -41,6 +41,7 @@ var OptimizationEngine = (function () {
                             continue;
                         var combo = Context.ACF.Combine(Context.Armory.Head[ih], Context.Armory.Chest[ic], Context.Armory.Arms[ia], Context.Armory.Legs[il]);
                         if (combo.PhysicalAverage >= Context.Minimums.PhysicalAverage &&
+                            combo.Physical >= Context.Minimums.Physical &&
                             combo.Strike >= Context.Minimums.Strike &&
                             combo.Slash >= Context.Minimums.Slash &&
                             combo.Thrust >= Context.Minimums.Thrust &&

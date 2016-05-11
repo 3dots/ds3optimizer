@@ -14,6 +14,7 @@ var armory_1 = require('./armory');
 var ArmorService = (function () {
     function ArmorService() {
         this.Armory = new armory_1.Armory(armory_data_1.ARMORY);
+        //console.log("Service constructor ran.")
     }
     ArmorService.prototype.getArmorData = function () {
         return Promise.resolve(this.Armory);

@@ -8,8 +8,6 @@ exports.ArmoryData = ArmoryData;
 var Armory = (function () {
     function Armory(ArmoryData) {
         this.ArmoryData = ArmoryData;
-        this.AvailableWeight = 100;
-        this.ResultListLength = 10;
         this.Head = ArmoryData.Head;
         this.Chest = ArmoryData.Chest;
         this.Arms = ArmoryData.Arms;
@@ -19,14 +17,18 @@ var Armory = (function () {
         this.Init_FindAndSetLargestIds();
         this.Init_FormAllSets();
         this.Init_FormSeparatePieceArrays();
+        this.AvailableWeight = 100;
+        this.ResultListLength = 10;
         this.Minimums = new OptimizationParameters();
         this.Weights = new OptimizationParameters();
+        this.Weights.Physical = 1;
         this.Weights.Strike = 1;
         this.Weights.Slash = 1;
         this.Weights.Thrust = 1;
         this.SelectedCharacter = this.StartingCharacter[0];
         this.SelectedCharacter.Enabled = true;
         this.PreviousCharacter = this.StartingCharacter[0];
+        console.log("Armory constructor ran.");
     }
     Armory.prototype.Init_FindAndSetLargestIds = function () {
         var LargestPieceId = 0;
@@ -308,10 +310,11 @@ var ArmorCombination = (function () {
         this.Arms = Arms;
         this.Legs = Legs;
         this.Weight = Head.Weight + Chest.Weight + Arms.Weight + Legs.Weight;
+        this.Physical = 1 - (1 - Head.Physical / 100) * (1 - Chest.Physical / 100) * (1 - Arms.Physical / 100) * (1 - Legs.Physical / 100);
         this.Strike = 1 - (1 - Head.Strike / 100) * (1 - Chest.Strike / 100) * (1 - Arms.Strike / 100) * (1 - Legs.Strike / 100);
         this.Slash = 1 - (1 - Head.Slash / 100) * (1 - Chest.Slash / 100) * (1 - Arms.Slash / 100) * (1 - Legs.Slash / 100);
         this.Thrust = 1 - (1 - Head.Thrust / 100) * (1 - Chest.Thrust / 100) * (1 - Arms.Thrust / 100) * (1 - Legs.Thrust / 100);
-        this.PhysicalAverage = (this.Strike + this.Slash + this.Thrust) / 3;
+        this.PhysicalAverage = (this.Physical + this.Strike + this.Slash + this.Thrust) / 4;
         this.Magic = 1 - (1 - Head.Magic / 100) * (1 - Chest.Magic / 100) * (1 - Arms.Magic / 100) * (1 - Legs.Magic / 100);
         this.Fire = 1 - (1 - Head.Fire / 100) * (1 - Chest.Fire / 100) * (1 - Arms.Fire / 100) * (1 - Legs.Fire / 100);
         this.Lightning = 1 - (1 - Head.Lightning / 100) * (1 - Chest.Lightning / 100) * (1 - Arms.Lightning / 100) * (1 - Legs.Lightning / 100);
@@ -333,8 +336,8 @@ var ArmorCombinationFactory = (function () {
         var result = new ArmorCombination(Head, Chest, Arms, Legs);
         if (this.MetricWeights != null) {
             result.Metric =
-                //this.MetricWeights.Physical * result.Physical +
-                this.MetricWeights.Strike * result.Strike +
+                this.MetricWeights.Physical * result.Physical +
+                    this.MetricWeights.Strike * result.Strike +
                     this.MetricWeights.Slash * result.Slash +
                     this.MetricWeights.Thrust * result.Thrust +
                     this.MetricWeights.Magic * result.Magic +
@@ -357,8 +360,8 @@ var ArmorCombinationFactory = (function () {
 exports.ArmorCombinationFactory = ArmorCombinationFactory;
 var OptimizationParameters = (function () {
     function OptimizationParameters() {
-        //Physical: number = 0;
         this.PhysicalAverage = 0;
+        this.Physical = 0;
         this.Strike = 0;
         this.Slash = 0;
         this.Thrust = 0;

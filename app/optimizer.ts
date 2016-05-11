@@ -17,8 +17,8 @@ export class OptimizationEngine {
     ProgressIncrement: number
     
     constructor(private _ViewModel: IOptimizerNecessaryData){
-        this.MaxWeight = _ViewModel.AvailableWeight;
-        this.MaxListLength = _ViewModel.ResultListLength;
+        this.MaxWeight = _ViewModel.Armory.AvailableWeight;
+        this.MaxListLength = _ViewModel.Armory.ResultListLength;
         
         this.Armory = _ViewModel.Armory;
         
@@ -74,6 +74,8 @@ export class OptimizationEngine {
                         
                         if(
                             combo.PhysicalAverage >= Context.Minimums.PhysicalAverage &&
+                            
+                            combo.Physical >= Context.Minimums.Physical &&
                             combo.Strike >= Context.Minimums.Strike &&
                             combo.Slash >= Context.Minimums.Slash &&
                             combo.Thrust >= Context.Minimums.Thrust &&
@@ -196,9 +198,6 @@ export interface IOptimizerNecessaryData {
     UpdateProgress(Progress: number): void;
     
     RecieveResults(result: ArmorCombination[]): void;
-    
-    AvailableWeight: number;
-    ResultListLength: number;
     
     Minimums: OptimizationParameters;
     Weights: OptimizationParameters;

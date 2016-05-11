@@ -26,8 +26,8 @@ var OptimizerComponent = (function () {
             _this.Armory = data;
             _this.Minimums = _this.Armory.Minimums;
             _this.Weights = _this.Armory.Weights;
-            _this.AvailableWeight = _this.Armory.AvailableWeight;
-            _this.ResultListLength = _this.Armory.ResultListLength;
+            //this.AvailableWeight = this.Armory.AvailableWeight;
+            //this.ResultListLength = this.Armory.ResultListLength;
         });
     };
     OptimizerComponent.prototype.RunOptimization = function () {
@@ -56,6 +56,7 @@ var OptimizerComponent = (function () {
         this.RunOptimization();
     };
     OptimizerComponent.prototype.ResetWeights = function () {
+        this.Weights.Physical = 1;
         this.Weights.Strike = 1;
         this.Weights.Slash = 1;
         this.Weights.Thrust = 1;
