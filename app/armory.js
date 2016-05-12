@@ -5,6 +5,12 @@ var ArmoryData = (function () {
     return ArmoryData;
 }());
 exports.ArmoryData = ArmoryData;
+var Ring = (function () {
+    function Ring() {
+    }
+    return Ring;
+}());
+exports.Ring = Ring;
 var Armory = (function () {
     function Armory(ArmoryData) {
         this.ArmoryData = ArmoryData;
@@ -14,10 +20,11 @@ var Armory = (function () {
         this.Legs = ArmoryData.Legs;
         this.StartingCharacter = ArmoryData.StartingCharacter;
         this.GameProgressConditions = ArmoryData.GameProgressConditions;
+        this.RingData = ArmoryData.Rings;
+        this.RingsEquipped = [this.RingData[0], this.RingData[0], this.RingData[0], this.RingData[0]];
         this.Init_FindAndSetLargestIds();
         this.Init_FormAllSets();
         this.Init_FormSeparatePieceArrays();
-        this.AvailableWeight = 100;
         this.ResultListLength = 10;
         this.Minimums = new OptimizationParameters();
         this.Weights = new OptimizationParameters();
@@ -25,11 +32,18 @@ var Armory = (function () {
         this.Weights.Strike = 1;
         this.Weights.Slash = 1;
         this.Weights.Thrust = 1;
-        this.SelectedCharacter = this.StartingCharacter[0];
-        this.SelectedCharacter.Enabled = true;
-        this.PreviousCharacter = this.StartingCharacter[0];
-        console.log("Armory constructor ran.");
+        this.SelectedCharacter = null;
+        this.PreviousCharacter = null;
+        this.Vitality = 10;
+        this.FractionGoal = 0.7;
+        this.TotalWeight = this.EnduranceToWeight(this.Vitality);
+        this.AvailableWeight = this.TotalWeight * this.FractionGoal;
+        this.RightWeapons = [0, 0, 0];
+        this.LeftWeapons = [0, 0, 0];
     }
+    Armory.prototype.EnduranceToWeight = function (Vitality) {
+        return 50 + Vitality - 10;
+    };
     Armory.prototype.Init_FindAndSetLargestIds = function () {
         var LargestPieceId = 0;
         var LargestSetId = 0;

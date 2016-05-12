@@ -2,17 +2,115 @@
 <button type="button" class="btn btn-primary" (click)="null">Optimizer</button>
 <button type="button" class="btn btn-primary" (click)="gotoArmorSelections()">Armor Selections</button>
 <button type="button" class="btn btn-primary" (click)="gotoGameProgressSelections()">Game Progress</button>
+<p></p>
+
+<table class="table table-nonfluid">
+      <tbody>
+            <tr>
+                  <td><label>Vitality</label> <input type="number" step="any" class="ds3input" *ngIf="Armory" [(ngModel)]="Armory.Vitality" min=1/></td>
+                  <td><label>Weight Fraction Goals</label> <input type="number" step="any" class="ds3input" *ngIf="Armory" [(ngModel)]="Armory.FractionGoal"/></td>
+                  <td>
+                        <label *ngIf="Armory">Total Weight: 
+                              {{ 
+                                    ((50 + Armory.Vitality - 10) +
+                                    
+                                    (Armory.RingsEquipped[0].VitalityModifier != null ? Armory.RingsEquipped[0].VitalityModifier : 0) +
+                                    (Armory.RingsEquipped[1].VitalityModifier != null ? Armory.RingsEquipped[1].VitalityModifier : 0) +
+                                    (Armory.RingsEquipped[2].VitalityModifier != null ? Armory.RingsEquipped[2].VitalityModifier : 0) +
+                                    (Armory.RingsEquipped[3].VitalityModifier != null ? Armory.RingsEquipped[3].VitalityModifier : 0)) *
+                                    
+                                    (Armory.RingsEquipped[0].ProductModfier != null ? Armory.RingsEquipped[0].ProductModfier : 1) *
+                                    (Armory.RingsEquipped[1].ProductModfier != null ? Armory.RingsEquipped[1].ProductModfier : 1) *
+                                    (Armory.RingsEquipped[2].ProductModfier != null ? Armory.RingsEquipped[2].ProductModfier : 1) *
+                                    (Armory.RingsEquipped[3].ProductModfier != null ? Armory.RingsEquipped[3].ProductModfier : 1)
+                                    
+                                    | number:'.3'
+                              }}                        
+                        </label>
+                  </td>
+                  <td>
+                        <label *ngIf="Armory">Available Weight For Armor: 
+                              {{
+                                    (((50 + Armory.Vitality - 10) +
+                                    
+                                    (Armory.RingsEquipped[0].VitalityModifier != null ? Armory.RingsEquipped[0].VitalityModifier : 0) +
+                                    (Armory.RingsEquipped[1].VitalityModifier != null ? Armory.RingsEquipped[1].VitalityModifier : 0) +
+                                    (Armory.RingsEquipped[2].VitalityModifier != null ? Armory.RingsEquipped[2].VitalityModifier : 0) +
+                                    (Armory.RingsEquipped[3].VitalityModifier != null ? Armory.RingsEquipped[3].VitalityModifier : 0)) *
+                                    
+                                    (Armory.RingsEquipped[0].ProductModfier != null ? Armory.RingsEquipped[0].ProductModfier : 1) *
+                                    (Armory.RingsEquipped[1].ProductModfier != null ? Armory.RingsEquipped[1].ProductModfier : 1) *
+                                    (Armory.RingsEquipped[2].ProductModfier != null ? Armory.RingsEquipped[2].ProductModfier : 1) *
+                                    (Armory.RingsEquipped[3].ProductModfier != null ? Armory.RingsEquipped[3].ProductModfier : 1)) *
+                                    
+                                    Armory.FractionGoal -
+                                    
+                                    Armory.RightWeapons[0] - Armory.RightWeapons[1] - Armory.RightWeapons[2] -
+                                    Armory.LeftWeapons[0] - Armory.LeftWeapons[1] - Armory.LeftWeapons[2] -
+                                    
+                                    Armory.RingsEquipped[0].Weight - Armory.RingsEquipped[1].Weight - Armory.RingsEquipped[2].Weight - Armory.RingsEquipped[3].Weight
+                                    
+                                    | number:'.3'
+                              }}
+                        </label>
+                  </td>
+            </tr>
+            
+            <tr>
+                  <td><label>Right Hand Weapons:</label></td>
+                  <td>
+                        <input type="number" step="any" class="ds3input" *ngIf="Armory" [(ngModel)]="Armory.RightWeapons[0]" />
+                        <input type="number" step="any" class="ds3input" *ngIf="Armory" [(ngModel)]="Armory.RightWeapons[1]" />
+                        <input type="number" step="any" class="ds3input" *ngIf="Armory" [(ngModel)]="Armory.RightWeapons[2]" />
+                  </td>
+                  <td></td>
+                  <td></td>
+            </tr>
+            
+            <tr>
+                  <td><label>Left Hand Weapons</label></td>
+                  <td>
+                        <input type="number" step="any" class="ds3input" *ngIf="Armory" [(ngModel)]="Armory.LeftWeapons[0]" />
+                        <input type="number" step="any" class="ds3input" *ngIf="Armory" [(ngModel)]="Armory.LeftWeapons[1]" />
+                        <input type="number" step="any" class="ds3input" *ngIf="Armory" [(ngModel)]="Armory.LeftWeapons[2]" />
+                  </td>
+                  <td></td>
+                  <td></td>
+            </tr>            
+            <tr>
+                  <td><label>Rings</label></td>
+                  <td colspan="3">
+                        <select *ngIf="Armory" [(ngModel)]="Armory.RingsEquipped[0]">
+                              <option *ngFor="let Ring of Armory.RingData" [ngValue]="Ring">{{Ring.Name}}</option>
+                        </select>
+                        <select *ngIf="Armory" [(ngModel)]="Armory.RingsEquipped[1]">
+                              <option *ngFor="let Ring of Armory.RingData" [ngValue]="Ring">{{Ring.Name}}</option>
+                        </select>
+                        <select *ngIf="Armory" [(ngModel)]="Armory.RingsEquipped[2]">
+                              <option *ngFor="let Ring of Armory.RingData" [ngValue]="Ring">{{Ring.Name}}</option>
+                        </select>
+                        <select *ngIf="Armory" [(ngModel)]="Armory.RingsEquipped[3]">
+                              <option *ngFor="let Ring of Armory.RingData" [ngValue]="Ring">{{Ring.Name}}</option>
+                        </select>                                                                                                                      
+                  </td>
+            </tr>                                    
+      </tbody>
+</table>
+
+
+
+
+
 
 <p></p>
-<label>Max Armor Weight</label>
-<input type="number" step="any" class="ds3input" *ngIf="Armory" [(ngModel)]="Armory.AvailableWeight" />
 
 <label>Result List Length</label>
 <input type="number" class="ds3input" *ngIf="Armory" [(ngModel)]="Armory.ResultListLength" min=1/>
 
 <button type="button" class="btn btn-primary" (click)="RunOptimization()">Run</button>
 <p></p>
-<progress-bar [value]="Progress" [max]="100"></progress-bar>
+
+<progress-bar  [value]="Progress" [max]="100"></progress-bar>
 
 <button type="button" class="btn btn-primary" (click)="ResetWeights()">Reset Weights</button>
 <button type="button" class="btn btn-primary" (click)="SetMagicWeights()">Set Magics Weights</button>

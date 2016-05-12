@@ -31,6 +31,21 @@ var OptimizerComponent = (function () {
         });
     };
     OptimizerComponent.prototype.RunOptimization = function () {
+        this.Armory.TotalWeight =
+            ((50 + this.Armory.Vitality - 10) +
+                (this.Armory.RingsEquipped[0].VitalityModifier != null ? this.Armory.RingsEquipped[0].VitalityModifier : 0) +
+                (this.Armory.RingsEquipped[1].VitalityModifier != null ? this.Armory.RingsEquipped[1].VitalityModifier : 0) +
+                (this.Armory.RingsEquipped[2].VitalityModifier != null ? this.Armory.RingsEquipped[2].VitalityModifier : 0) +
+                (this.Armory.RingsEquipped[3].VitalityModifier != null ? this.Armory.RingsEquipped[3].VitalityModifier : 0)) *
+                (this.Armory.RingsEquipped[0].ProductModfier != null ? this.Armory.RingsEquipped[0].ProductModfier : 1) *
+                (this.Armory.RingsEquipped[1].ProductModfier != null ? this.Armory.RingsEquipped[1].ProductModfier : 1) *
+                (this.Armory.RingsEquipped[2].ProductModfier != null ? this.Armory.RingsEquipped[2].ProductModfier : 1) *
+                (this.Armory.RingsEquipped[3].ProductModfier != null ? this.Armory.RingsEquipped[3].ProductModfier : 1);
+        this.Armory.AvailableWeight =
+            this.Armory.TotalWeight * this.Armory.FractionGoal -
+                this.Armory.RightWeapons[0] - this.Armory.RightWeapons[1] - this.Armory.RightWeapons[2] -
+                this.Armory.LeftWeapons[0] - this.Armory.LeftWeapons[1] - this.Armory.LeftWeapons[2] -
+                this.Armory.RingsEquipped[0].Weight - this.Armory.RingsEquipped[1].Weight - this.Armory.RingsEquipped[2].Weight - this.Armory.RingsEquipped[3].Weight;
         new optimizer_1.OptimizationEngine(this).ComputeOptimals();
     };
     OptimizerComponent.prototype.RecieveResults = function (result) {

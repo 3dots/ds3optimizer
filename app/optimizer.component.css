@@ -6,5 +6,11 @@ th {
     width: 80px;
 }
 
+.table-nonfluid {
+   width: auto !important;
+}
 
+.table-nonfluid tbody tr td, .table-nonfluid tbody tr th, .table-nonfluid thead tr th {
+    border: none;
+}
 

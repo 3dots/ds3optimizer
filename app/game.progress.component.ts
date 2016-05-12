@@ -16,9 +16,7 @@ export class GameProgressComponent implements OnInit{
     
     StartingCharacterList: GameProgressArmorGroup[];
     GameProgressConditions: GameProgressArmorGroup[];  
-     
-    SelectedCharacter: GameProgressArmorGroup;
-    PreviousCharacter:  GameProgressArmorGroup;
+
     
      constructor(
         private _router: Router,
@@ -35,8 +33,6 @@ export class GameProgressComponent implements OnInit{
                 this.StartingCharacterList = this.Armory.StartingCharacter;
                 this.GameProgressConditions = this.Armory.GameProgressConditions;
                 
-                this.SelectedCharacter = this.Armory.SelectedCharacter;
-                this.PreviousCharacter = this.Armory.PreviousCharacter;
 
             });   
     }
@@ -54,15 +50,23 @@ export class GameProgressComponent implements OnInit{
     
     onCharacterChange(NewClass: GameProgressArmorGroup) {
 
-        
         this.Armory.EnableArmorGroup(NewClass);
         NewClass.Enabled = true;
+        
         //Need to cancle the previous one so long as it doesnt conflict with bonfires
-        this.Armory.TryToCancelArmorGroup(this.PreviousCharacter, this.GameProgressConditions);
-        this.PreviousCharacter.Enabled = false;
+        if(this.Armory.PreviousCharacter != null) {
+            this.Armory.TryToCancelArmorGroup(this.Armory.PreviousCharacter, this.GameProgressConditions);
+            this.Armory.PreviousCharacter.Enabled = false;
+        }
 
+
+        //console.log(this.Armory.SelectedCharacter.ProgressCondition);
         this.Armory.PreviousCharacter = this.Armory.SelectedCharacter;
         this.Armory.SelectedCharacter = NewClass;   
+    }
+    
+    onChangeTest() {
+        console.log(this.Armory.SelectedCharacter.ProgressCondition);
     }
     
     onChangeBonfire(BonfireChanged: GameProgressArmorGroup) {

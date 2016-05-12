@@ -9,6 +9,15 @@ export class ArmoryData {
     StartingCharacter: GameProgressArmorGroup[];
     GameProgressConditions: GameProgressArmorGroup[];
     
+    Rings: Ring[];
+    
+}
+
+export class Ring {
+    Name: string;
+    Weight: number;
+    VitalityModifier: number;
+    ProductModfier: number;
 }
 
 export class Armory {
@@ -19,6 +28,9 @@ export class Armory {
     
     StartingCharacter: GameProgressArmorGroup[];
     GameProgressConditions: GameProgressArmorGroup[];
+    
+    RingData: Ring[];
+    RingsEquipped: Ring[];
     
     ArmorSets: ArmorCombination[]; 
     SeparateArmorPieces: ArmorCombination[]; 
@@ -38,7 +50,14 @@ export class Armory {
     ResultListLength: number;
     
     SelectedCharacter: GameProgressArmorGroup;
-    PreviousCharacter:  GameProgressArmorGroup;    
+    PreviousCharacter:  GameProgressArmorGroup;
+    
+    Vitality: number;
+    FractionGoal: number;
+    TotalWeight: number;
+    
+    RightWeapons: number[];
+    LeftWeapons: number[];
     
     constructor(public ArmoryData: ArmoryData) {
         this.Head = ArmoryData.Head;
@@ -48,6 +67,9 @@ export class Armory {
         
         this.StartingCharacter = ArmoryData.StartingCharacter;
         this.GameProgressConditions = ArmoryData.GameProgressConditions;
+        
+        this.RingData = ArmoryData.Rings;
+        this.RingsEquipped = [this.RingData[0], this.RingData[0], this.RingData[0], this.RingData[0]];
   
         this.Init_FindAndSetLargestIds();
          
@@ -55,7 +77,7 @@ export class Armory {
         
         this.Init_FormSeparatePieceArrays();
         
-        this.AvailableWeight = 100;
+        
         this.ResultListLength = 10;
         
         this.Minimums = new OptimizationParameters();  
@@ -66,14 +88,23 @@ export class Armory {
         this.Weights.Slash = 1;
         this.Weights.Thrust = 1; 
         
-        this.SelectedCharacter = this.StartingCharacter[0];
-        this.SelectedCharacter.Enabled = true;
-
+        this.SelectedCharacter = null;
         
-        this.PreviousCharacter = this.StartingCharacter[0];
+        this.PreviousCharacter = null;
         
-        console.log("Armory constructor ran.")
+        this.Vitality = 10;
+        this.FractionGoal = 0.7;
+        
+        this.TotalWeight = this.EnduranceToWeight(this.Vitality);
+        this.AvailableWeight = this.TotalWeight * this.FractionGoal;
+        
+        this.RightWeapons = [ 0, 0, 0 ];
+        this.LeftWeapons = [ 0, 0, 0 ];
                             
+    }
+    
+    EnduranceToWeight(Vitality: number): number {
+        return 50 + Vitality - 10;
     }
     
     private Init_FindAndSetLargestIds() {

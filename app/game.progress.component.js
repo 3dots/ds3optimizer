@@ -23,8 +23,6 @@ var GameProgressComponent = (function () {
             _this.Armory = data;
             _this.StartingCharacterList = _this.Armory.StartingCharacter;
             _this.GameProgressConditions = _this.Armory.GameProgressConditions;
-            _this.SelectedCharacter = _this.Armory.SelectedCharacter;
-            _this.PreviousCharacter = _this.Armory.PreviousCharacter;
         });
     };
     GameProgressComponent.prototype.gotoOptimizer = function () {
@@ -39,10 +37,16 @@ var GameProgressComponent = (function () {
         this.Armory.EnableArmorGroup(NewClass);
         NewClass.Enabled = true;
         //Need to cancle the previous one so long as it doesnt conflict with bonfires
-        this.Armory.TryToCancelArmorGroup(this.PreviousCharacter, this.GameProgressConditions);
-        this.PreviousCharacter.Enabled = false;
+        if (this.Armory.PreviousCharacter != null) {
+            this.Armory.TryToCancelArmorGroup(this.Armory.PreviousCharacter, this.GameProgressConditions);
+            this.Armory.PreviousCharacter.Enabled = false;
+        }
+        //console.log(this.Armory.SelectedCharacter.ProgressCondition);
         this.Armory.PreviousCharacter = this.Armory.SelectedCharacter;
         this.Armory.SelectedCharacter = NewClass;
+    };
+    GameProgressComponent.prototype.onChangeTest = function () {
+        console.log(this.Armory.SelectedCharacter.ProgressCondition);
     };
     GameProgressComponent.prototype.onChangeBonfire = function (BonfireChanged) {
         if (BonfireChanged.Enabled) {
