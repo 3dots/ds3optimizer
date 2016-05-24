@@ -25,6 +25,7 @@ export class OptimizerComponent implements OnInit {
 
     Progress: number = 0;
     
+    Output: number = 0;
     
     constructor(
         private _router: Router,

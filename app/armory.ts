@@ -59,6 +59,9 @@ export class Armory {
     RightWeapons: number[];
     LeftWeapons: number[];
     
+    Input: number;
+    Output: number=0;
+    
     constructor(public ArmoryData: ArmoryData) {
         this.Head = ArmoryData.Head;
         this.Chest = ArmoryData.Chest;

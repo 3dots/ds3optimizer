@@ -18,6 +18,7 @@ var OptimizerComponent = (function () {
         this._router = _router;
         this._armorService = _armorService;
         this.Progress = 0;
+        this.Output = 0;
     }
     OptimizerComponent.prototype.ngOnInit = function () {
         var _this = this;

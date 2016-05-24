@@ -14,6 +14,7 @@ exports.Ring = Ring;
 var Armory = (function () {
     function Armory(ArmoryData) {
         this.ArmoryData = ArmoryData;
+        this.Output = 0;
         this.Head = ArmoryData.Head;
         this.Chest = ArmoryData.Chest;
         this.Arms = ArmoryData.Arms;

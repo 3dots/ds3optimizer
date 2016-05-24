@@ -1,4 +1,5 @@
 Feature goals, May 10th.
+(also edited May 24th)
 
 0->10 priority
 
@@ -10,7 +11,7 @@ Feature goals, May 10th.
 
 //Hmm//7* Reset to All button ->> just press page refresh?
 
-2* Progress bar formatting to digits.
+//Done//2* Progress bar formatting to digits.
 
 //Done//9* Change weights to not have physical or give weights to thrust/so on.
 
@@ -22,6 +23,27 @@ Feature goals, May 10th.
 
 Next major iteration:
 
-7* Convert to Web Worker (do this last)
+7* Convert to Web Worker (do this last) *** This is very long term, need to figure out webworkers seprately ***
 
-6* Target weight => ring slots and endurance inputs as well as weapon slot weights
+//Done//6* Target weight => ring slots and endurance inputs as well as weapon slot weights
+
+
+Feature goals, May 24th.
+
+8* Sort rings alphabetically.
+
+9* Reset armor slections to Enabled All. In optimizer view, as well as induvidual slots (head/chest) in armor selections view.
+Make reset button global?
+
+10* Structure Armory class more Interfacy? Not all views need all properties.
+
+8* Optimizer view give option to select actual weapon slots/rings slot OR just plain input for armor weight goal.
+
+9* Weights buttons. Add a just MFLD button. Get rid of enable magic? 
+Can have just phsical. And just magic. AND Both.
+
+0.1* Add effects of rings into defenses?
+
+7* Store application state in cookies? or w/e browser storage is called. Hmm, would want to store JUST what is enabled and selections, not the Strings of names and such.
+
+7* Game progress tree, make an option to pick between ASAP one we have now vs a full on NPC story mode, where you only get armor after the NPC quest is over.
