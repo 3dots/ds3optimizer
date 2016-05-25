@@ -21,13 +21,6 @@ var ArmorSelectionsComponent = (function () {
         this._armorService.getArmorData()
             .then(function (data) {
             _this.Armory = data;
-            _this.TotalArmorPieces = _this.Armory.LargestPieceId;
-            _this.TotalSetCount = _this.Armory.LargestSetId;
-            _this.ArmorSets = _this.Armory.ArmorSets;
-            _this.HeadSeparatePieces = _this.Armory.HeadSeparatePieces;
-            _this.ChestSeparatePieces = _this.Armory.ChestSeparatePieces;
-            _this.ArmsSeparatePieces = _this.Armory.ArmsSeparatePieces;
-            _this.LegsSeparatePieces = _this.Armory.LegsSeparatePieces;
         });
     };
     ArmorSelectionsComponent.prototype.gotoOptimizer = function () {
@@ -74,10 +67,10 @@ var ArmorSelectionsComponent = (function () {
         }
     };
     ArmorSelectionsComponent.prototype.SortAlphabetically = function () {
-        this.ArmorSets.sort(function (a, b) { return a.Head.Name.localeCompare(b.Head.Name); });
+        this.Armory.ArmorSets.sort(function (a, b) { return a.Head.Name.localeCompare(b.Head.Name); });
     };
     ArmorSelectionsComponent.prototype.SortByWeight = function () {
-        this.ArmorSets.sort(function (a, b) { return a.Weight - b.Weight; });
+        this.Armory.ArmorSets.sort(function (a, b) { return a.Weight - b.Weight; });
     };
     ArmorSelectionsComponent = __decorate([
         core_1.Component({

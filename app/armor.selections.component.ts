@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router-deprecated';
 
 
-import { Armory, ArmorPiece, ArmorCombination, GameProgressArmorGroup} from './armory';
+import { Armory, ArmorPiece, ArmorCombination } from './armory';
 import { ArmorService } from './armory.service';
 
 @Component({
@@ -13,38 +13,18 @@ import { ArmorService } from './armory.service';
 })
 export class ArmorSelectionsComponent implements OnInit{
     
-    Armory: Armory;
-    
-    ArmorSets: ArmorCombination[];
-    
-    TotalArmorPieces: number;
-    TotalSetCount: number;
-    
-    HeadSeparatePieces: ArmorPiece[];
-    ChestSeparatePieces: ArmorPiece[];
-    ArmsSeparatePieces: ArmorPiece[];
-    LegsSeparatePieces: ArmorPiece[];
-    
+    Armory: IArmorSelectionsComponentContext;
+   
      constructor(
         private _router: Router,
         private _armorService: ArmorService) {
     }
     
-    ngOnInit() {
-        
+    ngOnInit() {      
         this._armorService.getArmorData()
             .then( (data: Armory)=> 
             { 
-                this.Armory = data;
-                this.TotalArmorPieces = this.Armory.LargestPieceId;
-                this.TotalSetCount = this.Armory.LargestSetId;                
-               
-                this.ArmorSets = this.Armory.ArmorSets;
-                
-                this.HeadSeparatePieces = this.Armory.HeadSeparatePieces;
-                this.ChestSeparatePieces = this.Armory.ChestSeparatePieces;
-                this.ArmsSeparatePieces = this.Armory.ArmsSeparatePieces;
-                this.LegsSeparatePieces = this.Armory.LegsSeparatePieces;
+                this.Armory = data as IArmorSelectionsComponentContext;              
             });   
     }
     
@@ -102,12 +82,31 @@ export class ArmorSelectionsComponent implements OnInit{
     }
     
     SortAlphabetically() {
-        this.ArmorSets.sort((a: ArmorCombination, b: ArmorCombination) => { return a.Head.Name.localeCompare(b.Head.Name); });      
+        this.Armory.ArmorSets.sort((a: ArmorCombination, b: ArmorCombination) => { return a.Head.Name.localeCompare(b.Head.Name); });      
     }
     
     SortByWeight() {
-        this.ArmorSets.sort((a: ArmorCombination, b: ArmorCombination) => { return a.Weight - b.Weight; });      
+        this.Armory.ArmorSets.sort((a: ArmorCombination, b: ArmorCombination) => { return a.Weight - b.Weight; });      
     }                  
   
     
+}
+
+export interface IArmorSelectionsComponentContext {
+    Head: ArmorPiece[];
+    Chest: ArmorPiece[];
+    Arms: ArmorPiece[];
+    Legs: ArmorPiece[];    
+    
+    LargestPieceId: number;
+    LargestSetId: number;    
+    
+    ArmorSets: ArmorCombination[]; 
+      
+    HeadSeparatePieces: ArmorPiece[];
+    ChestSeparatePieces: ArmorPiece[];
+    ArmsSeparatePieces: ArmorPiece[];
+    LegsSeparatePieces: ArmorPiece[];
+    
+    EnableDisableArmorSet(SetId: number, Setting: boolean): void;    
 }

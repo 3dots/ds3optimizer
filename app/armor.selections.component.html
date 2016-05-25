@@ -1,137 +1,139 @@
 <button type="button" class="btn btn-primary" (click)="gotoOptimizer()">Optimizer</button>
 <button type="button" class="btn btn-primary" (click)="null">Armor Selections</button>
 <button type="button" class="btn btn-primary" (click)="gotoGameProgressSelections()">Game Progress</button>
-
-<p></p>
-<label>Total Armor Pieces: {{TotalArmorPieces}}</label>
-<label>Total Set Count: {{TotalSetCount}}</label>
-
-<h1>Armor Sets</h1>
-<button type="button" class="btn btn-primary" (click)="SortAlphabetically()">Sort Sets Alphabetically</button> 
-<button type="button" class="btn btn-primary" (click)="SortByWeight()">Sort Sets by Weight</button> 
-<p></p>
-<button type="button" class="btn-danger" (click)="DisableAllHead()">Disable All Head Pieces</button> 
-<button type="button" class="btn-danger" (click)="DisableAllChest()">Disable All Chest Pieces</button> 
-<button type="button" class="btn-danger" (click)="DisableAllArms()">Disable All Arms Pieces</button> 
-<button type="button" class="btn-danger" (click)="DisableAllLegs()">Disable All Legs Pieces</button> 
 <p></p>
 
-<table class="table table-hover">
-   <thead>
-      <tr>
-         <th></th>            
-         <th>Head</th>
-         <th>Chest</th>
-         <th>Arms</th>
-         <th>Legs</th>
-         
-         <th>Weight</th>
-         
-         <th>Average Physical</th>
-         
-         <th>Physical</th>
-         <th>Strike</th>
-         <th>Slash</th>
-         <th>Thrust</th>
-         
-         <th class="Magic">Magic</th>
-         <th class="Fire">Fire</th>
-         <th class="Lightning">Lightning</th>
-         <th class="Dark">Dark</th>
-         
-         <th class="Bleed">Bleed</th>
-         <th class="Poison">Poison</th>
-         <th class="Frost">Frost</th>
-         <th class="Curse">Curse</th>
-         
-         <th>Semi-Pointless</th>
-      </tr>
-   </thead>
-   
-   <tbody>
-         <tr *ngFor="let ArmorCombo of ArmorSets">
-               <td>
-                     <button type="button" class="btn-success" title="Enable the Armor Set"  (click)="SetArmorSet(ArmorCombo, true)">X</button>
-                     <button type="button" class="btn-danger" title="Disable the Armor Set" (click)="SetArmorSet(ArmorCombo, false)">X</button>         
-               </td>
-               <td [style.text-decoration]="ArmorCombo.Head.Enabled ? 'none' : 'line-through'">
-                     {{ArmorCombo.Head.Name}}
-                     <button type="button" title="Toggle the Armor Piece" (click)="ToggleArmorPiece(ArmorCombo.Head)">x</button>
-               </td>
-               <td [style.text-decoration]="ArmorCombo.Chest.Enabled ? 'none' : 'line-through'">
-                     {{ArmorCombo.Chest.Name}}
-                     <button type="button" title="Toggle the Armor Piece" (click)="ToggleArmorPiece(ArmorCombo.Chest)">x</button>
-               </td>
-               <td [style.text-decoration]="ArmorCombo.Arms.Enabled ? 'none' : 'line-through'">
-                     {{ArmorCombo.Arms.Name}}
-                     <button type="button" title="Toggle the Armor Piece" (click)="ToggleArmorPiece(ArmorCombo.Arms)">x</button>
-               </td>
-               <td [style.text-decoration]="ArmorCombo.Legs.Enabled ? 'none' : 'line-through'">
-                     {{ArmorCombo.Legs.Name}}
-                     <button type="button" title="Toggle the Armor Piece" (click)="ToggleArmorPiece(ArmorCombo.Legs)">x</button>
-               </td>
-               
-               <td>{{ArmorCombo.Weight | number:'.2'}}</td>
-               
-               <td>{{ArmorCombo.PhysicalAverage | number:'.3'}}</td>
-               
-               <td>{{ArmorCombo.Physical | number:'.3'}}</td>
-               <td>{{ArmorCombo.Strike | number:'.3'}}</td>
-               <td>{{ArmorCombo.Slash | number:'.3'}}</td>
-               <td>{{ArmorCombo.Thrust | number:'.3'}}</td>
-               
-               <td class="Magic">{{ArmorCombo.Magic | number:'.3'}}</td>
-               <td class="Fire">{{ArmorCombo.Fire | number:'.3'}}</td>
-               <td class="Lightning">{{ArmorCombo.Lightning | number:'.3'}}</td>
-               <td class="Dark">{{ArmorCombo.Dark | number:'.3'}}</td>
-               
-               <td class="Bleed">{{ArmorCombo.Bleed}}</td>
-               <td class="Poison">{{ArmorCombo.Poison}}</td>
-               <td class="Frost">{{ArmorCombo.Frost}}</td>
-               <td class="Curse">{{ArmorCombo.Curse}}</td>
-               
-               <td>{{ArmorCombo.Poise | number:'.1'}}</td>
-         </tr>
-   </tbody>
-</table>
+<div *ngIf="Armory">
+      <label>Total Armor Pieces: {{Armory.LargestPieceId}}</label>
+      <label>Total Set Count: {{Armory.LargestSetId}}</label>
 
-<h1>Unassociated Armor Pieces</h1>
+      <h1>Armor Sets</h1>
+      <button type="button" class="btn btn-primary" (click)="SortAlphabetically()">Sort Sets Alphabetically</button> 
+      <button type="button" class="btn btn-primary" (click)="SortByWeight()">Sort Sets by Weight</button> 
+      <p></p>
+      <button type="button" class="btn-danger" (click)="DisableAllHead()">Disable All Head Pieces</button> 
+      <button type="button" class="btn-danger" (click)="DisableAllChest()">Disable All Chest Pieces</button> 
+      <button type="button" class="btn-danger" (click)="DisableAllArms()">Disable All Arms Pieces</button> 
+      <button type="button" class="btn-danger" (click)="DisableAllLegs()">Disable All Legs Pieces</button> 
+      <p></p>
 
-<div class="row">
-        <div class="col-md-3">
-              <h2>Head</h2>
-              <tr *ngFor="let ArmorPiece of HeadSeparatePieces">
-                    <td [style.text-decoration]="ArmorPiece.Enabled ? 'none' : 'line-through'">
-                          {{ArmorPiece.Name}}
-                          <button type="button" title="Toggle the Armor Piece" (click)="ToggleArmorPiece(ArmorPiece)">x</button>
-                    </td>
-              </tr>
-        </div>
-        <div class="col-md-3">
-              <h2>Chest</h2>
-              <tr *ngFor="let ArmorPiece of ChestSeparatePieces">
-                    <td [style.text-decoration]="ArmorPiece.Enabled ? 'none' : 'line-through'">
-                          {{ArmorPiece.Name}}
-                          <button type="button" title="Toggle the Armor Piece" (click)="ToggleArmorPiece(ArmorPiece)">x</button>
-                    </td>
-              </tr>              
-        </div>
-        <div class="col-md-3">
-              <h2>Arms</h2>
-              <tr *ngFor="let ArmorPiece of ArmsSeparatePieces">
-                    <td [style.text-decoration]="ArmorPiece.Enabled ? 'none' : 'line-through'">
-                          {{ArmorPiece.Name}}
-                          <button type="button" title="Toggle the Armor Piece" (click)="ToggleArmorPiece(ArmorPiece)">x</button>
-                    </td>
-              </tr>              
-        </div>
-        <div class="col-md-3">
-              <h2>Legs</h2>
-              <tr *ngFor="let ArmorPiece of LegsSeparatePieces">
-                    <td [style.text-decoration]="ArmorPiece.Enabled ? 'none' : 'line-through'">
-                          {{ArmorPiece.Name}}
-                          <button type="button" title="Toggle the Armor Piece" (click)="ToggleArmorPiece(ArmorPiece)">x</button>
-                    </td>
-              </tr>              
-        </div>
+      <table class="table table-hover">
+      <thead>
+            <tr>
+            <th></th>            
+            <th>Head</th>
+            <th>Chest</th>
+            <th>Arms</th>
+            <th>Legs</th>
+            
+            <th>Weight</th>
+            
+            <th>Average Physical</th>
+            
+            <th>Physical</th>
+            <th>Strike</th>
+            <th>Slash</th>
+            <th>Thrust</th>
+            
+            <th class="Magic">Magic</th>
+            <th class="Fire">Fire</th>
+            <th class="Lightning">Lightning</th>
+            <th class="Dark">Dark</th>
+            
+            <th class="Bleed">Bleed</th>
+            <th class="Poison">Poison</th>
+            <th class="Frost">Frost</th>
+            <th class="Curse">Curse</th>
+            
+            <th>Semi-Pointless</th>
+            </tr>
+      </thead>
+      
+      <tbody>
+            <tr *ngFor="let ArmorCombo of Armory.ArmorSets">
+                  <td>
+                        <button type="button" class="btn-success" title="Enable the Armor Set"  (click)="SetArmorSet(ArmorCombo, true)">X</button>
+                        <button type="button" class="btn-danger" title="Disable the Armor Set" (click)="SetArmorSet(ArmorCombo, false)">X</button>         
+                  </td>
+                  <td [style.text-decoration]="ArmorCombo.Head.Enabled ? 'none' : 'line-through'">
+                        {{ArmorCombo.Head.Name}}
+                        <button type="button" title="Toggle the Armor Piece" (click)="ToggleArmorPiece(ArmorCombo.Head)">x</button>
+                  </td>
+                  <td [style.text-decoration]="ArmorCombo.Chest.Enabled ? 'none' : 'line-through'">
+                        {{ArmorCombo.Chest.Name}}
+                        <button type="button" title="Toggle the Armor Piece" (click)="ToggleArmorPiece(ArmorCombo.Chest)">x</button>
+                  </td>
+                  <td [style.text-decoration]="ArmorCombo.Arms.Enabled ? 'none' : 'line-through'">
+                        {{ArmorCombo.Arms.Name}}
+                        <button type="button" title="Toggle the Armor Piece" (click)="ToggleArmorPiece(ArmorCombo.Arms)">x</button>
+                  </td>
+                  <td [style.text-decoration]="ArmorCombo.Legs.Enabled ? 'none' : 'line-through'">
+                        {{ArmorCombo.Legs.Name}}
+                        <button type="button" title="Toggle the Armor Piece" (click)="ToggleArmorPiece(ArmorCombo.Legs)">x</button>
+                  </td>
+                  
+                  <td>{{ArmorCombo.Weight | number:'.2'}}</td>
+                  
+                  <td>{{ArmorCombo.PhysicalAverage | number:'.3'}}</td>
+                  
+                  <td>{{ArmorCombo.Physical | number:'.3'}}</td>
+                  <td>{{ArmorCombo.Strike | number:'.3'}}</td>
+                  <td>{{ArmorCombo.Slash | number:'.3'}}</td>
+                  <td>{{ArmorCombo.Thrust | number:'.3'}}</td>
+                  
+                  <td class="Magic">{{ArmorCombo.Magic | number:'.3'}}</td>
+                  <td class="Fire">{{ArmorCombo.Fire | number:'.3'}}</td>
+                  <td class="Lightning">{{ArmorCombo.Lightning | number:'.3'}}</td>
+                  <td class="Dark">{{ArmorCombo.Dark | number:'.3'}}</td>
+                  
+                  <td class="Bleed">{{ArmorCombo.Bleed}}</td>
+                  <td class="Poison">{{ArmorCombo.Poison}}</td>
+                  <td class="Frost">{{ArmorCombo.Frost}}</td>
+                  <td class="Curse">{{ArmorCombo.Curse}}</td>
+                  
+                  <td>{{ArmorCombo.Poise | number:'.1'}}</td>
+            </tr>
+      </tbody>
+      </table>
+
+      <h1>Unassociated Armor Pieces</h1>
+
+      <div class="row">
+            <div class="col-md-3">
+                  <h2>Head</h2>
+                  <tr *ngFor="let ArmorPiece of Armory.HeadSeparatePieces">
+                        <td [style.text-decoration]="ArmorPiece.Enabled ? 'none' : 'line-through'">
+                              {{ArmorPiece.Name}}
+                              <button type="button" title="Toggle the Armor Piece" (click)="ToggleArmorPiece(ArmorPiece)">x</button>
+                        </td>
+                  </tr>
+            </div>
+            <div class="col-md-3">
+                  <h2>Chest</h2>
+                  <tr *ngFor="let ArmorPiece of Armory.ChestSeparatePieces">
+                        <td [style.text-decoration]="ArmorPiece.Enabled ? 'none' : 'line-through'">
+                              {{ArmorPiece.Name}}
+                              <button type="button" title="Toggle the Armor Piece" (click)="ToggleArmorPiece(ArmorPiece)">x</button>
+                        </td>
+                  </tr>              
+            </div>
+            <div class="col-md-3">
+                  <h2>Arms</h2>
+                  <tr *ngFor="let ArmorPiece of Armory.ArmsSeparatePieces">
+                        <td [style.text-decoration]="ArmorPiece.Enabled ? 'none' : 'line-through'">
+                              {{ArmorPiece.Name}}
+                              <button type="button" title="Toggle the Armor Piece" (click)="ToggleArmorPiece(ArmorPiece)">x</button>
+                        </td>
+                  </tr>              
+            </div>
+            <div class="col-md-3">
+                  <h2>Legs</h2>
+                  <tr *ngFor="let ArmorPiece of Armory.LegsSeparatePieces">
+                        <td [style.text-decoration]="ArmorPiece.Enabled ? 'none' : 'line-through'">
+                              {{ArmorPiece.Name}}
+                              <button type="button" title="Toggle the Armor Piece" (click)="ToggleArmorPiece(ArmorPiece)">x</button>
+                        </td>
+                  </tr>              
+            </div>
+      </div>
 </div>

@@ -1,8 +1,9 @@
 import { ISortable } from './doublylinkedlist';
 import { IOptimizerComponentContext } from './optimizer.component';
 import { IOptimizertContext } from './optimizer';
+import { IArmorSelectionsComponentContext } from './armor.selections.component';
 
-export class Armory implements IOptimizerComponentContext, IOptimizertContext { 
+export class Armory implements IOptimizerComponentContext, IOptimizertContext, IArmorSelectionsComponentContext { 
     //Data
     Head: ArmorPiece[];
     Chest: ArmorPiece[];
@@ -60,21 +61,6 @@ export class Armory implements IOptimizerComponentContext, IOptimizertContext {
     //Game Progress Component UI
     SelectedCharacter: GameProgressArmorGroup;
     PreviousCharacter:  GameProgressArmorGroup;
-    
-    /*
-    private _Input: number;
-    get Input(): number {
-        return this._Input;
-    }
-    set Input(newInput: number) {
-        this._Input = newInput;
-        this.Output = this._Input.toString();
-    }
-    
-    
-    //Input: number;
-    Output: string;
-    */
     
     constructor(public ArmoryData: ArmoryData) {       
         //Data      
@@ -142,7 +128,7 @@ export class Armory implements IOptimizerComponentContext, IOptimizertContext {
             this.RingsEquipped[0].Weight - this.RingsEquipped[1].Weight - this.RingsEquipped[2].Weight - this.RingsEquipped[3].Weight;   
     }
     
-    EnableDisableArmorSet(SetId: number, Setting: boolean) {
+    EnableDisableArmorSet(SetId: number, Setting: boolean): void {
         
         let Combo: ArmorCombination;
         

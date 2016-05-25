@@ -1,19 +1,5 @@
 "use strict";
 var Armory = (function () {
-    /*
-    private _Input: number;
-    get Input(): number {
-        return this._Input;
-    }
-    set Input(newInput: number) {
-        this._Input = newInput;
-        this.Output = this._Input.toString();
-    }
-    
-    
-    //Input: number;
-    Output: string;
-    */
     function Armory(ArmoryData) {
         this.ArmoryData = ArmoryData;
         //Data      
