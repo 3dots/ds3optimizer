@@ -20,6 +20,8 @@ export class OptimizerComponent implements OnInit, IOptimizerComponentVM {
     Progress: number = 0;
         
     OptimalArmorCombinations: ArmorCombination[];
+    
+    WeaponSelectionsView: boolean = true;
 
     constructor(
         private _router: Router,
@@ -47,6 +49,10 @@ export class OptimizerComponent implements OnInit, IOptimizerComponentVM {
         this._router.navigate(link);          
     }
         
+    SetInventoryView(value: boolean) : void {
+        this.WeaponSelectionsView = value;
+    }
+    
       
     RunOptimization() {  
         new OptimizationEngine(this as IOptimizerComponentVM, this._Armory as IOptimizertContext).ComputeOptimals();

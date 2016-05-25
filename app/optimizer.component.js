@@ -18,6 +18,7 @@ var OptimizerComponent = (function () {
         this._router = _router;
         this._armorService = _armorService;
         this.Progress = 0;
+        this.WeaponSelectionsView = true;
     }
     OptimizerComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -34,6 +35,9 @@ var OptimizerComponent = (function () {
     OptimizerComponent.prototype.gotoGameProgressSelections = function () {
         var link = ['GameProgress'];
         this._router.navigate(link);
+    };
+    OptimizerComponent.prototype.SetInventoryView = function (value) {
+        this.WeaponSelectionsView = value;
     };
     OptimizerComponent.prototype.RunOptimization = function () {
         new optimizer_1.OptimizationEngine(this, this._Armory).ComputeOptimals();

@@ -5,55 +5,66 @@
 <p></p>
 
 <div *ngIf="Armory">
-      <table class="table table-nonfluid">
-            <tbody>
-                  <tr>
-                        <td><label>Vitality</label> <input type="number" step="any" class="ds3input" [(ngModel)]="Armory.Vitality" min=1/></td>                  
-                        <td><label>Weight Fraction Goals</label> <input type="number" step="any" class="ds3input" [(ngModel)]="Armory.FractionGoal"/></td>                        
-                        <td><label>Total Weight: {{ Armory.TotalWeight | number:'.3' }}</label></td>
-                        <td><label>Available Weight For Armor: {{ Armory.AvailableWeight | number:'.3' }}</label></td>
-                  </tr>
-                  <tr>
-                        <td><label>Right Hand Weapons:</label></td>
-                        <td>
-                              <input type="number" step="any" class="ds3input" [(ngModel)]="Armory.RightWeapons[0]" (ngModelChange)="Armory.UpdateTotalWeights()"/>
-                              <input type="number" step="any" class="ds3input" [(ngModel)]="Armory.RightWeapons[1]" (ngModelChange)="Armory.UpdateTotalWeights()"/>
-                              <input type="number" step="any" class="ds3input" [(ngModel)]="Armory.RightWeapons[2]" (ngModelChange)="Armory.UpdateTotalWeights()"/>
-                        </td>
-                        <td></td>
-                        <td></td>
-                  </tr>              
-                  <tr>
-                        <td><label>Left Hand Weapons</label></td>
-                        <td>
-                              <input type="number" step="any" class="ds3input" [(ngModel)]="Armory.LeftWeapons[0]" (ngModelChange)="Armory.UpdateTotalWeights()"/>
-                              <input type="number" step="any" class="ds3input" [(ngModel)]="Armory.LeftWeapons[1]" (ngModelChange)="Armory.UpdateTotalWeights()"/>
-                              <input type="number" step="any" class="ds3input" [(ngModel)]="Armory.LeftWeapons[2]" (ngModelChange)="Armory.UpdateTotalWeights()"/>
-                        </td>
-                        <td></td>
-                        <td></td>
-                  </tr>                              
-                  <tr>
-                        <td><label>Rings</label></td>
-                        <td colspan="3">
-                              <select [(ngModel)]="Armory.RingsEquipped[0]" (ngModelChange)="Armory.UpdateTotalWeights()">
-                                    <option *ngFor="let Ring of Armory.RingData" [ngValue]="Ring">{{Ring.Name}}</option>
-                              </select>
-                              <select [(ngModel)]="Armory.RingsEquipped[1]" (ngModelChange)="Armory.UpdateTotalWeights()">
-                                    <option *ngFor="let Ring of Armory.RingData" [ngValue]="Ring">{{Ring.Name}}</option>
-                              </select>    
-                              <select [(ngModel)]="Armory.RingsEquipped[2]" (ngModelChange)="Armory.UpdateTotalWeights()">
-                                    <option *ngFor="let Ring of Armory.RingData" [ngValue]="Ring">{{Ring.Name}}</option>
-                              </select>    
-                              <select [(ngModel)]="Armory.RingsEquipped[3]" (ngModelChange)="Armory.UpdateTotalWeights()">
-                                    <option *ngFor="let Ring of Armory.RingData" [ngValue]="Ring">{{Ring.Name}}</option>
-                              </select>                                                                                                                           
-                        </td>
-                  </tr>                                
-            </tbody>
-      </table>
+      
+      <button type="button" class="btn btn-primary" (click)="SetInventoryView(true)">Inventory Weights View</button>
+      <button type="button" class="btn btn-primary" (click)="SetInventoryView(false)">Direct Available Weight View</button>
       <p></p>
-
+      
+      <div *ngIf="WeaponSelectionsView">    
+            <table class="table table-nonfluid">
+                  <tbody>
+                        <tr>
+                              <td><label>Vitality</label> <input type="number" step="any" class="ds3input" [(ngModel)]="Armory.Vitality" min=1/></td>                  
+                              <td><label>Weight Fraction Goals</label> <input type="number" step="any" class="ds3input" [(ngModel)]="Armory.FractionGoal"/></td>                        
+                              <td><label>Total Weight: {{ Armory.TotalWeight | number:'.3' }}</label></td>
+                              <td><label>Available Weight For Armor: {{ Armory.AvailableWeight | number:'.3' }}</label></td>
+                        </tr>
+                        <tr>
+                              <td><label>Right Hand Weapons:</label></td>
+                              <td>
+                                    <input type="number" step="any" class="ds3input" [(ngModel)]="Armory.RightWeapons[0]" (ngModelChange)="Armory.UpdateTotalWeights()"/>
+                                    <input type="number" step="any" class="ds3input" [(ngModel)]="Armory.RightWeapons[1]" (ngModelChange)="Armory.UpdateTotalWeights()"/>
+                                    <input type="number" step="any" class="ds3input" [(ngModel)]="Armory.RightWeapons[2]" (ngModelChange)="Armory.UpdateTotalWeights()"/>
+                              </td>
+                              <td></td>
+                              <td></td>
+                        </tr>              
+                        <tr>
+                              <td><label>Left Hand Weapons</label></td>
+                              <td>
+                                    <input type="number" step="any" class="ds3input" [(ngModel)]="Armory.LeftWeapons[0]" (ngModelChange)="Armory.UpdateTotalWeights()"/>
+                                    <input type="number" step="any" class="ds3input" [(ngModel)]="Armory.LeftWeapons[1]" (ngModelChange)="Armory.UpdateTotalWeights()"/>
+                                    <input type="number" step="any" class="ds3input" [(ngModel)]="Armory.LeftWeapons[2]" (ngModelChange)="Armory.UpdateTotalWeights()"/>
+                              </td>
+                              <td></td>
+                              <td></td>
+                        </tr>                              
+                        <tr>
+                              <td><label>Rings</label></td>
+                              <td colspan="3">
+                                    <select [(ngModel)]="Armory.RingsEquipped[0]" (ngModelChange)="Armory.UpdateTotalWeights()">
+                                          <option *ngFor="let Ring of Armory.RingData" [ngValue]="Ring">{{Ring.Name}}</option>
+                                    </select>
+                                    <select [(ngModel)]="Armory.RingsEquipped[1]" (ngModelChange)="Armory.UpdateTotalWeights()">
+                                          <option *ngFor="let Ring of Armory.RingData" [ngValue]="Ring">{{Ring.Name}}</option>
+                                    </select>    
+                                    <select [(ngModel)]="Armory.RingsEquipped[2]" (ngModelChange)="Armory.UpdateTotalWeights()">
+                                          <option *ngFor="let Ring of Armory.RingData" [ngValue]="Ring">{{Ring.Name}}</option>
+                                    </select>    
+                                    <select [(ngModel)]="Armory.RingsEquipped[3]" (ngModelChange)="Armory.UpdateTotalWeights()">
+                                          <option *ngFor="let Ring of Armory.RingData" [ngValue]="Ring">{{Ring.Name}}</option>
+                                    </select>                                                                                                                           
+                              </td>
+                        </tr>                                
+                  </tbody>
+            </table>     
+      </div>
+      <div *ngIf="!WeaponSelectionsView">
+            <label>Available Weight For Armor:</label>
+            <input type="number" step="any" class="ds3input" [(ngModel)]="Armory.AvailableWeight"/>
+      </div>  
+      <p></p>
+     
      
       <label>Result List Length</label>
       <input type="number" class="ds3input" [(ngModel)]="Armory.ResultListLength" min=1/>
