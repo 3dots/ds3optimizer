@@ -2,8 +2,9 @@ import { ISortable } from './doublylinkedlist';
 import { IOptimizerComponentContext } from './optimizer.component';
 import { IOptimizertContext } from './optimizer';
 import { IArmorSelectionsComponentContext } from './armor.selections.component';
+import { IGameProgressComponentContext } from './game.progress.component';
 
-export class Armory implements IOptimizerComponentContext, IOptimizertContext, IArmorSelectionsComponentContext { 
+export class Armory implements IOptimizerComponentContext, IOptimizertContext, IArmorSelectionsComponentContext, IGameProgressComponentContext { 
     //Data
     Head: ArmorPiece[];
     Chest: ArmorPiece[];
@@ -289,7 +290,7 @@ export class Armory implements IOptimizerComponentContext, IOptimizertContext, I
     }
     
     //Game Progress Component UI           
-    EnableArmorGroup(Group: GameProgressArmorGroup) {
+    EnableArmorGroup(Group: GameProgressArmorGroup): void {
         if(Group.ArmorPiecesIds != null) {
             for(var i = 0; i < this.Head.length; i++) {
                 for(var j = 0; j < Group.ArmorPiecesIds.length; j++) {
@@ -381,7 +382,7 @@ export class Armory implements IOptimizerComponentContext, IOptimizertContext, I
                    
     }
     
-    TryToCancelArmorGroup(Group: GameProgressArmorGroup, PossibleConflictGroups: GameProgressArmorGroup[]){
+    TryToCancelArmorGroup(Group: GameProgressArmorGroup, PossibleConflictGroups: GameProgressArmorGroup[]): void {
         //if canceling a piece, we can't if a) there is an enabled Bonfire with that piece id. or b> there is an enabled Bonfire with a set with same setid.
         //thus need setid of piece as well.  
         //if cancelling a set, we canf't if a) there is an enabled Bonfire with that classid => after that have to check each piece.
@@ -423,7 +424,7 @@ export class Armory implements IOptimizerComponentContext, IOptimizertContext, I
         }
     }
     
-    TryToCancelArmorPiece(Piece: ArmorPiece, PossibleConflictGroups: GameProgressArmorGroup[]) {
+    TryToCancelArmorPiece(Piece: ArmorPiece, PossibleConflictGroups: GameProgressArmorGroup[]): void {
         
         for(var i = 0; i < PossibleConflictGroups.length; i++){
             if(PossibleConflictGroups[i].Enabled == false)

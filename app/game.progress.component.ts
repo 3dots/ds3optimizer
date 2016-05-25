@@ -12,12 +12,8 @@ import { ArmorService } from './armory.service';
 })
 export class GameProgressComponent implements OnInit{
     
-    Armory: Armory;
-    
-    StartingCharacterList: GameProgressArmorGroup[];
-    GameProgressConditions: GameProgressArmorGroup[];  
-
-    
+    Armory: IGameProgressComponentContext;
+        
      constructor(
         private _router: Router,
         private _armorService: ArmorService) {
@@ -28,12 +24,7 @@ export class GameProgressComponent implements OnInit{
         this._armorService.getArmorData()
             .then( (data: Armory)=> 
             { 
-                this.Armory = data;                
-                
-                this.StartingCharacterList = this.Armory.StartingCharacter;
-                this.GameProgressConditions = this.Armory.GameProgressConditions;
-                
-
+                this.Armory = data as IGameProgressComponentContext;                
             });   
     }
     
@@ -55,7 +46,7 @@ export class GameProgressComponent implements OnInit{
         
         //Need to cancle the previous one so long as it doesnt conflict with bonfires
         if(this.Armory.PreviousCharacter != null) {
-            this.Armory.TryToCancelArmorGroup(this.Armory.PreviousCharacter, this.GameProgressConditions);
+            this.Armory.TryToCancelArmorGroup(this.Armory.PreviousCharacter, this.Armory.GameProgressConditions);
             this.Armory.PreviousCharacter.Enabled = false;
         }
 
@@ -74,21 +65,34 @@ export class GameProgressComponent implements OnInit{
             this.Armory.EnableArmorGroup(BonfireChanged);
         }
         else {
-            this.Armory.TryToCancelArmorGroup(BonfireChanged, this.StartingCharacterList);
+            this.Armory.TryToCancelArmorGroup(BonfireChanged, this.Armory.StartingCharacter);
         }
     }
     
     DisableAllBonfires(){
-        for(var i = 0; i < this.GameProgressConditions.length; i++){
-            this.Armory.TryToCancelArmorGroup(this.GameProgressConditions[i], this.StartingCharacterList);
-            this.GameProgressConditions[i].Enabled = false;
+        for(var i = 0; i < this.Armory.GameProgressConditions.length; i++){
+            this.Armory.TryToCancelArmorGroup(this.Armory.GameProgressConditions[i], this.Armory.StartingCharacter);
+            this.Armory.GameProgressConditions[i].Enabled = false;
         }
     }
     
     EnableAllBonfires() {
-        for(var i = 0; i < this.GameProgressConditions.length; i++){
-            this.Armory.EnableArmorGroup(this.GameProgressConditions[i]);
-            this.GameProgressConditions[i].Enabled = true;
+        for(var i = 0; i < this.Armory.GameProgressConditions.length; i++){
+            this.Armory.EnableArmorGroup(this.Armory.GameProgressConditions[i]);
+            this.Armory.GameProgressConditions[i].Enabled = true;
         }        
     }
+}
+
+export interface IGameProgressComponentContext {
+    StartingCharacter: GameProgressArmorGroup[];
+    GameProgressConditions: GameProgressArmorGroup[];
+    
+    SelectedCharacter: GameProgressArmorGroup;
+    PreviousCharacter:  GameProgressArmorGroup;
+    
+    EnableArmorGroup(Group: GameProgressArmorGroup): void;
+    
+    TryToCancelArmorGroup(Group: GameProgressArmorGroup, PossibleConflictGroups: GameProgressArmorGroup[]): void;
+    
 }

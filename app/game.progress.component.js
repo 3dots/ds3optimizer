@@ -21,8 +21,6 @@ var GameProgressComponent = (function () {
         this._armorService.getArmorData()
             .then(function (data) {
             _this.Armory = data;
-            _this.StartingCharacterList = _this.Armory.StartingCharacter;
-            _this.GameProgressConditions = _this.Armory.GameProgressConditions;
         });
     };
     GameProgressComponent.prototype.gotoOptimizer = function () {
@@ -38,7 +36,7 @@ var GameProgressComponent = (function () {
         NewClass.Enabled = true;
         //Need to cancle the previous one so long as it doesnt conflict with bonfires
         if (this.Armory.PreviousCharacter != null) {
-            this.Armory.TryToCancelArmorGroup(this.Armory.PreviousCharacter, this.GameProgressConditions);
+            this.Armory.TryToCancelArmorGroup(this.Armory.PreviousCharacter, this.Armory.GameProgressConditions);
             this.Armory.PreviousCharacter.Enabled = false;
         }
         //console.log(this.Armory.SelectedCharacter.ProgressCondition);
@@ -53,19 +51,19 @@ var GameProgressComponent = (function () {
             this.Armory.EnableArmorGroup(BonfireChanged);
         }
         else {
-            this.Armory.TryToCancelArmorGroup(BonfireChanged, this.StartingCharacterList);
+            this.Armory.TryToCancelArmorGroup(BonfireChanged, this.Armory.StartingCharacter);
         }
     };
     GameProgressComponent.prototype.DisableAllBonfires = function () {
-        for (var i = 0; i < this.GameProgressConditions.length; i++) {
-            this.Armory.TryToCancelArmorGroup(this.GameProgressConditions[i], this.StartingCharacterList);
-            this.GameProgressConditions[i].Enabled = false;
+        for (var i = 0; i < this.Armory.GameProgressConditions.length; i++) {
+            this.Armory.TryToCancelArmorGroup(this.Armory.GameProgressConditions[i], this.Armory.StartingCharacter);
+            this.Armory.GameProgressConditions[i].Enabled = false;
         }
     };
     GameProgressComponent.prototype.EnableAllBonfires = function () {
-        for (var i = 0; i < this.GameProgressConditions.length; i++) {
-            this.Armory.EnableArmorGroup(this.GameProgressConditions[i]);
-            this.GameProgressConditions[i].Enabled = true;
+        for (var i = 0; i < this.Armory.GameProgressConditions.length; i++) {
+            this.Armory.EnableArmorGroup(this.Armory.GameProgressConditions[i]);
+            this.Armory.GameProgressConditions[i].Enabled = true;
         }
     };
     GameProgressComponent = __decorate([

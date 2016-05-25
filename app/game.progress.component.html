@@ -4,15 +4,22 @@
 <p></p>
 
 
+<div *ngIf="Armory">
+    <h1>Starting Class</h1>
+    <select [(ngModel)]="Armory.SelectedCharacter" (ngModelChange)="onCharacterChange($event)">
+        <option *ngFor="let CharacterClass of Armory.StartingCharacter" [ngValue]="CharacterClass">{{CharacterClass.ProgressCondition}}</option>
+    </select>
 
-<h1>Starting Class</h1>
-<select *ngIf="Armory" [(ngModel)]="Armory.SelectedCharacter" (ngModelChange)="onCharacterChange($event)">
-    <option *ngFor="let CharacterClass of StartingCharacterList" [ngValue]="CharacterClass">{{CharacterClass.ProgressCondition}}</option>
-</select>
-
-<h1>Bonfire Progress</h1>
-<button type="button" class="btn-success" (click)="EnableAllBonfires()">Enable All Bonfires</button>
-<button type="button" class="btn-danger" (click)="DisableAllBonfires()">Disable All Bonfires</button> <p></p>
-<div *ngFor="let BonfireCondition of GameProgressConditions"><label> <input type="checkbox" [(ngModel)]="BonfireCondition.Enabled" (ngModelChange)="onChangeBonfire(BonfireCondition)" /> {{BonfireCondition.ProgressCondition}}</label> <p></p></div>
+    <h1>Bonfire Progress</h1>
+    <button type="button" class="btn-success" (click)="EnableAllBonfires()">Enable All Bonfires</button>
+    <button type="button" class="btn-danger" (click)="DisableAllBonfires()">Disable All Bonfires</button> <p></p>
+    <div *ngFor="let BonfireCondition of Armory.GameProgressConditions">
+        <label> 
+            <input type="checkbox" [(ngModel)]="BonfireCondition.Enabled" (ngModelChange)="onChangeBonfire(BonfireCondition)"/> 
+            {{BonfireCondition.ProgressCondition}}
+        </label> 
+        <p></p>
+    </div>
+</div>
 
 
