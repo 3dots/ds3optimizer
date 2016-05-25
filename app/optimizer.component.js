@@ -56,6 +56,51 @@ var OptimizerComponent = (function () {
         this.Armory.EnableDisableArmorSet(SetId, false);
         this.RunOptimization();
     };
+    OptimizerComponent.prototype.JustPhysical = function () {
+        this.Armory.Weights.Physical = 1;
+        this.Armory.Weights.Strike = 1;
+        this.Armory.Weights.Slash = 1;
+        this.Armory.Weights.Thrust = 1;
+        this.Armory.Weights.Magic = 0;
+        this.Armory.Weights.Fire = 0;
+        this.Armory.Weights.Lightning = 0;
+        this.Armory.Weights.Dark = 0;
+        this.Armory.Weights.Bleed = 0;
+        this.Armory.Weights.Poison = 0;
+        this.Armory.Weights.Frost = 0;
+        this.Armory.Weights.Curse = 0;
+        this.Armory.Weights.Poise = 0;
+    };
+    OptimizerComponent.prototype.JustMFLD = function () {
+        this.Armory.Weights.Physical = 0;
+        this.Armory.Weights.Strike = 0;
+        this.Armory.Weights.Slash = 0;
+        this.Armory.Weights.Thrust = 0;
+        this.Armory.Weights.Magic = 1;
+        this.Armory.Weights.Fire = 1;
+        this.Armory.Weights.Lightning = 1;
+        this.Armory.Weights.Dark = 1;
+        this.Armory.Weights.Bleed = 0;
+        this.Armory.Weights.Poison = 0;
+        this.Armory.Weights.Frost = 0;
+        this.Armory.Weights.Curse = 0;
+        this.Armory.Weights.Poise = 0;
+    };
+    OptimizerComponent.prototype.BothPhysicalAndMFLD = function () {
+        this.Armory.Weights.Physical = 1;
+        this.Armory.Weights.Strike = 1;
+        this.Armory.Weights.Slash = 1;
+        this.Armory.Weights.Thrust = 1;
+        this.Armory.Weights.Magic = 1;
+        this.Armory.Weights.Fire = 1;
+        this.Armory.Weights.Lightning = 1;
+        this.Armory.Weights.Dark = 1;
+        this.Armory.Weights.Bleed = 0;
+        this.Armory.Weights.Poison = 0;
+        this.Armory.Weights.Frost = 0;
+        this.Armory.Weights.Curse = 0;
+        this.Armory.Weights.Poise = 0;
+    };
     OptimizerComponent = __decorate([
         core_1.Component({
             selector: 'my-optimizer',

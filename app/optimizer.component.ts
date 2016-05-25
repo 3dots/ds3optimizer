@@ -78,35 +78,63 @@ export class OptimizerComponent implements OnInit, IOptimizerComponentVM {
         
         this.RunOptimization();
     }
-    
-    /*
-    ResetWeights() {
-        this.Weights.Physical = 1;
-        this.Weights.Strike = 1;
-        this.Weights.Slash = 1;
-        this.Weights.Thrust = 1;
+       
+    JustPhysical(): void {
+        this.Armory.Weights.Physical = 1;
+        this.Armory.Weights.Strike = 1;
+        this.Armory.Weights.Slash = 1;
+        this.Armory.Weights.Thrust = 1;
         
-        this.Weights.Magic = 0;
-        this.Weights.Fire = 0;
-        this.Weights.Lightning = 0;
-        this.Weights.Dark = 0;
+        this.Armory.Weights.Magic = 0;
+        this.Armory.Weights.Fire = 0;
+        this.Armory.Weights.Lightning = 0;
+        this.Armory.Weights.Dark = 0;
         
-        this.Weights.Bleed = 0;
-        this.Weights.Poison = 0;
-        this.Weights.Frost = 0;
-        this.Weights.Curse = 0;
+        this.Armory.Weights.Bleed = 0;
+        this.Armory.Weights.Poison = 0;
+        this.Armory.Weights.Frost = 0;
+        this.Armory.Weights.Curse = 0;
         
-        this.Weights.Poise = 0;
-      
+        this.Armory.Weights.Poise = 0;   
     }
     
-    SetMagicWeights() {
-        this.Weights.Magic = 1;
-        this.Weights.Fire = 1;
-        this.Weights.Lightning = 1;
-        this.Weights.Dark = 1;
+    JustMFLD(): void {
+        this.Armory.Weights.Physical = 0;
+        this.Armory.Weights.Strike = 0;
+        this.Armory.Weights.Slash = 0;
+        this.Armory.Weights.Thrust = 0;
+        
+        this.Armory.Weights.Magic = 1;
+        this.Armory.Weights.Fire = 1;
+        this.Armory.Weights.Lightning = 1;
+        this.Armory.Weights.Dark = 1;
+        
+        this.Armory.Weights.Bleed = 0;
+        this.Armory.Weights.Poison = 0;
+        this.Armory.Weights.Frost = 0;
+        this.Armory.Weights.Curse = 0;
+        
+        this.Armory.Weights.Poise = 0;  
     }
-    */
+    
+    BothPhysicalAndMFLD(): void {
+        this.Armory.Weights.Physical = 1;
+        this.Armory.Weights.Strike = 1;
+        this.Armory.Weights.Slash = 1;
+        this.Armory.Weights.Thrust = 1;
+        
+        this.Armory.Weights.Magic = 1;
+        this.Armory.Weights.Fire = 1;
+        this.Armory.Weights.Lightning = 1;
+        this.Armory.Weights.Dark = 1;
+        
+        this.Armory.Weights.Bleed = 0;
+        this.Armory.Weights.Poison = 0;
+        this.Armory.Weights.Frost = 0;
+        this.Armory.Weights.Curse = 0;
+        
+        this.Armory.Weights.Poise = 0;  
+    }    
 }
 
 

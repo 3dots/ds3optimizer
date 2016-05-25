@@ -38,9 +38,9 @@ Feature goals, May 24th.
 
 //Done//10* Structure Armory class more Interfacy? Not all views need all properties.
 
-8* Optimizer view give option to select actual weapon slots/rings slot OR just plain input for armor weight goal.
+//Done//8* Optimizer view give option to select actual weapon slots/rings slot OR just plain input for armor weight goal.
 
-9* Weights buttons. Add a just MFLD button. Get rid of enable magic? 
+//Done//9* Weights buttons. Add a just MFLD button. Get rid of enable magic? 
 Can have just phsical. And just magic. AND Both.
 
 0.1* Add effects of rings into defenses?
