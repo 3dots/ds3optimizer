@@ -32,10 +32,11 @@ Feature goals, May 24th.
 
 8* Sort rings alphabetically.
 
-9* Reset armor slections to Enabled All. In optimizer view, as well as induvidual slots (head/chest) in armor selections view.
-Make reset button global?
+//Done//9* Reset armor slections to Enabled All. In optimizer view, as well as induvidual slots (head/chest) in armor selections view.
 
-10* Structure Armory class more Interfacy? Not all views need all properties.
+7* Make reset button global?
+
+//Done//10* Structure Armory class more Interfacy? Not all views need all properties.
 
 8* Optimizer view give option to select actual weapon slots/rings slot OR just plain input for armor weight goal.
 

@@ -6,15 +6,22 @@
 <div *ngIf="Armory">
       <label>Total Armor Pieces: {{Armory.LargestPieceId}}</label>
       <label>Total Set Count: {{Armory.LargestSetId}}</label>
-
+      
       <h1>Armor Sets</h1>
       <button type="button" class="btn btn-primary" (click)="SortAlphabetically()">Sort Sets Alphabetically</button> 
       <button type="button" class="btn btn-primary" (click)="SortByWeight()">Sort Sets by Weight</button> 
       <p></p>
-      <button type="button" class="btn-danger" (click)="DisableAllHead()">Disable All Head Pieces</button> 
-      <button type="button" class="btn-danger" (click)="DisableAllChest()">Disable All Chest Pieces</button> 
-      <button type="button" class="btn-danger" (click)="DisableAllArms()">Disable All Arms Pieces</button> 
-      <button type="button" class="btn-danger" (click)="DisableAllLegs()">Disable All Legs Pieces</button> 
+      
+      <button type="button" class="btn-success" (click)="EnableDisableAllHead(true)">Enable All Head Pieces</button> 
+      <button type="button" class="btn-success" (click)="EnableDisableAllChest(true)">Enable All Chest Pieces</button> 
+      <button type="button" class="btn-success" (click)="EnableDisableAllArms(true)">Enable All Arms Pieces</button> 
+      <button type="button" class="btn-success" (click)="EnableDisableAllLegs(true)">Enable All Legs Pieces</button> 
+      <p></p> 
+           
+      <button type="button" class="btn-danger" (click)="EnableDisableAllHead(false)">Disable All Head Pieces</button> 
+      <button type="button" class="btn-danger" (click)="EnableDisableAllChest(false)">Disable All Chest Pieces</button> 
+      <button type="button" class="btn-danger" (click)="EnableDisableAllArms(false)">Disable All Arms Pieces</button> 
+      <button type="button" class="btn-danger" (click)="EnableDisableAllLegs(false)">Disable All Legs Pieces</button> 
       <p></p>
 
       <table class="table table-hover">

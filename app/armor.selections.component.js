@@ -46,24 +46,24 @@ var ArmorSelectionsComponent = (function () {
             SetId = Combo.Legs.SetId;
         this.Armory.EnableDisableArmorSet(SetId, EnableDisable);
     };
-    ArmorSelectionsComponent.prototype.DisableAllHead = function () {
+    ArmorSelectionsComponent.prototype.EnableDisableAllHead = function (value) {
         for (var i = 1; i < this.Armory.Head.length; i++) {
-            this.Armory.Head[i].Enabled = false;
+            this.Armory.Head[i].Enabled = value;
         }
     };
-    ArmorSelectionsComponent.prototype.DisableAllChest = function () {
+    ArmorSelectionsComponent.prototype.EnableDisableAllChest = function (value) {
         for (var i = 1; i < this.Armory.Chest.length; i++) {
-            this.Armory.Chest[i].Enabled = false;
+            this.Armory.Chest[i].Enabled = value;
         }
     };
-    ArmorSelectionsComponent.prototype.DisableAllArms = function () {
+    ArmorSelectionsComponent.prototype.EnableDisableAllArms = function (value) {
         for (var i = 1; i < this.Armory.Arms.length; i++) {
-            this.Armory.Arms[i].Enabled = false;
+            this.Armory.Arms[i].Enabled = value;
         }
     };
-    ArmorSelectionsComponent.prototype.DisableAllLegs = function () {
+    ArmorSelectionsComponent.prototype.EnableDisableAllLegs = function (value) {
         for (var i = 1; i < this.Armory.Legs.length; i++) {
-            this.Armory.Legs[i].Enabled = false;
+            this.Armory.Legs[i].Enabled = value;
         }
     };
     ArmorSelectionsComponent.prototype.SortAlphabetically = function () {
