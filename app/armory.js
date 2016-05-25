@@ -1,20 +1,22 @@
 "use strict";
-var ArmoryData = (function () {
-    function ArmoryData() {
-    }
-    return ArmoryData;
-}());
-exports.ArmoryData = ArmoryData;
-var Ring = (function () {
-    function Ring() {
-    }
-    return Ring;
-}());
-exports.Ring = Ring;
 var Armory = (function () {
+    /*
+    private _Input: number;
+    get Input(): number {
+        return this._Input;
+    }
+    set Input(newInput: number) {
+        this._Input = newInput;
+        this.Output = this._Input.toString();
+    }
+    
+    
+    //Input: number;
+    Output: string;
+    */
     function Armory(ArmoryData) {
         this.ArmoryData = ArmoryData;
-        this.Output = 0;
+        //Data      
         this.Head = ArmoryData.Head;
         this.Chest = ArmoryData.Chest;
         this.Arms = ArmoryData.Arms;
@@ -22,10 +24,13 @@ var Armory = (function () {
         this.StartingCharacter = ArmoryData.StartingCharacter;
         this.GameProgressConditions = ArmoryData.GameProgressConditions;
         this.RingData = ArmoryData.Rings;
+        //Optimizer Component UI             
+        this._Vitality = 10;
+        this._FractionGoal = 0.7;
+        this.RightWeapons = [0, 0, 0];
+        this.LeftWeapons = [0, 0, 0];
         this.RingsEquipped = [this.RingData[0], this.RingData[0], this.RingData[0], this.RingData[0]];
-        this.Init_FindAndSetLargestIds();
-        this.Init_FormAllSets();
-        this.Init_FormSeparatePieceArrays();
+        this.UpdateTotalWeights(); //initial AvailableWeight and TotalWeight
         this.ResultListLength = 10;
         this.Minimums = new OptimizationParameters();
         this.Weights = new OptimizationParameters();
@@ -33,18 +38,84 @@ var Armory = (function () {
         this.Weights.Strike = 1;
         this.Weights.Slash = 1;
         this.Weights.Thrust = 1;
+        //Armor Selections Component UI
+        this.Init_FindAndSetLargestIds();
+        this.Init_FormAllSets();
+        this.Init_FormSeparatePieceArrays();
+        //Game Progress Component UI
         this.SelectedCharacter = null;
         this.PreviousCharacter = null;
-        this.Vitality = 10;
-        this.FractionGoal = 0.7;
-        this.TotalWeight = this.EnduranceToWeight(this.Vitality);
-        this.AvailableWeight = this.TotalWeight * this.FractionGoal;
-        this.RightWeapons = [0, 0, 0];
-        this.LeftWeapons = [0, 0, 0];
     }
-    Armory.prototype.EnduranceToWeight = function (Vitality) {
-        return 50 + Vitality - 10;
+    Object.defineProperty(Armory.prototype, "Vitality", {
+        get: function () {
+            return this._Vitality;
+        },
+        set: function (newValue) {
+            this._Vitality = newValue;
+            this.UpdateTotalWeights();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Armory.prototype, "FractionGoal", {
+        get: function () {
+            return this._FractionGoal;
+        },
+        set: function (newValue) {
+            this._FractionGoal = newValue;
+            this.UpdateTotalWeights();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    //Optimizer Component UI
+    Armory.prototype.UpdateTotalWeights = function () {
+        this.TotalWeight =
+            ((50 + this.Vitality - 10) +
+                (this.RingsEquipped[0].VitalityModifier != null ? this.RingsEquipped[0].VitalityModifier : 0) +
+                (this.RingsEquipped[1].VitalityModifier != null ? this.RingsEquipped[1].VitalityModifier : 0) +
+                (this.RingsEquipped[2].VitalityModifier != null ? this.RingsEquipped[2].VitalityModifier : 0) +
+                (this.RingsEquipped[3].VitalityModifier != null ? this.RingsEquipped[3].VitalityModifier : 0)) *
+                (this.RingsEquipped[0].ProductModfier != null ? this.RingsEquipped[0].ProductModfier : 1) *
+                (this.RingsEquipped[1].ProductModfier != null ? this.RingsEquipped[1].ProductModfier : 1) *
+                (this.RingsEquipped[2].ProductModfier != null ? this.RingsEquipped[2].ProductModfier : 1) *
+                (this.RingsEquipped[3].ProductModfier != null ? this.RingsEquipped[3].ProductModfier : 1);
+        this.AvailableWeight =
+            this.TotalWeight * this.FractionGoal -
+                this.RightWeapons[0] - this.RightWeapons[1] - this.RightWeapons[2] -
+                this.LeftWeapons[0] - this.LeftWeapons[1] - this.LeftWeapons[2] -
+                this.RingsEquipped[0].Weight - this.RingsEquipped[1].Weight - this.RingsEquipped[2].Weight - this.RingsEquipped[3].Weight;
     };
+    Armory.prototype.EnableDisableArmorSet = function (SetId, Setting) {
+        var Combo;
+        for (var i = 0; i <= this.ArmorSets.length; i++) {
+            if (this.ArmorSets[i].Head.SetId == SetId ||
+                this.ArmorSets[i].Chest.SetId == SetId ||
+                this.ArmorSets[i].Arms.SetId == SetId ||
+                this.ArmorSets[i].Legs.SetId == SetId) {
+                Combo = this.ArmorSets[i];
+                break;
+            }
+        }
+        if (Combo.Head.SetId == SetId)
+            Combo.Head.Enabled = Setting;
+        if (Combo.Chest.SetId == SetId)
+            Combo.Chest.Enabled = Setting;
+        if (Combo.Arms.SetId == SetId)
+            Combo.Arms.Enabled = Setting;
+        if (Combo.Legs.SetId == SetId)
+            Combo.Legs.Enabled = Setting;
+    };
+    //IOptimizertContext        
+    Armory.prototype.CountHeadArmor = function () {
+        var result = 0;
+        for (var i = 0; i < this.Head.length; i++) {
+            if (this.Head[i].Enabled)
+                result++;
+        }
+        return result;
+    };
+    //Armor Selections Component UI    
     Armory.prototype.Init_FindAndSetLargestIds = function () {
         var LargestPieceId = 0;
         var LargestSetId = 0;
@@ -141,26 +212,7 @@ var Armory = (function () {
         }
         this.LegsSeparatePieces.sort(function (a, b) { return a.Name.localeCompare(b.Name); });
     };
-    Armory.prototype.EnableDisableArmorSet = function (SetId, Setting) {
-        var Combo;
-        for (var i = 0; i <= this.ArmorSets.length; i++) {
-            if (this.ArmorSets[i].Head.SetId == SetId ||
-                this.ArmorSets[i].Chest.SetId == SetId ||
-                this.ArmorSets[i].Arms.SetId == SetId ||
-                this.ArmorSets[i].Legs.SetId == SetId) {
-                Combo = this.ArmorSets[i];
-                break;
-            }
-        }
-        if (Combo.Head.SetId == SetId)
-            Combo.Head.Enabled = Setting;
-        if (Combo.Chest.SetId == SetId)
-            Combo.Chest.Enabled = Setting;
-        if (Combo.Arms.SetId == SetId)
-            Combo.Arms.Enabled = Setting;
-        if (Combo.Legs.SetId == SetId)
-            Combo.Legs.Enabled = Setting;
-    };
+    //Game Progress Component UI           
     Armory.prototype.EnableArmorGroup = function (Group) {
         if (Group.ArmorPiecesIds != null) {
             for (var i = 0; i < this.Head.length; i++) {
@@ -222,14 +274,6 @@ var Armory = (function () {
                 }
             }
         }
-    };
-    Armory.prototype.CountHeadArmor = function () {
-        var result = 0;
-        for (var i = 0; i < this.Head.length; i++) {
-            if (this.Head[i].Enabled)
-                result++;
-        }
-        return result;
     };
     Armory.prototype.FindPieceByPieceId = function (PieceId) {
         for (var i = 1; i < this.Head.length; i++) {
@@ -312,6 +356,18 @@ var Armory = (function () {
     return Armory;
 }());
 exports.Armory = Armory;
+var ArmoryData = (function () {
+    function ArmoryData() {
+    }
+    return ArmoryData;
+}());
+exports.ArmoryData = ArmoryData;
+var Ring = (function () {
+    function Ring() {
+    }
+    return Ring;
+}());
+exports.Ring = Ring;
 var ArmorPiece = (function () {
     function ArmorPiece() {
     }

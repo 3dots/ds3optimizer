@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router-deprecated';
 
-import { Armory, ArmorPiece, ArmorCombination, GameProgressArmorGroup} from './armory';
+import { Armory, ArmorCombination, GameProgressArmorGroup} from './armory';
 import { ArmorService } from './armory.service';
 
 @Component({

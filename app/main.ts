@@ -7,6 +7,9 @@ import {provide}           from '@angular/core';
 import {LocationStrategy,
         HashLocationStrategy} from '@angular/common';
 
+import {enableProdMode} from '@angular/core';
+enableProdMode();
+
 //bootstrap(AppComponent);
 bootstrap(AppComponent, [
   ROUTER_PROVIDERS,

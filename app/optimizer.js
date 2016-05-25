@@ -2,14 +2,11 @@
 var armory_1 = require('./armory');
 var doublylinkedlist_1 = require('./doublylinkedlist');
 var OptimizationEngine = (function () {
-    function OptimizationEngine(_ViewModel) {
+    function OptimizationEngine(_ViewModel, Armory) {
         this._ViewModel = _ViewModel;
-        this.MaxWeight = _ViewModel.Armory.AvailableWeight;
-        this.MaxListLength = _ViewModel.Armory.ResultListLength;
-        this.Armory = _ViewModel.Armory;
-        this.Minimums = _ViewModel.Minimums;
-        this.ACF = new armory_1.ArmorCombinationFactory(_ViewModel.Weights);
-        this.List = new doublylinkedlist_1.DoublyLinkedList(this.MaxListLength);
+        this.Armory = Armory;
+        this.ACF = new armory_1.ArmorCombinationFactory(this.Armory.Weights);
+        this.List = new doublylinkedlist_1.DoublyLinkedList(this.Armory.ResultListLength);
     }
     OptimizationEngine.prototype.ComputeOptimals = function () {
         this.Progress = 0;
@@ -37,23 +34,23 @@ var OptimizationEngine = (function () {
                     for (var il = 0; il < Context.Armory.Legs.length; il++) {
                         if (Context.Armory.Legs[il].Enabled == false)
                             continue;
-                        if (Context.Armory.Head[ih].Weight + Context.Armory.Chest[ic].Weight + Context.Armory.Arms[ia].Weight + Context.Armory.Legs[il].Weight > Context.MaxWeight)
+                        if (Context.Armory.Head[ih].Weight + Context.Armory.Chest[ic].Weight + Context.Armory.Arms[ia].Weight + Context.Armory.Legs[il].Weight > Context.Armory.AvailableWeight)
                             continue;
                         var combo = Context.ACF.Combine(Context.Armory.Head[ih], Context.Armory.Chest[ic], Context.Armory.Arms[ia], Context.Armory.Legs[il]);
-                        if (combo.PhysicalAverage >= Context.Minimums.PhysicalAverage &&
-                            combo.Physical >= Context.Minimums.Physical &&
-                            combo.Strike >= Context.Minimums.Strike &&
-                            combo.Slash >= Context.Minimums.Slash &&
-                            combo.Thrust >= Context.Minimums.Thrust &&
-                            combo.Magic >= Context.Minimums.Magic &&
-                            combo.Fire >= Context.Minimums.Fire &&
-                            combo.Lightning >= Context.Minimums.Lightning &&
-                            combo.Dark >= Context.Minimums.Dark &&
-                            combo.Bleed >= Context.Minimums.Bleed &&
-                            combo.Poison >= Context.Minimums.Poison &&
-                            combo.Frost >= Context.Minimums.Frost &&
-                            combo.Curse >= Context.Minimums.Curse &&
-                            combo.Poise >= Context.Minimums.Poise) {
+                        if (combo.PhysicalAverage >= Context.Armory.Minimums.PhysicalAverage &&
+                            combo.Physical >= Context.Armory.Minimums.Physical &&
+                            combo.Strike >= Context.Armory.Minimums.Strike &&
+                            combo.Slash >= Context.Armory.Minimums.Slash &&
+                            combo.Thrust >= Context.Armory.Minimums.Thrust &&
+                            combo.Magic >= Context.Armory.Minimums.Magic &&
+                            combo.Fire >= Context.Armory.Minimums.Fire &&
+                            combo.Lightning >= Context.Armory.Minimums.Lightning &&
+                            combo.Dark >= Context.Armory.Minimums.Dark &&
+                            combo.Bleed >= Context.Armory.Minimums.Bleed &&
+                            combo.Poison >= Context.Armory.Minimums.Poison &&
+                            combo.Frost >= Context.Armory.Minimums.Frost &&
+                            combo.Curse >= Context.Armory.Minimums.Curse &&
+                            combo.Poise >= Context.Armory.Minimums.Poise) {
                             Context.List.TryToAdd(combo);
                         }
                     }

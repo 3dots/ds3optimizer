@@ -4,270 +4,226 @@
 <button type="button" class="btn btn-primary" (click)="gotoGameProgressSelections()">Game Progress</button>
 <p></p>
 
+<!--
+<div *ngIf="Armory">
+      <label>Input: </label>
+      <input type="number" step="any" class="ds3input" [(ngModel)]="Armory.Input"/>
+      <label>Output: </label>
+      {{Armory.Output}}
+      
+</div>
+-->
 
+<div *ngIf="Armory">
+      <table class="table table-nonfluid">
+            <tbody>
+                  <tr>
+                        <td><label>Vitality</label> <input type="number" step="any" class="ds3input" [(ngModel)]="Armory.Vitality" min=1/></td>                  
+                        <td><label>Weight Fraction Goals</label> <input type="number" step="any" class="ds3input" [(ngModel)]="Armory.FractionGoal"/></td>                        
+                        <td><label>Total Weight: {{ Armory.TotalWeight | number:'.3' }}</label></td>
+                        <td><label>Available Weight For Armor: {{ Armory.AvailableWeight | number:'.3' }}</label></td>
+                  </tr>
+                  <tr>
+                        <td><label>Right Hand Weapons:</label></td>
+                        <td>
+                              <input type="number" step="any" class="ds3input" [(ngModel)]="Armory.RightWeapons[0]" (ngModelChange)="Armory.UpdateTotalWeights()"/>
+                              <input type="number" step="any" class="ds3input" [(ngModel)]="Armory.RightWeapons[1]" (ngModelChange)="Armory.UpdateTotalWeights()"/>
+                              <input type="number" step="any" class="ds3input" [(ngModel)]="Armory.RightWeapons[2]" (ngModelChange)="Armory.UpdateTotalWeights()"/>
+                        </td>
+                        <td></td>
+                        <td></td>
+                  </tr>              
+                  <tr>
+                        <td><label>Left Hand Weapons</label></td>
+                        <td>
+                              <input type="number" step="any" class="ds3input" [(ngModel)]="Armory.LeftWeapons[0]" (ngModelChange)="Armory.UpdateTotalWeights()"/>
+                              <input type="number" step="any" class="ds3input" [(ngModel)]="Armory.LeftWeapons[1]" (ngModelChange)="Armory.UpdateTotalWeights()"/>
+                              <input type="number" step="any" class="ds3input" [(ngModel)]="Armory.LeftWeapons[2]" (ngModelChange)="Armory.UpdateTotalWeights()"/>
+                        </td>
+                        <td></td>
+                        <td></td>
+                  </tr>                              
+                  <tr>
+                        <td><label>Rings</label></td>
+                        <td colspan="3">
+                              <select [(ngModel)]="Armory.RingsEquipped[0]" (ngModelChange)="Armory.UpdateTotalWeights()">
+                                    <option *ngFor="let Ring of Armory.RingData" [ngValue]="Ring">{{Ring.Name}}</option>
+                              </select>
+                              <select [(ngModel)]="Armory.RingsEquipped[1]" (ngModelChange)="Armory.UpdateTotalWeights()">
+                                    <option *ngFor="let Ring of Armory.RingData" [ngValue]="Ring">{{Ring.Name}}</option>
+                              </select>    
+                              <select [(ngModel)]="Armory.RingsEquipped[2]" (ngModelChange)="Armory.UpdateTotalWeights()">
+                                    <option *ngFor="let Ring of Armory.RingData" [ngValue]="Ring">{{Ring.Name}}</option>
+                              </select>    
+                              <select [(ngModel)]="Armory.RingsEquipped[3]" (ngModelChange)="Armory.UpdateTotalWeights()">
+                                    <option *ngFor="let Ring of Armory.RingData" [ngValue]="Ring">{{Ring.Name}}</option>
+                              </select>                                                                                                                           
+                        </td>
+                  </tr>                                
+            </tbody>
+      </table>
+      <p></p>
 
-<table class="table table-nonfluid">
-      <tbody>
-            <tr>
-                  <td><label>Vitality</label> <input type="number" step="any" class="ds3input" *ngIf="Armory" [(ngModel)]="Armory.Vitality" min=1/></td>
-                  <td><label>Weight Fraction Goals</label> <input type="number" step="any" class="ds3input" *ngIf="Armory" [(ngModel)]="Armory.FractionGoal"/></td>
-                  <td>
-                        <label *ngIf="Armory">Total Weight: 
-                              {{ 
-                                    ((50 + Armory.Vitality - 10) +
+     
+      <label>Result List Length</label>
+      <input type="number" class="ds3input" [(ngModel)]="Armory.ResultListLength" min=1/>
+
+      <button type="button" class="btn btn-primary" (click)="RunOptimization()">Run</button>
+      <p></p>
+
+      <progress-bar  [value]="Progress" [max]="100"></progress-bar>
+
+      <!--
+      <button type="button" class="btn btn-primary" (click)="ResetWeights()">Reset Weights</button>
+      <button type="button" class="btn btn-primary" (click)="SetMagicWeights()">Set Magics Weights</button>
+      -->
+
+      <table class="table table-striped">
+            <thead>
+                  <tr>
+                  <th></th>
+                  <th>Average Physical</th>         
+                  <th>Physical</th>
+                  <th>Strike</th>
+                  <th>Slash</th>
+                  <th>Thrust</th>
+                  
+                  <th>Magic</th>
+                  <th>Fire</th>
+                  <th>Lightning</th>
+                  <th>Dark</th>
+                  
+                  <th>Bleed</th>
+                  <th>Poison</th>
+                  <th>Frost</th>
+                  <th>Curse</th>
+                  
+                  <th>Semi-Pointless</th>
+                  </tr>
+            </thead>
+            <tbody>              
+                  <tr>
+                        <td>Minimums</td>
                                     
-                                    (Armory.RingsEquipped[0].VitalityModifier != null ? Armory.RingsEquipped[0].VitalityModifier : 0) +
-                                    (Armory.RingsEquipped[1].VitalityModifier != null ? Armory.RingsEquipped[1].VitalityModifier : 0) +
-                                    (Armory.RingsEquipped[2].VitalityModifier != null ? Armory.RingsEquipped[2].VitalityModifier : 0) +
-                                    (Armory.RingsEquipped[3].VitalityModifier != null ? Armory.RingsEquipped[3].VitalityModifier : 0)) *
-                                    
-                                    (Armory.RingsEquipped[0].ProductModfier != null ? Armory.RingsEquipped[0].ProductModfier : 1) *
-                                    (Armory.RingsEquipped[1].ProductModfier != null ? Armory.RingsEquipped[1].ProductModfier : 1) *
-                                    (Armory.RingsEquipped[2].ProductModfier != null ? Armory.RingsEquipped[2].ProductModfier : 1) *
-                                    (Armory.RingsEquipped[3].ProductModfier != null ? Armory.RingsEquipped[3].ProductModfier : 1)
-                                    
-                                    | number:'.3'
-                              }}                        
-                        </label>
-                  </td>
-                  <td>
-                        <label *ngIf="Armory">Available Weight For Armor: 
-                              {{
-                                    (((50 + Armory.Vitality - 10) +
-                                    
-                                    (Armory.RingsEquipped[0].VitalityModifier != null ? Armory.RingsEquipped[0].VitalityModifier : 0) +
-                                    (Armory.RingsEquipped[1].VitalityModifier != null ? Armory.RingsEquipped[1].VitalityModifier : 0) +
-                                    (Armory.RingsEquipped[2].VitalityModifier != null ? Armory.RingsEquipped[2].VitalityModifier : 0) +
-                                    (Armory.RingsEquipped[3].VitalityModifier != null ? Armory.RingsEquipped[3].VitalityModifier : 0)) *
-                                    
-                                    (Armory.RingsEquipped[0].ProductModfier != null ? Armory.RingsEquipped[0].ProductModfier : 1) *
-                                    (Armory.RingsEquipped[1].ProductModfier != null ? Armory.RingsEquipped[1].ProductModfier : 1) *
-                                    (Armory.RingsEquipped[2].ProductModfier != null ? Armory.RingsEquipped[2].ProductModfier : 1) *
-                                    (Armory.RingsEquipped[3].ProductModfier != null ? Armory.RingsEquipped[3].ProductModfier : 1)) *
-                                    
-                                    Armory.FractionGoal -
-                                    
-                                    Armory.RightWeapons[0] - Armory.RightWeapons[1] - Armory.RightWeapons[2] -
-                                    Armory.LeftWeapons[0] - Armory.LeftWeapons[1] - Armory.LeftWeapons[2] -
-                                    
-                                    Armory.RingsEquipped[0].Weight - Armory.RingsEquipped[1].Weight - Armory.RingsEquipped[2].Weight - Armory.RingsEquipped[3].Weight
-                                    
-                                    | number:'.3'
-                              }}
-                        </label>
-                  </td>
-            </tr>
+                        <td><input type="number" step="any" class="ds3input" [(ngModel)]="Armory.Minimums.PhysicalAverage"/></td>
             
-            <tr>
-                  <td><label>Right Hand Weapons:</label></td>
-                  <td>
-                        <input type="number" step="any" class="ds3input" *ngIf="Armory" [(ngModel)]="Armory.RightWeapons[0]" />
-                        <input type="number" step="any" class="ds3input" *ngIf="Armory" [(ngModel)]="Armory.RightWeapons[1]" />
-                        <input type="number" step="any" class="ds3input" *ngIf="Armory" [(ngModel)]="Armory.RightWeapons[2]" />
-                  </td>
-                  <td></td>
-                  <td></td>
-            </tr>
+                        <td><input type="number" step="any" class="ds3input" [(ngModel)]="Armory.Minimums.Physical"/></td>               
+                        <td><input type="number" step="any" class="ds3input" [(ngModel)]="Armory.Minimums.Strike"/></td>
+                        <td><input type="number" step="any" class="ds3input" [(ngModel)]="Armory.Minimums.Slash"/></td>
+                        <td><input type="number" step="any" class="ds3input" [(ngModel)]="Armory.Minimums.Thrust"/></td>
+                        
+                        <td><input type="number" step="any" class="ds3input" [(ngModel)]="Armory.Minimums.Magic"/></td>
+                        <td><input type="number" step="any" class="ds3input" [(ngModel)]="Armory.Minimums.Fire"/></td>
+                        <td><input type="number" step="any" class="ds3input" [(ngModel)]="Armory.Minimums.Lightning"/></td>
+                        <td><input type="number" step="any" class="ds3input" [(ngModel)]="Armory.Minimums.Dark"/></td>
+                        
+                        <td><input type="number" step="any" class="ds3input" [(ngModel)]="Armory.Minimums.Bleed"/></td>
+                        <td><input type="number" step="any" class="ds3input" [(ngModel)]="Armory.Minimums.Poison"/></td>
+                        <td><input type="number" step="any" class="ds3input" [(ngModel)]="Armory.Minimums.Frost"/></td>
+                        <td><input type="number" step="any" class="ds3input" [(ngModel)]="Armory.Minimums.Curse"/></td>
+                        
+                        <td><input type="number" step="any" class="ds3input" [(ngModel)]="Armory.Minimums.Poise"/></td> 
+                  </tr>
+                  <tr>       
+                        <td>Weights</td>
+                                    
+                        <td></td>
+                        
+                        <td><input type="number" step="any" class="ds3input" [(ngModel)]="Armory.Weights.Physical"/></td>  
+                        <td><input type="number" step="any" class="ds3input" [(ngModel)]="Armory.Weights.Strike"/></td>
+                        <td><input type="number" step="any" class="ds3input" [(ngModel)]="Armory.Weights.Slash"/></td>
+                        <td><input type="number" step="any" class="ds3input" [(ngModel)]="Armory.Weights.Thrust"/></td>
+                        
+                        <td><input type="number" step="any" class="ds3input" [(ngModel)]="Armory.Weights.Magic"/></td>
+                        <td><input type="number" step="any" class="ds3input" [(ngModel)]="Armory.Weights.Fire"/></td>
+                        <td><input type="number" step="any" class="ds3input" [(ngModel)]="Armory.Weights.Lightning"/></td>
+                        <td><input type="number" step="any" class="ds3input" [(ngModel)]="Armory.Weights.Dark"/></td>
+                        
+                        <td><input type="number" step="any" class="ds3input" [(ngModel)]="Armory.Weights.Bleed"/></td>
+                        <td><input type="number" step="any" class="ds3input" [(ngModel)]="Armory.Weights.Poison"/></td>
+                        <td><input type="number" step="any" class="ds3input" [(ngModel)]="Armory.Weights.Frost"/></td>
+                        <td><input type="number" step="any" class="ds3input" [(ngModel)]="Armory.Weights.Curse"/></td>
+                        
+                        <td><input type="number" step="any" class="ds3input" [(ngModel)]="Armory.Weights.Poise"/></td>
+                  </tr>            
+            </tbody>  
+      </table>
+      
+      <h1>Results</h1>
+      <table class="table table-hover">
+            <thead>
+                  <tr>
+                  <th>Head</th>
+                  <th>Chest</th>
+                  <th>Arms</th>
+                  <th>Legs</th>
+                  
+                  <th>Weight</th>
+                  
+                  <th>Average Physical</th>
+                  
+                  <th>Physical</th>
+                  <th>Strike</th>
+                  <th>Slash</th>
+                  <th>Thrust</th>
+                  
+                  <th class="Magic">Magic</th>
+                  <th class="Fire">Fire</th>
+                  <th class="Lightning">Lightning</th>
+                  <th class="Dark">Dark</th>
+                  
+                  <th class="Bleed">Bleed</th>
+                  <th class="Poison">Poison</th>
+                  <th class="Frost">Frost</th>
+                  <th class="Curse">Curse</th>
+                  
+                  <th>Semi-Pointless</th>
+                  </tr>
+            </thead>
             
-            <tr>
-                  <td><label>Left Hand Weapons</label></td>
-                  <td>
-                        <input type="number" step="any" class="ds3input" *ngIf="Armory" [(ngModel)]="Armory.LeftWeapons[0]" />
-                        <input type="number" step="any" class="ds3input" *ngIf="Armory" [(ngModel)]="Armory.LeftWeapons[1]" />
-                        <input type="number" step="any" class="ds3input" *ngIf="Armory" [(ngModel)]="Armory.LeftWeapons[2]" />
-                  </td>
-                  <td></td>
-                  <td></td>
-            </tr>            
-            <tr>
-                  <td><label>Rings</label></td>
-                  <td colspan="3">
-                        <select *ngIf="Armory" [(ngModel)]="Armory.RingsEquipped[0]">
-                              <option *ngFor="let Ring of Armory.RingData" [ngValue]="Ring">{{Ring.Name}}</option>
-                        </select>
-                        <select *ngIf="Armory" [(ngModel)]="Armory.RingsEquipped[1]">
-                              <option *ngFor="let Ring of Armory.RingData" [ngValue]="Ring">{{Ring.Name}}</option>
-                        </select>
-                        <select *ngIf="Armory" [(ngModel)]="Armory.RingsEquipped[2]">
-                              <option *ngFor="let Ring of Armory.RingData" [ngValue]="Ring">{{Ring.Name}}</option>
-                        </select>
-                        <select *ngIf="Armory" [(ngModel)]="Armory.RingsEquipped[3]">
-                              <option *ngFor="let Ring of Armory.RingData" [ngValue]="Ring">{{Ring.Name}}</option>
-                        </select>                                                                                                                      
-                  </td>
-            </tr>                                    
-      </tbody>
-</table>
-
-
-
-
-
-
-<p></p>
-
-<label>Result List Length</label>
-<input type="number" class="ds3input" *ngIf="Armory" [(ngModel)]="Armory.ResultListLength" min=1/>
-
-<button type="button" class="btn btn-primary" (click)="RunOptimization()">Run</button>
-<p></p>
-
-<progress-bar  [value]="Progress" [max]="100"></progress-bar>
-
-<button type="button" class="btn btn-primary" (click)="ResetWeights()">Reset Weights</button>
-<button type="button" class="btn btn-primary" (click)="SetMagicWeights()">Set Magics Weights</button>
-
-<table class="table table-striped">
-
-   <thead>
-      <tr>
-         <th></th>
-         <th>Average Physical</th>         
-         <th>Physical</th>
-         <th>Strike</th>
-         <th>Slash</th>
-         <th>Thrust</th>
-         
-         <th>Magic</th>
-         <th>Fire</th>
-         <th>Lightning</th>
-         <th>Dark</th>
-         
-         <th>Bleed</th>
-         <th>Poison</th>
-         <th>Frost</th>
-         <th>Curse</th>
-         
-         <th>Semi-Pointless</th>
-      </tr>
-   </thead>
-
-   <tbody>
-         
-         <tr *ngIf="Minimums">
-               <td>Minimums</td>
-                            
-               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.PhysicalAverage"/></td>
- 
-               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Physical"/></td>               
-               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Strike"/></td>
-               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Slash"/></td>
-               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Thrust"/></td>
-               
-               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Magic"/></td>
-               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Fire"/></td>
-               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Lightning"/></td>
-               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Dark"/></td>
-               
-               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Bleed"/></td>
-               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Poison"/></td>
-               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Frost"/></td>
-               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Curse"/></td>
-               
-               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Minimums.Poise"/></td> 
-         </tr>
-         <tr *ngIf="Weights">       
-               <td>Weights</td>
-                            
-               <td></td>
-               
-               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Physical"/></td>  
-               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Strike"/></td>
-               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Slash"/></td>
-               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Thrust"/></td>
-               
-               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Magic"/></td>
-               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Fire"/></td>
-               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Lightning"/></td>
-               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Dark"/></td>
-               
-               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Bleed"/></td>
-               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Poison"/></td>
-               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Frost"/></td>
-               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Curse"/></td>
-               
-               <td><input type="number" step="any" class="ds3input" [(ngModel)]="Weights.Poise"/></td>
-         </tr>
-   </tbody>
-  
-</table>
-
-<h1>Results</h1>
-<table class="table table-hover">
-   <thead>
-      <tr>
-         <th>Head</th>
-         <th>Chest</th>
-         <th>Arms</th>
-         <th>Legs</th>
-         
-         <th>Weight</th>
-         
-         <th>Average Physical</th>
-         
-         <th>Physical</th>
-         <th>Strike</th>
-         <th>Slash</th>
-         <th>Thrust</th>
-         
-         <th class="Magic">Magic</th>
-         <th class="Fire">Fire</th>
-         <th class="Lightning">Lightning</th>
-         <th class="Dark">Dark</th>
-         
-         <th class="Bleed">Bleed</th>
-         <th class="Poison">Poison</th>
-         <th class="Frost">Frost</th>
-         <th class="Curse">Curse</th>
-         
-         <th>Semi-Pointless</th>
-      </tr>
-   </thead>
-   
-   <tbody>
-         <tr *ngFor="let ArmorCombo of OptimalArmorCombinations">
-               <td>
-                     <button type="button" class="btn-danger" title="Disable the Armor Set"  (click)="DisableArmorSet(ArmorCombo.Head.SetId)">X</button>
-                     {{ArmorCombo.Head.Name}}
-                     <button type="button" title="Disable the Armor Piece" (click)="DisableArmorPiece(ArmorCombo.Head)">x</button>
-               </td>
-               <td>
-                     <button type="button" class="btn-danger" title="Disable the Armor Set" (click)="DisableArmorSet(ArmorCombo.Chest.SetId)">X</button>
-                     {{ArmorCombo.Chest.Name}}
-                     <button type="button" title="Disable the Armor Piece" (click)="DisableArmorPiece(ArmorCombo.Chest)">x</button>
-               </td>
-               <td>
-                     <button type="button" class="btn-danger" title="Disable the Armor Set" (click)="DisableArmorSet(ArmorCombo.Arms.SetId)">X</button>
-                     {{ArmorCombo.Arms.Name}}
-                     <button type="button" title="Disable the Armor Piece" (click)="DisableArmorPiece(ArmorCombo.Arms)">x</button>
-               </td>
-               <td>
-                     <button type="button" class="btn-danger" title="Disable the Armor Set" (click)="DisableArmorSet(ArmorCombo.Legs.SetId)">X</button>
-                     {{ArmorCombo.Legs.Name}}
-                     <button type="button" title="Disable the Armor Piece" (click)="DisableArmorPiece(ArmorCombo.Legs)">x</button>
-               </td>
-               
-               <td>{{ArmorCombo.Weight | number:'.2'}}</td>
-               
-               <td>{{ArmorCombo.PhysicalAverage | number:'.3'}}</td>
-               <td>{{ArmorCombo.Physical | number:'.3'}}</td>
-               <td>{{ArmorCombo.Strike | number:'.3'}}</td>
-               <td>{{ArmorCombo.Slash | number:'.3'}}</td>
-               <td>{{ArmorCombo.Thrust | number:'.3'}}</td>
-               
-               <td class="Magic">{{ArmorCombo.Magic | number:'.3'}}</td>
-               <td class="Fire">{{ArmorCombo.Fire | number:'.3'}}</td>
-               <td class="Lightning">{{ArmorCombo.Lightning | number:'.3'}}</td>
-               <td class="Dark">{{ArmorCombo.Dark | number:'.3'}}</td>
-               
-               <td class="Bleed">{{ArmorCombo.Bleed}}</td>
-               <td class="Poison">{{ArmorCombo.Poison}}</td>
-               <td class="Frost">{{ArmorCombo.Frost}}</td>
-               <td class="Curse">{{ArmorCombo.Curse}}</td>
-               
-               <td>{{ArmorCombo.Poise | number:'.1'}}</td>
-         </tr>
-   </tbody>
-
-</table>   
-
+            <tbody>
+                  <tr *ngFor="let ArmorCombo of OptimalArmorCombinations">
+                        <td>
+                              <button type="button" class="btn-danger" title="Disable the Armor Set"  (click)="DisableArmorSet(ArmorCombo.Head.SetId)">X</button>
+                              {{ArmorCombo.Head.Name}}
+                              <button type="button" title="Disable the Armor Piece" (click)="DisableArmorPiece(ArmorCombo.Head)">x</button>
+                        </td>
+                        <td>
+                              <button type="button" class="btn-danger" title="Disable the Armor Set" (click)="DisableArmorSet(ArmorCombo.Chest.SetId)">X</button>
+                              {{ArmorCombo.Chest.Name}}
+                              <button type="button" title="Disable the Armor Piece" (click)="DisableArmorPiece(ArmorCombo.Chest)">x</button>
+                        </td>
+                        <td>
+                              <button type="button" class="btn-danger" title="Disable the Armor Set" (click)="DisableArmorSet(ArmorCombo.Arms.SetId)">X</button>
+                              {{ArmorCombo.Arms.Name}}
+                              <button type="button" title="Disable the Armor Piece" (click)="DisableArmorPiece(ArmorCombo.Arms)">x</button>
+                        </td>
+                        <td>
+                              <button type="button" class="btn-danger" title="Disable the Armor Set" (click)="DisableArmorSet(ArmorCombo.Legs.SetId)">X</button>
+                              {{ArmorCombo.Legs.Name}}
+                              <button type="button" title="Disable the Armor Piece" (click)="DisableArmorPiece(ArmorCombo.Legs)">x</button>
+                        </td>
+                        
+                        <td>{{ArmorCombo.Weight | number:'.2'}}</td>
+                        
+                        <td>{{ArmorCombo.PhysicalAverage | number:'.3'}}</td>
+                        <td>{{ArmorCombo.Physical | number:'.3'}}</td>
+                        <td>{{ArmorCombo.Strike | number:'.3'}}</td>
+                        <td>{{ArmorCombo.Slash | number:'.3'}}</td>
+                        <td>{{ArmorCombo.Thrust | number:'.3'}}</td>
+                        
+                        <td class="Magic">{{ArmorCombo.Magic | number:'.3'}}</td>
+                        <td class="Fire">{{ArmorCombo.Fire | number:'.3'}}</td>
+                        <td class="Lightning">{{ArmorCombo.Lightning | number:'.3'}}</td>
+                        <td class="Dark">{{ArmorCombo.Dark | number:'.3'}}</td>
+                        
+                        <td class="Bleed">{{ArmorCombo.Bleed}}</td>
+                        <td class="Poison">{{ArmorCombo.Poison}}</td>
+                        <td class="Frost">{{ArmorCombo.Frost}}</td>
+                        <td class="Curse">{{ArmorCombo.Curse}}</td>
+                        
+                        <td>{{ArmorCombo.Poise | number:'.1'}}</td>
+                  </tr>
+            </tbody>
+      </table>   
+</div>

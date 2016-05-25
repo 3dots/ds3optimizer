@@ -47,3 +47,9 @@ Can have just phsical. And just magic. AND Both.
 7* Store application state in cookies? or w/e browser storage is called. Hmm, would want to store JUST what is enabled and selections, not the Strings of names and such.
 
 7* Game progress tree, make an option to pick between ASAP one we have now vs a full on NPC story mode, where you only get armor after the NPC quest is over.
+
+6* Fix progress bar for heads disabled.
+
+5* fix the hack in the optimizer for forcing UI update.
+
+1* use angular2 new router

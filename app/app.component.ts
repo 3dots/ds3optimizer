@@ -13,7 +13,7 @@ import { GameProgressComponent }     from './game.progress.component';
     styleUrls: ['app/app.component.css'],
     directives: [ROUTER_DIRECTIVES],
     providers: [
- //       ROUTER_PROVIDERS,
+ //       ROUTER_PROVIDERS,  This comes from main.ts
         ArmorService
     ]
 })

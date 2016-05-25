@@ -24,7 +24,7 @@ var AppComponent = (function () {
             styleUrls: ['app/app.component.css'],
             directives: [router_deprecated_1.ROUTER_DIRECTIVES],
             providers: [
-                //       ROUTER_PROVIDERS,
+                //       ROUTER_PROVIDERS,  This comes from main.ts
                 armory_service_1.ArmorService
             ]
         }),

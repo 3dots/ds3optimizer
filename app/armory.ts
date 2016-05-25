@@ -1,26 +1,9 @@
 import { ISortable } from './doublylinkedlist';
+import { IOptimizerComponentContext } from './optimizer.component';
+import { IOptimizertContext } from './optimizer';
 
-export class ArmoryData {
-    Head: ArmorPiece[];
-    Chest: ArmorPiece[];
-    Arms: ArmorPiece[];
-    Legs: ArmorPiece[];
-    
-    StartingCharacter: GameProgressArmorGroup[];
-    GameProgressConditions: GameProgressArmorGroup[];
-    
-    Rings: Ring[];
-    
-}
-
-export class Ring {
-    Name: string;
-    Weight: number;
-    VitalityModifier: number;
-    ProductModfier: number;
-}
-
-export class Armory {
+export class Armory implements IOptimizerComponentContext, IOptimizertContext { 
+    //Data
     Head: ArmorPiece[];
     Chest: ArmorPiece[];
     Arms: ArmorPiece[];
@@ -30,39 +13,71 @@ export class Armory {
     GameProgressConditions: GameProgressArmorGroup[];
     
     RingData: Ring[];
+    
+    //Optimizer Component UI  
+    private _Vitality: number;
+    public get Vitality(): number {
+        return this._Vitality;
+    }
+    public set Vitality(newValue: number) {
+        this._Vitality = newValue;
+        this.UpdateTotalWeights();
+    }
+    
+    private _FractionGoal: number;
+    public get FractionGoal(): number {
+        return this._FractionGoal;
+    }
+    public set FractionGoal(newValue: number) {
+        this._FractionGoal = newValue;
+        this.UpdateTotalWeights();
+    }
+    
+    RightWeapons: number[];
+    LeftWeapons: number[];
+        
     RingsEquipped: Ring[];
     
-    ArmorSets: ArmorCombination[]; 
-    SeparateArmorPieces: ArmorCombination[]; 
+    TotalWeight: number;
+    AvailableWeight: number;
+       
+    ResultListLength: number;
     
+    Minimums: OptimizationParameters;
+    Weights: OptimizationParameters;     
+     
+    //Armor Selections Component UI
     LargestPieceId: number;
-    LargestSetId: number;
-   
+    LargestSetId: number;    
+    
+    ArmorSets: ArmorCombination[]; 
+      
     HeadSeparatePieces: ArmorPiece[];
     ChestSeparatePieces: ArmorPiece[];
     ArmsSeparatePieces: ArmorPiece[];
     LegsSeparatePieces: ArmorPiece[];
-    
-    Minimums: OptimizationParameters;
-    Weights: OptimizationParameters;
-    
-    AvailableWeight: number;
-    ResultListLength: number;
-    
+      
+    //Game Progress Component UI
     SelectedCharacter: GameProgressArmorGroup;
     PreviousCharacter:  GameProgressArmorGroup;
     
-    Vitality: number;
-    FractionGoal: number;
-    TotalWeight: number;
+    /*
+    private _Input: number;
+    get Input(): number {
+        return this._Input;
+    }
+    set Input(newInput: number) {
+        this._Input = newInput;
+        this.Output = this._Input.toString();
+    }
     
-    RightWeapons: number[];
-    LeftWeapons: number[];
     
-    Input: number;
-    Output: number=0;
+    //Input: number;
+    Output: string;
+    */
     
-    constructor(public ArmoryData: ArmoryData) {
+    constructor(public ArmoryData: ArmoryData) {       
+        //Data      
         this.Head = ArmoryData.Head;
         this.Chest = ArmoryData.Chest;
         this.Arms = ArmoryData.Arms;
@@ -72,44 +87,95 @@ export class Armory {
         this.GameProgressConditions = ArmoryData.GameProgressConditions;
         
         this.RingData = ArmoryData.Rings;
+        
+        //Optimizer Component UI             
+        this._Vitality = 10;
+        this._FractionGoal = 0.7;
+        
+        this.RightWeapons = [ 0, 0, 0 ];
+        this.LeftWeapons = [ 0, 0, 0 ];
+                
         this.RingsEquipped = [this.RingData[0], this.RingData[0], this.RingData[0], this.RingData[0]];
-  
-        this.Init_FindAndSetLargestIds();
-         
-        this.Init_FormAllSets();
         
-        this.Init_FormSeparatePieceArrays();
-        
+        this.UpdateTotalWeights(); //initial AvailableWeight and TotalWeight
         
         this.ResultListLength = 10;
         
         this.Minimums = new OptimizationParameters();  
         this.Weights = new OptimizationParameters();
-        
         this.Weights.Physical = 1;
         this.Weights.Strike = 1;
         this.Weights.Slash = 1;
-        this.Weights.Thrust = 1; 
+        this.Weights.Thrust = 1;         
+       
+        //Armor Selections Component UI
+        this.Init_FindAndSetLargestIds();        
+        this.Init_FormAllSets();     
+        this.Init_FormSeparatePieceArrays();
         
-        this.SelectedCharacter = null;
-        
-        this.PreviousCharacter = null;
-        
-        this.Vitality = 10;
-        this.FractionGoal = 0.7;
-        
-        this.TotalWeight = this.EnduranceToWeight(this.Vitality);
-        this.AvailableWeight = this.TotalWeight * this.FractionGoal;
-        
-        this.RightWeapons = [ 0, 0, 0 ];
-        this.LeftWeapons = [ 0, 0, 0 ];
-                            
+        //Game Progress Component UI
+        this.SelectedCharacter = null;   
+        this.PreviousCharacter = null;                          
     }
     
-    EnduranceToWeight(Vitality: number): number {
-        return 50 + Vitality - 10;
+    //Optimizer Component UI
+    UpdateTotalWeights(): void {
+        this.TotalWeight = 
+            ((50 + this.Vitality - 10) +
+            
+            (this.RingsEquipped[0].VitalityModifier != null ? this.RingsEquipped[0].VitalityModifier : 0) +
+            (this.RingsEquipped[1].VitalityModifier != null ? this.RingsEquipped[1].VitalityModifier : 0) +
+            (this.RingsEquipped[2].VitalityModifier != null ? this.RingsEquipped[2].VitalityModifier : 0) +
+            (this.RingsEquipped[3].VitalityModifier != null ? this.RingsEquipped[3].VitalityModifier : 0)) *
+            
+            (this.RingsEquipped[0].ProductModfier != null ? this.RingsEquipped[0].ProductModfier : 1) *
+            (this.RingsEquipped[1].ProductModfier != null ? this.RingsEquipped[1].ProductModfier : 1) *
+            (this.RingsEquipped[2].ProductModfier != null ? this.RingsEquipped[2].ProductModfier : 1) *
+            (this.RingsEquipped[3].ProductModfier != null ? this.RingsEquipped[3].ProductModfier : 1);
+            
+        this.AvailableWeight = 
+            this.TotalWeight * this.FractionGoal -
+                                         
+            this.RightWeapons[0] - this.RightWeapons[1] - this.RightWeapons[2] -
+            this.LeftWeapons[0] - this.LeftWeapons[1] - this.LeftWeapons[2] -
+            
+            this.RingsEquipped[0].Weight - this.RingsEquipped[1].Weight - this.RingsEquipped[2].Weight - this.RingsEquipped[3].Weight;   
     }
     
+    EnableDisableArmorSet(SetId: number, Setting: boolean) {
+        
+        let Combo: ArmorCombination;
+        
+        for(var i = 0; i <= this.ArmorSets.length; i++) {
+            if( this.ArmorSets[i].Head.SetId == SetId || 
+                this.ArmorSets[i].Chest.SetId == SetId ||
+                this.ArmorSets[i].Arms.SetId == SetId ||
+                this.ArmorSets[i].Legs.SetId == SetId) {
+                    Combo = this.ArmorSets[i];
+                    break;
+                }        
+        }
+        if(Combo.Head.SetId == SetId)
+            Combo.Head.Enabled = Setting;
+        if(Combo.Chest.SetId == SetId)
+            Combo.Chest.Enabled = Setting;
+        if(Combo.Arms.SetId == SetId)
+            Combo.Arms.Enabled = Setting;                        
+        if(Combo.Legs.SetId == SetId)
+            Combo.Legs.Enabled = Setting;        
+    }
+    
+    //IOptimizertContext        
+    CountHeadArmor(): number{
+        let result = 0;      
+        for(var i = 0; i < this.Head.length; i++){
+            if(this.Head[i].Enabled)
+                result++;
+        }       
+        return result; 
+    }
+    
+    //Armor Selections Component UI    
     private Init_FindAndSetLargestIds() {
         
         let LargestPieceId = 0;
@@ -236,30 +302,7 @@ export class Armory {
                
     }
     
-    EnableDisableArmorSet(SetId: number, Setting: boolean) {
-        
-        let Combo: ArmorCombination;
-        
-        for(var i = 0; i <= this.ArmorSets.length; i++) {
-            if( this.ArmorSets[i].Head.SetId == SetId || 
-                this.ArmorSets[i].Chest.SetId == SetId ||
-                this.ArmorSets[i].Arms.SetId == SetId ||
-                this.ArmorSets[i].Legs.SetId == SetId) {
-                    Combo = this.ArmorSets[i];
-                    break;
-                }        
-        }
-        if(Combo.Head.SetId == SetId)
-            Combo.Head.Enabled = Setting;
-        if(Combo.Chest.SetId == SetId)
-            Combo.Chest.Enabled = Setting;
-        if(Combo.Arms.SetId == SetId)
-            Combo.Arms.Enabled = Setting;                        
-        if(Combo.Legs.SetId == SetId)
-            Combo.Legs.Enabled = Setting;        
-    }
-    
-    
+    //Game Progress Component UI           
     EnableArmorGroup(Group: GameProgressArmorGroup) {
         if(Group.ArmorPiecesIds != null) {
             for(var i = 0; i < this.Head.length; i++) {
@@ -326,17 +369,7 @@ export class Armory {
         }       
    
     }
-    
-    
-    CountHeadArmor(): number{
-        let result = 0;      
-        for(var i = 0; i < this.Head.length; i++){
-            if(this.Head[i].Enabled)
-                result++;
-        }       
-        return result; 
-    }
-    
+  
     FindPieceByPieceId(PieceId: number): ArmorPiece {
             
             for(var i = 1; i < this.Head.length; i++) {
@@ -404,7 +437,6 @@ export class Armory {
         }
     }
     
-    
     TryToCancelArmorPiece(Piece: ArmorPiece, PossibleConflictGroups: GameProgressArmorGroup[]) {
         
         for(var i = 0; i < PossibleConflictGroups.length; i++){
@@ -432,10 +464,25 @@ export class Armory {
     
 }
 
+export class ArmoryData {
+    Head: ArmorPiece[];
+    Chest: ArmorPiece[];
+    Arms: ArmorPiece[];
+    Legs: ArmorPiece[];
+    
+    StartingCharacter: GameProgressArmorGroup[];
+    GameProgressConditions: GameProgressArmorGroup[];
+    
+    Rings: Ring[];
+    
+}
 
-
-
-
+export class Ring {
+    Name: string;
+    Weight: number;
+    VitalityModifier: number;
+    ProductModfier: number;
+}
 
 export class ArmorPiece {
     PieceId: number;
