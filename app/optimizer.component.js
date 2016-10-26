@@ -32,10 +32,10 @@ var OptimizerComponent = (function () {
         var link = ['ArmorSelections'];
         this._router.navigate(link);
     };
-    OptimizerComponent.prototype.gotoGameProgressSelections = function () {
-        var link = ['GameProgress'];
-        this._router.navigate(link);
-    };
+    // gotoGameProgressSelections() {
+    //     let link = ['GameProgress'];
+    //     this._router.navigate(link);          
+    // }
     OptimizerComponent.prototype.SetInventoryView = function (value) {
         this.WeaponSelectionsView = value;
     };

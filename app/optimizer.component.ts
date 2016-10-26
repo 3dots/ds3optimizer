@@ -44,10 +44,10 @@ export class OptimizerComponent implements OnInit, IOptimizerComponentVM {
         this._router.navigate(link);        
     }
     
-    gotoGameProgressSelections() {
-        let link = ['GameProgress'];
-        this._router.navigate(link);          
-    }
+    // gotoGameProgressSelections() {
+    //     let link = ['GameProgress'];
+    //     this._router.navigate(link);          
+    // }
         
     SetInventoryView(value: boolean) : void {
         this.WeaponSelectionsView = value;

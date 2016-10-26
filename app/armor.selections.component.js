@@ -27,10 +27,10 @@ var ArmorSelectionsComponent = (function () {
         var link = ['Optimizer'];
         this._router.navigate(link);
     };
-    ArmorSelectionsComponent.prototype.gotoGameProgressSelections = function () {
-        var link = ['GameProgress'];
-        this._router.navigate(link);
-    };
+    // gotoGameProgressSelections() {
+    //     let link = ['GameProgress'];
+    //     this._router.navigate(link);          
+    // }
     ArmorSelectionsComponent.prototype.ToggleArmorPiece = function (Piece) {
         Piece.Enabled = !Piece.Enabled;
     };

@@ -318,6 +318,7 @@ export var ARMORY: ArmoryData = {
     { PieceId:307, SetId:45, Enabled:true, Name:"Fire Witch Leggings", Weight:5.5, Physical:7.4, Strike:3.5, Slash:5.7, Thrust:5.7, Magic:6.5, Fire:7.1, Lightning:4.3, Dark:6.1, Bleed:24, Poison:16, Frost:20, Curse:13, Poise:5.5 },       
     ],
     
+    /*
     StartingCharacter: [
     { Enabled:false, ProgressCondition:"Knight", ArmorSetIds:[ 21 ], ArmorPiecesIds:null },
     { Enabled:false, ProgressCondition:"Mercenary", ArmorSetIds:[ 20 ], ArmorPiecesIds:null },
@@ -372,6 +373,8 @@ export var ARMORY: ArmoryData = {
     { Enabled:true, ProgressCondition:"Twin Princes", ArmorSetIds:[ 77 ], ArmorPiecesIds:null },
     { Enabled:true, ProgressCondition:"Kiln of the First Flame", ArmorSetIds:[ 46 ], ArmorPiecesIds:null },
     ],
+
+    */
     
     Rings: [
       { Name:"none", Weight:0, VitalityModifier:null, ProductModfier:null },

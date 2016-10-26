@@ -13,7 +13,7 @@ var router_deprecated_1 = require('@angular/router-deprecated');
 var armory_service_1 = require('./armory.service');
 var optimizer_component_1 = require('./optimizer.component');
 var armor_selections_component_1 = require('./armor.selections.component');
-var game_progress_component_1 = require('./game.progress.component');
+//import { GameProgressComponent }     from './game.progress.component';
 var AppComponent = (function () {
     function AppComponent() {
     }
@@ -39,11 +39,6 @@ var AppComponent = (function () {
                 path: '/armor.selections',
                 name: 'ArmorSelections',
                 component: armor_selections_component_1.ArmorSelectionsComponent,
-            },
-            {
-                path: '/game.progress',
-                name: 'GameProgress',
-                component: game_progress_component_1.GameProgressComponent,
             }
         ]), 
         __metadata('design:paramtypes', [])

@@ -33,10 +33,10 @@ export class ArmorSelectionsComponent implements OnInit{
         this._router.navigate(link);  
     }
     
-    gotoGameProgressSelections() {
-        let link = ['GameProgress'];
-        this._router.navigate(link);          
-    }
+    // gotoGameProgressSelections() {
+    //     let link = ['GameProgress'];
+    //     this._router.navigate(link);          
+    // }
     
     ToggleArmorPiece(Piece: ArmorPiece) {
         Piece.Enabled = !Piece.Enabled;
@@ -98,8 +98,8 @@ export interface IArmorSelectionsComponentContext {
     Arms: ArmorPiece[];
     Legs: ArmorPiece[];    
     
-    LargestPieceId: number;
-    LargestSetId: number;    
+    //LargestPieceId: number;
+    //LargestSetId: number;    
     
     ArmorSets: ArmorCombination[]; 
       

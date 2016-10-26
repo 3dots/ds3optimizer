@@ -2,17 +2,18 @@ import { ISortable } from './doublylinkedlist';
 import { IOptimizerComponentContext } from './optimizer.component';
 import { IOptimizertContext } from './optimizer';
 import { IArmorSelectionsComponentContext } from './armor.selections.component';
-import { IGameProgressComponentContext } from './game.progress.component';
+//import { IGameProgressComponentContext } from './game.progress.component';
 
-export class Armory implements IOptimizerComponentContext, IOptimizertContext, IArmorSelectionsComponentContext, IGameProgressComponentContext { 
+//IGameProgressComponentContext
+export class Armory implements IOptimizerComponentContext, IOptimizertContext, IArmorSelectionsComponentContext  { 
     //Data
     Head: ArmorPiece[];
     Chest: ArmorPiece[];
     Arms: ArmorPiece[];
     Legs: ArmorPiece[];
     
-    StartingCharacter: GameProgressArmorGroup[];
-    GameProgressConditions: GameProgressArmorGroup[];
+    //StartingCharacter: GameProgressArmorGroup[];
+    //GameProgressConditions: GameProgressArmorGroup[];
     
     RingData: Ring[];
     
@@ -70,8 +71,8 @@ export class Armory implements IOptimizerComponentContext, IOptimizertContext, I
         this.Arms = ArmoryData.Arms;
         this.Legs = ArmoryData.Legs;
         
-        this.StartingCharacter = ArmoryData.StartingCharacter;
-        this.GameProgressConditions = ArmoryData.GameProgressConditions;
+        //this.StartingCharacter = ArmoryData.StartingCharacter;
+        //this.GameProgressConditions = ArmoryData.GameProgressConditions;
         
         this.RingData = ArmoryData.Rings;
         
@@ -289,6 +290,7 @@ export class Armory implements IOptimizerComponentContext, IOptimizertContext, I
                
     }
     
+    /*
     //Game Progress Component UI           
     EnableArmorGroup(Group: GameProgressArmorGroup): void {
         if(Group.ArmorPiecesIds != null) {
@@ -448,6 +450,7 @@ export class Armory implements IOptimizerComponentContext, IOptimizertContext, I
         Piece.Enabled = false;       
         
     }
+    */
     
 }
 
@@ -457,8 +460,8 @@ export class ArmoryData {
     Arms: ArmorPiece[];
     Legs: ArmorPiece[];
     
-    StartingCharacter: GameProgressArmorGroup[];
-    GameProgressConditions: GameProgressArmorGroup[];
+    //StartingCharacter: GameProgressArmorGroup[];
+    //GameProgressConditions: GameProgressArmorGroup[];
     
     Rings: Ring[];
     

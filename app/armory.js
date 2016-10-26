@@ -1,4 +1,6 @@
 "use strict";
+//import { IGameProgressComponentContext } from './game.progress.component';
+//IGameProgressComponentContext
 var Armory = (function () {
     function Armory(ArmoryData) {
         this.ArmoryData = ArmoryData;
@@ -7,8 +9,8 @@ var Armory = (function () {
         this.Chest = ArmoryData.Chest;
         this.Arms = ArmoryData.Arms;
         this.Legs = ArmoryData.Legs;
-        this.StartingCharacter = ArmoryData.StartingCharacter;
-        this.GameProgressConditions = ArmoryData.GameProgressConditions;
+        //this.StartingCharacter = ArmoryData.StartingCharacter;
+        //this.GameProgressConditions = ArmoryData.GameProgressConditions;
         this.RingData = ArmoryData.Rings;
         //Optimizer Component UI             
         this._Vitality = 10;
@@ -197,147 +199,6 @@ var Armory = (function () {
                 this.LegsSeparatePieces.push(this.Legs[i]);
         }
         this.LegsSeparatePieces.sort(function (a, b) { return a.Name.localeCompare(b.Name); });
-    };
-    //Game Progress Component UI           
-    Armory.prototype.EnableArmorGroup = function (Group) {
-        if (Group.ArmorPiecesIds != null) {
-            for (var i = 0; i < this.Head.length; i++) {
-                for (var j = 0; j < Group.ArmorPiecesIds.length; j++) {
-                    if (this.Head[i].PieceId == Group.ArmorPiecesIds[j]) {
-                        this.Head[i].Enabled = true;
-                    }
-                }
-            }
-            for (var i = 0; i < this.Chest.length; i++) {
-                for (var j = 0; j < Group.ArmorPiecesIds.length; j++) {
-                    if (this.Chest[i].PieceId == Group.ArmorPiecesIds[j]) {
-                        this.Chest[i].Enabled = true;
-                    }
-                }
-            }
-            for (var i = 0; i < this.Arms.length; i++) {
-                for (var j = 0; j < Group.ArmorPiecesIds.length; j++) {
-                    if (this.Arms[i].PieceId == Group.ArmorPiecesIds[j]) {
-                        this.Arms[i].Enabled = true;
-                    }
-                }
-            }
-            for (var i = 0; i < this.Legs.length; i++) {
-                for (var j = 0; j < Group.ArmorPiecesIds.length; j++) {
-                    if (this.Legs[i].PieceId == Group.ArmorPiecesIds[j]) {
-                        this.Legs[i].Enabled = true;
-                    }
-                }
-            }
-        }
-        if (Group.ArmorSetIds != null) {
-            for (var i = 0; i < this.Head.length; i++) {
-                for (var j = 0; j < Group.ArmorSetIds.length; j++) {
-                    if (this.Head[i].SetId == Group.ArmorSetIds[j]) {
-                        this.Head[i].Enabled = true;
-                    }
-                }
-            }
-            for (var i = 0; i < this.Chest.length; i++) {
-                for (var j = 0; j < Group.ArmorSetIds.length; j++) {
-                    if (this.Chest[i].SetId == Group.ArmorSetIds[j]) {
-                        this.Chest[i].Enabled = true;
-                    }
-                }
-            }
-            for (var i = 0; i < this.Arms.length; i++) {
-                for (var j = 0; j < Group.ArmorSetIds.length; j++) {
-                    if (this.Arms[i].SetId == Group.ArmorSetIds[j]) {
-                        this.Arms[i].Enabled = true;
-                    }
-                }
-            }
-            for (var i = 0; i < this.Legs.length; i++) {
-                for (var j = 0; j < Group.ArmorSetIds.length; j++) {
-                    if (this.Legs[i].SetId == Group.ArmorSetIds[j]) {
-                        this.Legs[i].Enabled = true;
-                    }
-                }
-            }
-        }
-    };
-    Armory.prototype.FindPieceByPieceId = function (PieceId) {
-        for (var i = 1; i < this.Head.length; i++) {
-            if (this.Head[i].PieceId == PieceId) {
-                return this.Head[i];
-            }
-        }
-        for (var i = 1; i < this.Chest.length; i++) {
-            if (this.Chest[i].PieceId == PieceId) {
-                return this.Chest[i];
-            }
-        }
-        for (var i = 1; i < this.Arms.length; i++) {
-            if (this.Arms[i].PieceId == PieceId) {
-                return this.Arms[i];
-            }
-        }
-        for (var i = 1; i < this.Legs.length; i++) {
-            if (this.Legs[i].PieceId == PieceId) {
-                return this.Legs[i];
-            }
-        }
-    };
-    Armory.prototype.TryToCancelArmorGroup = function (Group, PossibleConflictGroups) {
-        //if canceling a piece, we can't if a) there is an enabled Bonfire with that piece id. or b> there is an enabled Bonfire with a set with same setid.
-        //thus need setid of piece as well.  
-        //if cancelling a set, we canf't if a) there is an enabled Bonfire with that classid => after that have to check each piece.
-        //So in either case, first check if set is enabled as a set. If so, can't
-        //Then need to check each piece sepratly for seprate pieceid enabled.
-        if (Group.ArmorPiecesIds != null) {
-            for (var i = 0; i < Group.ArmorPiecesIds.length; i++) {
-                this.TryToCancelArmorPiece(this.FindPieceByPieceId(Group.ArmorPiecesIds[i]), PossibleConflictGroups);
-            }
-        }
-        if (Group.ArmorSetIds != null) {
-            for (var j = 0; j < Group.ArmorSetIds.length; j++) {
-                for (var i = 1; i < this.Head.length; i++) {
-                    if (this.Head[i].SetId == Group.ArmorSetIds[j]) {
-                        this.TryToCancelArmorPiece(this.Head[i], PossibleConflictGroups);
-                    }
-                }
-                for (var i = 1; i < this.Chest.length; i++) {
-                    if (this.Chest[i].SetId == Group.ArmorSetIds[j]) {
-                        this.TryToCancelArmorPiece(this.Chest[i], PossibleConflictGroups);
-                    }
-                }
-                for (var i = 1; i < this.Arms.length; i++) {
-                    if (this.Arms[i].SetId == Group.ArmorSetIds[j]) {
-                        this.TryToCancelArmorPiece(this.Arms[i], PossibleConflictGroups);
-                    }
-                }
-                for (var i = 1; i < this.Legs.length; i++) {
-                    if (this.Legs[i].SetId == Group.ArmorSetIds[j]) {
-                        this.TryToCancelArmorPiece(this.Legs[i], PossibleConflictGroups);
-                    }
-                }
-            }
-        }
-    };
-    Armory.prototype.TryToCancelArmorPiece = function (Piece, PossibleConflictGroups) {
-        for (var i = 0; i < PossibleConflictGroups.length; i++) {
-            if (PossibleConflictGroups[i].Enabled == false)
-                continue;
-            if (PossibleConflictGroups[i].ArmorSetIds != null) {
-                for (var j = 0; j < PossibleConflictGroups[i].ArmorSetIds.length; j++) {
-                    if (PossibleConflictGroups[i].ArmorSetIds[j] == Piece.SetId)
-                        return; //There is an explictly enabled set with this piece id.
-                }
-            }
-            if (PossibleConflictGroups[i].ArmorPiecesIds != null) {
-                for (var j = 0; j < PossibleConflictGroups[i].ArmorPiecesIds.length; j++) {
-                    if (PossibleConflictGroups[i].ArmorPiecesIds[j] == Piece.PieceId)
-                        return; //This piece has been explictly enabled.
-                }
-            }
-        }
-        //Can cancle it.
-        Piece.Enabled = false;
     };
     return Armory;
 }());
