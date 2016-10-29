@@ -24,7 +24,9 @@ export class ArmorSelectionsComponent implements OnInit{
         this._armorService.getArmorData()
             .then( (data: Armory)=> 
             { 
-                this.Armory = data as IArmorSelectionsComponentContext;              
+                this.Armory = data as IArmorSelectionsComponentContext;
+
+                //console.log(this.Armory.ArmorSets[0].Head.Name);              
             });   
     }
     

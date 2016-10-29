@@ -21,6 +21,7 @@ var ArmorSelectionsComponent = (function () {
         this._armorService.getArmorData()
             .then(function (data) {
             _this.Armory = data;
+            //console.log(this.Armory.ArmorSets[0].Head.Name);              
         });
     };
     ArmorSelectionsComponent.prototype.gotoOptimizer = function () {

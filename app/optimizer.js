@@ -5,7 +5,7 @@ var OptimizationEngine = (function () {
     function OptimizationEngine(_ViewModel, Armory) {
         this._ViewModel = _ViewModel;
         this.Armory = Armory;
-        this.ACF = new armory_1.ArmorCombinationFactory(this.Armory.Weights);
+        this.ACF = new armory_1.ArmorCombinationFactory(this.Armory.Weights, this.Armory.InnatePoise);
         this.List = new doublylinkedlist_1.DoublyLinkedList(this.Armory.ResultListLength);
     }
     OptimizationEngine.prototype.ComputeOptimals = function () {

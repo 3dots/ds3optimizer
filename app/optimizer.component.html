@@ -62,7 +62,11 @@
       <div *ngIf="!WeaponSelectionsView">
             <label>Available Weight For Armor:</label>
             <input type="number" step="any" class="ds3input" [(ngModel)]="Armory.AvailableWeight"/>
-      </div>  
+      </div> 
+
+      <label>Poise</label> 
+      <input type="number" step="any" class="ds3input" [(ngModel)]="Armory.InnatePoise"/>
+      <label>Enter Poise ring or weapon contribution MANUALLY!</label>               
       <p></p>
      
      
@@ -98,7 +102,7 @@
                   <th>Frost</th>
                   <th>Curse</th>
                   
-                  <th>Semi-Pointless</th>
+                  <th>Very Poise</th>
                   </tr>
             </thead>
             <tbody>              
@@ -177,7 +181,7 @@
                   <th class="Frost">Frost</th>
                   <th class="Curse">Curse</th>
                   
-                  <th>Semi-Pointless</th>
+                  <th>Very Poise</th>
                   </tr>
             </thead>
             

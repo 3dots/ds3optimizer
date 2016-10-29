@@ -35,6 +35,8 @@ export class Armory implements IOptimizerComponentContext, IOptimizertContext, I
         this._FractionGoal = newValue;
         this.UpdateTotalWeights();
     }
+
+    InnatePoise: number;
     
     RightWeapons: number[];
     LeftWeapons: number[];
@@ -50,7 +52,7 @@ export class Armory implements IOptimizerComponentContext, IOptimizertContext, I
     Weights: OptimizationParameters;     
      
     //Armor Selections Component UI
-    LargestPieceId: number;
+    //LargestPieceId: number;
     LargestSetId: number;    
     
     ArmorSets: ArmorCombination[]; 
@@ -99,11 +101,13 @@ export class Armory implements IOptimizerComponentContext, IOptimizertContext, I
         //Armor Selections Component UI
         this.Init_FindAndSetLargestIds();        
         this.Init_FormAllSets();     
-        this.Init_FormSeparatePieceArrays();
+        //this.Init_FormSeparatePieceArrays();
         
         //Game Progress Component UI
         this.SelectedCharacter = null;   
-        this.PreviousCharacter = null;                          
+        this.PreviousCharacter = null;
+
+        this.InnatePoise = 0;                          
     }
     
     //Optimizer Component UI
@@ -163,48 +167,50 @@ export class Armory implements IOptimizerComponentContext, IOptimizertContext, I
         return result; 
     }
     
-    //Armor Selections Component UI    
+    //Armor Selections Component UI
+        
     private Init_FindAndSetLargestIds() {
         
         let LargestPieceId = 0;
         let LargestSetId = 0;
         
         for(var i = 1; i < this.Head.length; i++) {
-            if(this.Head[i].PieceId > LargestPieceId)
-                LargestPieceId = this.Head[i].PieceId;
+            // if(this.Head[i].PieceId > LargestPieceId)
+            //     LargestPieceId = this.Head[i].PieceId;
                 
             if(this.Head[i].SetId > LargestSetId)
                 LargestSetId = this.Head[i].SetId;                                       
         } 
         for(var i = 1; i < this.Chest.length; i++) {
-            if(this.Chest[i].PieceId > LargestPieceId)
-                LargestPieceId = this.Chest[i].PieceId;
+            // if(this.Chest[i].PieceId > LargestPieceId)
+            //     LargestPieceId = this.Chest[i].PieceId;
                 
             if(this.Chest[i].SetId > LargestSetId)
                 LargestSetId = this.Chest[i].SetId;                         
         } 
         for(var i = 1; i < this.Arms.length; i++) {
-            if(this.Arms[i].PieceId > LargestPieceId)
-                LargestPieceId = this.Arms[i].PieceId;
+            // if(this.Arms[i].PieceId > LargestPieceId)
+            //     LargestPieceId = this.Arms[i].PieceId;
                 
             if(this.Arms[i].SetId > LargestSetId)
                 LargestSetId = this.Arms[i].SetId;  
         } 
         for(var i = 1; i < this.Legs.length; i++) {
-            if(this.Legs[i].PieceId > LargestPieceId)
-                LargestPieceId = this.Legs[i].PieceId;
+            // if(this.Legs[i].PieceId > LargestPieceId)
+            //     LargestPieceId = this.Legs[i].PieceId;
                 
             if(this.Legs[i].SetId > LargestSetId)
                 LargestSetId = this.Legs[i].SetId;  
         }
         
-        this.LargestPieceId = LargestPieceId;
+        //this.LargestPieceId = LargestPieceId;
         this.LargestSetId = LargestSetId;          
     }
     
+
     private Init_FormAllSets() {
         
-        let ACF: ArmorCombinationFactory = new ArmorCombinationFactory(null);
+        let ACF: ArmorCombinationFactory = new ArmorCombinationFactory(null, 0);
         
         this.ArmorSets = []; 
         
@@ -257,6 +263,7 @@ export class Armory implements IOptimizerComponentContext, IOptimizertContext, I
         this.ArmorSets.sort((a: ArmorCombination, b: ArmorCombination) => { return a.Head.Name.localeCompare(b.Head.Name); });        
     }
     
+    /*
     private Init_FormSeparatePieceArrays() {
         
         this.HeadSeparatePieces = [];
@@ -290,7 +297,8 @@ export class Armory implements IOptimizerComponentContext, IOptimizertContext, I
                
     }
     
-    /*
+    
+    
     //Game Progress Component UI           
     EnableArmorGroup(Group: GameProgressArmorGroup): void {
         if(Group.ArmorPiecesIds != null) {
@@ -475,7 +483,7 @@ export class Ring {
 }
 
 export class ArmorPiece {
-    PieceId: number;
+    //PieceId: number;
     SetId: number;
 
     Enabled: boolean;
@@ -505,7 +513,7 @@ export class ArmorCombination implements ISortable {
     
     Metric: number;
     
-    constructor(public Head: ArmorPiece, public Chest: ArmorPiece, public Arms: ArmorPiece, public Legs: ArmorPiece) {
+    constructor(public Head: ArmorPiece, public Chest: ArmorPiece, public Arms: ArmorPiece, public Legs: ArmorPiece, public InnatePoise: number) {
         this.Weight = Head.Weight + Chest.Weight + Arms.Weight + Legs.Weight;
         
         this.Physical = 1 - (1 - Head.Physical / 100) * (1 - Chest.Physical / 100) * (1 - Arms.Physical / 100) * (1 - Legs.Physical / 100);
@@ -524,7 +532,18 @@ export class ArmorCombination implements ISortable {
         this.Poison = Head.Poison + Chest.Poison + Arms.Poison + Legs.Poison;
         this.Frost = Head.Frost + Chest.Frost + Arms.Frost + Legs.Frost;
         this.Curse = Head.Curse + Chest.Curse + Arms.Curse + Legs.Curse;
-        this.Poise = Head.Poise + Chest.Poise + Arms.Poise + Legs.Poise;
+
+        //this.Poise = Head.Poise + Chest.Poise + Arms.Poise + Legs.Poise;
+        this.Poise = InnatePoise;
+        this.Poise = this.PoiseFormula(this.Poise, Head.Poise);
+        this.Poise = this.PoiseFormula(this.Poise, Chest.Poise);
+        this.Poise = this.PoiseFormula(this.Poise, Arms.Poise);
+        this.Poise = this.PoiseFormula(this.Poise, Legs.Poise);
+
+    }
+
+    PoiseFormula(p1: number, p2: number) : number {
+        return (p1 + p2 - p1*p2/100);
     }
 
     Weight: number;
@@ -551,11 +570,11 @@ export class ArmorCombination implements ISortable {
 
 export class ArmorCombinationFactory{
     
-    constructor(public MetricWeights: OptimizationParameters){        
+    constructor(public MetricWeights: OptimizationParameters, public InnatePoise: number){        
     }
     
     Combine(Head: ArmorPiece, Chest: ArmorPiece, Arms: ArmorPiece, Legs: ArmorPiece) : ArmorCombination {
-        let result: ArmorCombination = new ArmorCombination(Head, Chest, Arms, Legs);
+        let result: ArmorCombination = new ArmorCombination(Head, Chest, Arms, Legs, this.InnatePoise);
         
         if(this.MetricWeights != null) {
             result.Metric = 

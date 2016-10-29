@@ -29,10 +29,11 @@ var Armory = (function () {
         //Armor Selections Component UI
         this.Init_FindAndSetLargestIds();
         this.Init_FormAllSets();
-        this.Init_FormSeparatePieceArrays();
+        //this.Init_FormSeparatePieceArrays();
         //Game Progress Component UI
         this.SelectedCharacter = null;
         this.PreviousCharacter = null;
+        this.InnatePoise = 0;
     }
     Object.defineProperty(Armory.prototype, "Vitality", {
         get: function () {
@@ -103,39 +104,39 @@ var Armory = (function () {
         }
         return result;
     };
-    //Armor Selections Component UI    
+    //Armor Selections Component UI
     Armory.prototype.Init_FindAndSetLargestIds = function () {
         var LargestPieceId = 0;
         var LargestSetId = 0;
         for (var i = 1; i < this.Head.length; i++) {
-            if (this.Head[i].PieceId > LargestPieceId)
-                LargestPieceId = this.Head[i].PieceId;
+            // if(this.Head[i].PieceId > LargestPieceId)
+            //     LargestPieceId = this.Head[i].PieceId;
             if (this.Head[i].SetId > LargestSetId)
                 LargestSetId = this.Head[i].SetId;
         }
         for (var i = 1; i < this.Chest.length; i++) {
-            if (this.Chest[i].PieceId > LargestPieceId)
-                LargestPieceId = this.Chest[i].PieceId;
+            // if(this.Chest[i].PieceId > LargestPieceId)
+            //     LargestPieceId = this.Chest[i].PieceId;
             if (this.Chest[i].SetId > LargestSetId)
                 LargestSetId = this.Chest[i].SetId;
         }
         for (var i = 1; i < this.Arms.length; i++) {
-            if (this.Arms[i].PieceId > LargestPieceId)
-                LargestPieceId = this.Arms[i].PieceId;
+            // if(this.Arms[i].PieceId > LargestPieceId)
+            //     LargestPieceId = this.Arms[i].PieceId;
             if (this.Arms[i].SetId > LargestSetId)
                 LargestSetId = this.Arms[i].SetId;
         }
         for (var i = 1; i < this.Legs.length; i++) {
-            if (this.Legs[i].PieceId > LargestPieceId)
-                LargestPieceId = this.Legs[i].PieceId;
+            // if(this.Legs[i].PieceId > LargestPieceId)
+            //     LargestPieceId = this.Legs[i].PieceId;
             if (this.Legs[i].SetId > LargestSetId)
                 LargestSetId = this.Legs[i].SetId;
         }
-        this.LargestPieceId = LargestPieceId;
+        //this.LargestPieceId = LargestPieceId;
         this.LargestSetId = LargestSetId;
     };
     Armory.prototype.Init_FormAllSets = function () {
-        var ACF = new ArmorCombinationFactory(null);
+        var ACF = new ArmorCombinationFactory(null, 0);
         this.ArmorSets = [];
         for (var SetId = 1; SetId <= this.LargestSetId; SetId++) {
             //The none piece
@@ -174,32 +175,6 @@ var Armory = (function () {
         }
         this.ArmorSets.sort(function (a, b) { return a.Head.Name.localeCompare(b.Head.Name); });
     };
-    Armory.prototype.Init_FormSeparatePieceArrays = function () {
-        this.HeadSeparatePieces = [];
-        this.ChestSeparatePieces = [];
-        this.ArmsSeparatePieces = [];
-        this.LegsSeparatePieces = [];
-        for (var i = 1; i < this.Head.length; i++) {
-            if (this.Head[i].SetId == 0)
-                this.HeadSeparatePieces.push(this.Head[i]);
-        }
-        this.HeadSeparatePieces.sort(function (a, b) { return a.Name.localeCompare(b.Name); });
-        for (var i = 1; i < this.Chest.length; i++) {
-            if (this.Chest[i].SetId == 0)
-                this.ChestSeparatePieces.push(this.Chest[i]);
-        }
-        this.ChestSeparatePieces.sort(function (a, b) { return a.Name.localeCompare(b.Name); });
-        for (var i = 1; i < this.Arms.length; i++) {
-            if (this.Arms[i].SetId == 0)
-                this.ArmsSeparatePieces.push(this.Arms[i]);
-        }
-        this.ArmsSeparatePieces.sort(function (a, b) { return a.Name.localeCompare(b.Name); });
-        for (var i = 1; i < this.Legs.length; i++) {
-            if (this.Legs[i].SetId == 0)
-                this.LegsSeparatePieces.push(this.Legs[i]);
-        }
-        this.LegsSeparatePieces.sort(function (a, b) { return a.Name.localeCompare(b.Name); });
-    };
     return Armory;
 }());
 exports.Armory = Armory;
@@ -222,11 +197,12 @@ var ArmorPiece = (function () {
 }());
 exports.ArmorPiece = ArmorPiece;
 var ArmorCombination = (function () {
-    function ArmorCombination(Head, Chest, Arms, Legs) {
+    function ArmorCombination(Head, Chest, Arms, Legs, InnatePoise) {
         this.Head = Head;
         this.Chest = Chest;
         this.Arms = Arms;
         this.Legs = Legs;
+        this.InnatePoise = InnatePoise;
         this.Weight = Head.Weight + Chest.Weight + Arms.Weight + Legs.Weight;
         this.Physical = 1 - (1 - Head.Physical / 100) * (1 - Chest.Physical / 100) * (1 - Arms.Physical / 100) * (1 - Legs.Physical / 100);
         this.Strike = 1 - (1 - Head.Strike / 100) * (1 - Chest.Strike / 100) * (1 - Arms.Strike / 100) * (1 - Legs.Strike / 100);
@@ -241,17 +217,26 @@ var ArmorCombination = (function () {
         this.Poison = Head.Poison + Chest.Poison + Arms.Poison + Legs.Poison;
         this.Frost = Head.Frost + Chest.Frost + Arms.Frost + Legs.Frost;
         this.Curse = Head.Curse + Chest.Curse + Arms.Curse + Legs.Curse;
-        this.Poise = Head.Poise + Chest.Poise + Arms.Poise + Legs.Poise;
+        //this.Poise = Head.Poise + Chest.Poise + Arms.Poise + Legs.Poise;
+        this.Poise = InnatePoise;
+        this.Poise = this.PoiseFormula(this.Poise, Head.Poise);
+        this.Poise = this.PoiseFormula(this.Poise, Chest.Poise);
+        this.Poise = this.PoiseFormula(this.Poise, Arms.Poise);
+        this.Poise = this.PoiseFormula(this.Poise, Legs.Poise);
     }
+    ArmorCombination.prototype.PoiseFormula = function (p1, p2) {
+        return (p1 + p2 - p1 * p2 / 100);
+    };
     return ArmorCombination;
 }());
 exports.ArmorCombination = ArmorCombination;
 var ArmorCombinationFactory = (function () {
-    function ArmorCombinationFactory(MetricWeights) {
+    function ArmorCombinationFactory(MetricWeights, InnatePoise) {
         this.MetricWeights = MetricWeights;
+        this.InnatePoise = InnatePoise;
     }
     ArmorCombinationFactory.prototype.Combine = function (Head, Chest, Arms, Legs) {
-        var result = new ArmorCombination(Head, Chest, Arms, Legs);
+        var result = new ArmorCombination(Head, Chest, Arms, Legs, this.InnatePoise);
         if (this.MetricWeights != null) {
             result.Metric =
                 this.MetricWeights.Physical * result.Physical +

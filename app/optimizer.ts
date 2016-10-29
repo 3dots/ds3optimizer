@@ -15,7 +15,7 @@ export class OptimizationEngine {
     constructor(private _ViewModel: IOptimizerComponentVM, Armory: IOptimizertContext){      
         this.Armory = Armory;
         
-        this.ACF = new ArmorCombinationFactory(this.Armory.Weights);
+        this.ACF = new ArmorCombinationFactory(this.Armory.Weights, this.Armory.InnatePoise);
         
         this.List = new DoublyLinkedList<ArmorCombination>(this.Armory.ResultListLength);
     }
@@ -206,5 +206,7 @@ export interface IOptimizertContext {
     ResultListLength: number;
 
     CountHeadArmor(): number;
+
+    InnatePoise: number;
 
 }
