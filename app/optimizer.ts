@@ -44,13 +44,19 @@ export class OptimizationEngine {
         for(var ih = curHeadIndex; ih < Context.Armory.Head.length; ih++) {         
             if(Context.Armory.Head[ih].Enabled == false)
                 continue;
+            if(Context.Armory.Head[ih].Weight > Context.Armory.AvailableWeight)
+                continue;
             
             for(var ic = 0; ic < Context.Armory.Chest.length; ic++) {
                 if(Context.Armory.Chest[ic].Enabled == false)
                     continue;
+                if(Context.Armory.Head[ih].Weight + Context.Armory.Chest[ic].Weight > Context.Armory.AvailableWeight)
+                    continue;
                 
                 for(var ia = 0; ia < Context.Armory.Arms.length; ia++) {
                     if(Context.Armory.Arms[ia].Enabled == false)
+                        continue;
+                    if(Context.Armory.Head[ih].Weight + Context.Armory.Chest[ic].Weight +  Context.Armory.Arms[ia].Weight > Context.Armory.AvailableWeight)
                         continue;
                     
                     for(var il = 0; il < Context.Armory.Legs.length; il++) {
