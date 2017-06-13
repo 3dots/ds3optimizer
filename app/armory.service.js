@@ -1665,7 +1665,7 @@ var ARMORY = {
             "Poison": 17.0,
             "Frost": 12.0,
             "Curse": 30.0,
-            "Poise": 0.1
+            "Poise": 0.2
         },
         {
             "SetId": 93,
@@ -1678,8 +1678,8 @@ var ARMORY = {
             "Thrust": 0.8,
             "Magic": 4.7,
             "Fire": 4.5,
-            "Lightning": 4.5,
-            "Dark": 4.6,
+            "Lightning": 4.6,
+            "Dark": 4.9,
             "Bleed": 4.0,
             "Poison": 14.0,
             "Frost": 8.0,
@@ -1741,7 +1741,7 @@ var ARMORY = {
             "Poison": 22,
             "Frost": 24,
             "Curse": 11,
-            "Poise": 6.3
+            "Poise": 7.0
         },
         {
             "SetId": 98,
@@ -3483,9 +3483,9 @@ var ARMORY = {
             "Strike": 2.9,
             "Slash": 2.4,
             "Thrust": 2.4,
-            "Magic": 2.4,
-            "Fire": 10.5,
-            "Lightning": 11.1,
+            "Magic": 10.5,
+            "Fire": 11.1,
+            "Lightning": 12.7,
             "Dark": 11.7,
             "Bleed": 16,
             "Poison": 64,
@@ -5084,7 +5084,7 @@ var ARMORY = {
             "Magic": 3.4,
             "Fire": 3.3,
             "Lightning": 3.3,
-            "Dark": 3.3,
+            "Dark": 3.5,
             "Bleed": 5.0,
             "Poison": 13.0,
             "Frost": 9.0,
@@ -6820,7 +6820,7 @@ var ARMORY = {
             "Poison": 43,
             "Frost": 18,
             "Curse": 44,
-            "Poise": 0.3
+            "Poise": 1.2
         },
         {
             "SetId": 96,
@@ -6839,7 +6839,7 @@ var ARMORY = {
             "Poison": 37,
             "Frost": 36,
             "Curse": 35,
-            "Poise": 10.8
+            "Poise": 12.9
         },
         {
             "SetId": 97,
