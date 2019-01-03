@@ -42,18 +42,18 @@ var OptimizerComponent = (function () {
     OptimizerComponent.prototype.RunOptimization = function () {
         new optimizer_1.OptimizationEngine(this, this._Armory).ComputeOptimals();
     };
-    OptimizerComponent.prototype.UpdateProgress = function (Progress) {
-        this.Progress = Progress;
+    OptimizerComponent.prototype.UpdateProgress = function (progress) {
+        this.Progress = progress;
     };
-    OptimizerComponent.prototype.RecieveResults = function (result) {
+    OptimizerComponent.prototype.ReceiveResults = function (result) {
         this.OptimalArmorCombinations = result;
     };
     OptimizerComponent.prototype.DisableArmorPiece = function (piece) {
         piece.Enabled = false;
         this.RunOptimization();
     };
-    OptimizerComponent.prototype.DisableArmorSet = function (SetId) {
-        this.Armory.EnableDisableArmorSet(SetId, false);
+    OptimizerComponent.prototype.DisableArmorSet = function (setId) {
+        this.Armory.EnableDisableArmorSet(setId, false);
         this.RunOptimization();
     };
     OptimizerComponent.prototype.JustPhysical = function () {

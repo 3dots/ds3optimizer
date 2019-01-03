@@ -19,7 +19,7 @@ var OptimizationEngine = (function () {
     OptimizationEngine.prototype.ReturnResults = function (Context) {
         Context.Progress = 100;
         this._ViewModel.UpdateProgress(this.Progress);
-        Context._ViewModel.RecieveResults(Context.List.ToArray());
+        Context._ViewModel.ReceiveResults(Context.List.ToArray());
     };
     OptimizationEngine.prototype.ComputeOptimalsIncremental = function (curHeadIndex, Context) {
         for (var ih = curHeadIndex; ih < Context.Armory.Head.length; ih++) {

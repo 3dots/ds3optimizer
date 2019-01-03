@@ -75,25 +75,25 @@ var Armory = (function () {
                 this.LeftWeapons[0] - this.LeftWeapons[1] - this.LeftWeapons[2] -
                 this.RingsEquipped[0].Weight - this.RingsEquipped[1].Weight - this.RingsEquipped[2].Weight - this.RingsEquipped[3].Weight;
     };
-    Armory.prototype.EnableDisableArmorSet = function (SetId, Setting) {
+    Armory.prototype.EnableDisableArmorSet = function (setId, setting) {
         var Combo;
         for (var i = 0; i <= this.ArmorSets.length; i++) {
-            if (this.ArmorSets[i].Head.SetId == SetId ||
-                this.ArmorSets[i].Chest.SetId == SetId ||
-                this.ArmorSets[i].Arms.SetId == SetId ||
-                this.ArmorSets[i].Legs.SetId == SetId) {
+            if (this.ArmorSets[i].Head.SetId == setId ||
+                this.ArmorSets[i].Chest.SetId == setId ||
+                this.ArmorSets[i].Arms.SetId == setId ||
+                this.ArmorSets[i].Legs.SetId == setId) {
                 Combo = this.ArmorSets[i];
                 break;
             }
         }
-        if (Combo.Head.SetId == SetId)
-            Combo.Head.Enabled = Setting;
-        if (Combo.Chest.SetId == SetId)
-            Combo.Chest.Enabled = Setting;
-        if (Combo.Arms.SetId == SetId)
-            Combo.Arms.Enabled = Setting;
-        if (Combo.Legs.SetId == SetId)
-            Combo.Legs.Enabled = Setting;
+        if (Combo.Head.SetId == setId)
+            Combo.Head.Enabled = setting;
+        if (Combo.Chest.SetId == setId)
+            Combo.Chest.Enabled = setting;
+        if (Combo.Arms.SetId == setId)
+            Combo.Arms.Enabled = setting;
+        if (Combo.Legs.SetId == setId)
+            Combo.Legs.Enabled = setting;
     };
     //IOptimizertContext        
     Armory.prototype.CountHeadArmor = function () {
@@ -106,7 +106,7 @@ var Armory = (function () {
     };
     //Armor Selections Component UI
     Armory.prototype.Init_FindAndSetLargestIds = function () {
-        var LargestPieceId = 0;
+        //let LargestPieceId = 0;
         var LargestSetId = 0;
         for (var i = 1; i < this.Head.length; i++) {
             // if(this.Head[i].PieceId > LargestPieceId)
@@ -138,11 +138,11 @@ var Armory = (function () {
     Armory.prototype.Init_FormAllSets = function () {
         var ACF = new ArmorCombinationFactory(null, 0);
         this.ArmorSets = [];
-        for (var SetId = 1; SetId <= this.LargestSetId; SetId++) {
+        for (var setId = 1; setId <= this.LargestSetId; setId++) {
             //The none piece
             var Head = this.Head[0];
             for (var i = 1; i < this.Head.length; i++) {
-                if (this.Head[i].SetId == SetId) {
+                if (this.Head[i].SetId == setId) {
                     Head = this.Head[i];
                     break;
                 }
@@ -150,7 +150,7 @@ var Armory = (function () {
             //The none piece
             var Chest = this.Chest[0];
             for (var i = 1; i < this.Chest.length; i++) {
-                if (this.Chest[i].SetId == SetId) {
+                if (this.Chest[i].SetId == setId) {
                     Chest = this.Chest[i];
                     break;
                 }
@@ -158,7 +158,7 @@ var Armory = (function () {
             //The none piece
             var Arms = this.Arms[0];
             for (var i = 1; i < this.Arms.length; i++) {
-                if (this.Arms[i].SetId == SetId) {
+                if (this.Arms[i].SetId == setId) {
                     Arms = this.Arms[i];
                     break;
                 }
@@ -166,7 +166,7 @@ var Armory = (function () {
             //The none piece
             var Legs = this.Legs[0];
             for (var i = 1; i < this.Legs.length; i++) {
-                if (this.Legs[i].SetId == SetId) {
+                if (this.Legs[i].SetId == setId) {
                     Legs = this.Legs[i];
                     break;
                 }

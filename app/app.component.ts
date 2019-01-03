@@ -1,11 +1,10 @@
-import {Component} from '@angular/core';
-import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
+import { Component } from '@angular/core';
+import { RouteConfig, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 
-import { ArmorService }     from './armory.service';
-import { OptimizerComponent }     from './optimizer.component';
-import { ArmorSelectionsComponent }     from './armor.selections.component';
+import { ArmorService } from './armory.service';
+import { OptimizerComponent } from './optimizer.component';
+import { ArmorSelectionsComponent } from './armor.selections.component';
 //import { GameProgressComponent }     from './game.progress.component';
-
 
 @Component({
     selector: 'my-app',
@@ -13,7 +12,7 @@ import { ArmorSelectionsComponent }     from './armor.selections.component';
     styleUrls: ['app/app.component.css'],
     directives: [ROUTER_DIRECTIVES],
     providers: [
- //       ROUTER_PROVIDERS,  This comes from main.ts
+        //       ROUTER_PROVIDERS,  This comes from main.ts
         ArmorService
     ]
 })

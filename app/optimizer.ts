@@ -36,7 +36,7 @@ export class OptimizationEngine {
         Context.Progress = 100;
         this._ViewModel.UpdateProgress(this.Progress);
         
-        Context._ViewModel.RecieveResults(Context.List.ToArray());
+        Context._ViewModel.ReceiveResults(Context.List.ToArray());
     }
     
     ComputeOptimalsIncremental(curHeadIndex: number, Context: OptimizationEngine) {
@@ -188,7 +188,7 @@ export class OptimizationEngine {
 export interface IOptimizerComponentVM {
     UpdateProgress(Progress: number): void;
     
-    RecieveResults(result: ArmorCombination[]): void;
+    ReceiveResults(result: ArmorCombination[]): void;
          
 }
 

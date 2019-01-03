@@ -58,11 +58,11 @@ export class OptimizerComponent implements OnInit, IOptimizerComponentVM {
         new OptimizationEngine(this as IOptimizerComponentVM, this._Armory as IOptimizertContext).ComputeOptimals();
     }
     
-    UpdateProgress(Progress: number){
-        this.Progress = Progress;
+    UpdateProgress(progress: number){
+        this.Progress = progress;
     }    
     
-    RecieveResults(result: ArmorCombination[]){
+    ReceiveResults(result: ArmorCombination[]){
         this.OptimalArmorCombinations = result;
     }
     
@@ -73,8 +73,8 @@ export class OptimizerComponent implements OnInit, IOptimizerComponentVM {
         this.RunOptimization();
     }
     
-    DisableArmorSet(SetId: number) {
-        this.Armory.EnableDisableArmorSet(SetId, false);
+    DisableArmorSet(setId: number) {
+        this.Armory.EnableDisableArmorSet(setId, false);
         
         this.RunOptimization();
     }
